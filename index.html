@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuteSense Studios | Emotive Open Source Art</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        // Tailwind Configuration
+        window.tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cs-pink': '#F4C6C9',
+                        'cs-blue': '#B9E1F1',
+                        'cs-lilac': '#A178AF',
+                        'cs-cream': '#FFF9F4',
+                        'cs-dark': '#1A161D',
+                    }
+                }
+            }
+        };
+
+        // Immediate Theme Check
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'cutesense-studios';
+
+        let unsubscribeSignatures = null;
+
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.error("Auth failed:", err);
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadSignatures();
+            } else if (unsubscribeSignatures) {
+                unsubscribeSignatures();
+                unsubscribeSignatures = null;
+            }
+        });
+
+        initAuth();
+
+        async function signWall(e) {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            const nameInput = document.getElementById('signer-name');
+            const name = nameInput.value.trim() || "Anonymous Friend";
+            const submitBtn = e.target.querySelector('button');
+            const status = document.getElementById('form-status');
+            
+            try {
+                submitBtn.disabled = true;
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'signatures'), {
+                    name: name,
+                    timestamp: serverTimestamp(),
+                    uid: user.uid
+                });
+                nameInput.value = '';
+                status.innerText = "Signed successfully! ✨";
+                setTimeout(() => status.innerText = '', 3000);
+            } catch (err) {
+                status.innerText = "Error signing. Try again!";
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+        function loadSignatures() {
+            if (!auth.currentUser) return;
+            if (unsubscribeSignatures) unsubscribeSignatures();
+
+            const signaturesRef = collection(db, 'artifacts', appId, 'public', 'data', 'signatures');
+            unsubscribeSignatures = onSnapshot(signaturesRef, (snapshot) => {
+                const signatures = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.name) signatures.push(data);
+                });
+                
+                signatures.sort((a, b) => {
+                    const timeA = a.timestamp?.toMillis() || Date.now();
+                    const timeB = b.timestamp?.toMillis() || Date.now();
+                    return timeB - timeA;
+                });
+                
+                const countEl = document.getElementById('signature-count');
+                if (countEl) countEl.innerText = signatures.length;
+                
+                const list = document.getElementById('signature-list');
+                if (list) {
+                    list.innerHTML = signatures.slice(0, 24).map(s => `
+                        <div class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm border-2 border-cs-pink dark:border-cs-lilac/30 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500 font-medium whitespace-nowrap dark:text-white transition-all">
+                            ✨ ${escapeHtml(s.name)}
+                        </div>
+                    `).join('') || '<p class="text-slate-400 italic">Be the first to leave a mark!</p>';
+                }
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        window.signWall = signWall;
+    </script>
+
+    <style>
+        body {
+            font-family: 'Quicksand', 'Noto Sans', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        h1, h2, h3, .cute-font {
+            font-family: 'Fredoka', 'Noto Sans', sans-serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #F08DA1 0%, #7CB9D4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .floating {
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .sparkle-slow {
+            animation: sparkle-pulse 3s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle-pulse {
+            0%, 100% { opacity: 0.6; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(15deg); }
+        }
+
+        .motto-wrapper {
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #motto-container {
+            transition: all 0.5s ease-in-out;
+            color: #A178AF;
+        }
+
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .signature-list-container {
+            mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+        }
+
+        .glass-card {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .dark .toggle-inner {
+            transform: translateX(1.5rem);
+        }
+    </style>
+</head>
+<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-[100] px-4 md:px-8 py-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b-4 border-cs-lilac/20 rounded-3xl px-6 py-3 shadow-lg transition-all duration-300">
+            <div class="flex items-center gap-3">
+                <img src="CuteSense Studios Logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://img.icons8.com/color/96/ribbon.png'">
+                <span class="text-xl font-bold tracking-tight gradient-text cute-font">CuteSense</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 font-semibold text-sm">
+                <!-- Philosophy Button leads to Pillars -->
+                <a href="#motto" class="hover:text-cs-lilac transition-colors">Philosophy</a>
+                <!-- Motto Button leads to Founder's message -->
+                <a href="#founder" class="hover:text-cs-lilac transition-colors">Motto</a>
+                <a href="https://github.com/CuteSense-Studios" target="_blank" class="flex items-center gap-2 bg-cs-dark dark:bg-cs-lilac text-white px-5 py-2 rounded-full hover:opacity-90 transition-all shadow-md">
+                    <i data-lucide="github" class="w-4 h-4"></i> Repository
+                </a>
+                
+                <!-- Dark Mode Toggle -->
+                <div class="flex items-center gap-2 ml-4">
+                    <i data-lucide="sun" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
+                    <button onclick="toggleThemeManual()" class="relative inline-block w-12 h-6 align-middle select-none transition duration-200 ease-in bg-slate-200 dark:bg-cs-lilac rounded-full p-0">
+                        <span class="toggle-inner block w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in ml-0.5"></span>
+                    </button>
+                    <i data-lucide="moon" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
+                </div>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden p-2 text-cs-lilac" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-[110] md:hidden flex flex-col p-10 bg-cs-cream dark:bg-cs-dark transition-all">
+        <div class="flex justify-between items-center mb-16">
+            <span class="text-3xl font-bold gradient-text cute-font">CuteSense</span>
+            <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac rounded-full">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-10 text-2xl font-bold cute-font">
+            <a href="#motto" onclick="toggleMenu()" class="hover:text-cs-lilac">Philosophy</a>
+            <a href="#founder" onclick="toggleMenu()" class="hover:text-cs-lilac">Motto</a>
+            <a href="https://github.com/CuteSense-Studios" target="_blank" class="flex items-center gap-4 text-cs-lilac">
+                <i data-lucide="github" class="w-8 h-8"></i> Repository
+            </a>
+            <div class="h-px bg-cs-lilac/20 w-full mt-4"></div>
+            <button onclick="toggleThemeManual()" class="flex items-center justify-between w-full">
+                <span>Theme</span>
+                <div class="p-4 rounded-2xl bg-cs-lilac/10 text-cs-lilac">
+                    <i data-lucide="moon" class="dark:hidden"></i>
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
+        <div class="absolute top-[25%] left-[10%] sparkle-slow text-cs-pink z-10"><i data-lucide="sparkles" class="w-12 h-12"></i></div>
+        <div class="absolute bottom-[20%] right-[8%] sparkle-slow text-cs-blue z-10"><i data-lucide="sparkle" class="w-16 h-16"></i></div>
+        
+        <div class="absolute inset-0 pointer-events-none -z-10">
+            <div class="absolute top-1/4 right-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] md:blur-[180px] opacity-40"></div>
+            <div class="absolute bottom-1/4 left-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] md:blur-[180px] opacity-40"></div>
+        </div>
+
+        <div class="max-w-5xl mx-auto text-center px-6 relative z-20">
+            <div class="mb-10 flex justify-center">
+                <div class="p-6 border-4 border-dashed border-cs-lilac rounded-[3.5rem] floating bg-white dark:bg-slate-800 shadow-2xl overflow-hidden transition-all duration-500">
+                    <img src="CuteSense Studios Logo.png" alt="Logo" class="h-40 md:h-56 w-auto object-contain" onerror="this.src='https://img.icons8.com/color/96/ribbon.png'">
+                </div>
+            </div>
+            
+            <h1 class="text-5xl md:text-8xl font-bold mb-6 leading-tight">
+                Quality Art, <br/>
+                <span class="gradient-text">Openly Created</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl opacity-80 dark:text-slate-400 max-w-3xl mx-auto mb-14 font-medium leading-relaxed">
+                Empowering creative new voices through high-quality open-source tools and human-AI partnership.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <!-- Our Mission leads to Pillars -->
+                <a href="#motto" class="px-12 py-5 bg-cs-lilac text-white rounded-3xl font-bold text-lg shadow-xl flex items-center justify-center gap-2 hover:scale-105 transition-all">
+                    Our Mission <i data-lucide="compass" class="w-6 h-6"></i>
+                </a>
+                <a href="#signatures" class="px-12 py-5 bg-white dark:bg-slate-800 border-4 border-cs-pink text-cs-lilac dark:text-cs-pink rounded-3xl font-bold text-lg hover:border-cs-lilac transition-all text-center shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="github" class="w-6 h-6"></i> Repository
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder's Note -->
+    <section id="founder" class="py-20 px-6 relative bg-white/60 dark:bg-slate-900/40 border-y-4 border-dotted border-cs-lilac/30">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block p-1 bg-gradient-to-r from-cs-pink to-cs-blue rounded-full mb-8">
+                <div class="bg-cs-cream dark:bg-slate-900 rounded-full px-6 py-2 flex items-center gap-2">
+                    <i data-lucide="quote" class="w-4 h-4 text-cs-lilac"></i>
+                    <span class="text-xs font-bold text-cs-lilac uppercase tracking-widest">Founder's Note</span>
+                </div>
+            </div>
+            
+            <div class="motto-wrapper">
+                <h2 id="motto-container" class="text-3xl md:text-5xl font-bold cute-font italic px-4 leading-snug">
+                    Cuteness that makes sense!~
+                </h2>
+            </div>
+            
+            <div class="mt-8 flex justify-center items-center gap-3">
+                <div class="w-14 h-14 rounded-full border-4 border-cs-pink bg-white dark:bg-slate-800 flex items-center justify-center shadow-md">
+                    <i data-lucide="sparkles" class="w-8 h-8 text-cs-lilac"></i>
+                </div>
+                <div class="text-left">
+                    <p class="font-bold text-xl">Crossie</p>
+                    <p class="text-[10px] text-cs-lilac font-bold uppercase tracking-tighter">Chief Creative</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars Section -->
+    <section id="motto" class="py-32 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-7xl font-bold mb-4">Our Pillars</h2>
+                <p class="text-cs-lilac font-bold italic text-xl">"The motives that drive every project"</p>
+                <div class="w-32 h-2 bg-gradient-to-r from-cs-pink via-cs-lilac to-cs-blue mx-auto rounded-full mt-8"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-pink dark:border-cs-lilac/40 rounded-[2.5rem] shadow-[0_8px_0_#F4C6C9] dark:shadow-[0_8px_0_rgba(161,120,175,0.2)] hover:-translate-y-1">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-pink text-white">
+                        <i data-lucide="gem" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">High Quality</h3>
+                    <p class="font-medium opacity-80">Create high-quality experiences and digital tools that feel premium for all.</p>
+                </div>
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-blue dark:border-cs-lilac/40 rounded-[2.5rem] shadow-[0_8px_0_#B9E1F1] dark:shadow-[0_8px_0_rgba(161,120,175,0.2)] hover:-translate-y-1">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-blue text-white">
+                        <i data-lucide="package" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Open Source</h3>
+                    <p class="font-medium opacity-80">Create and publish open-source tools and frameworks to support the community.</p>
+                </div>
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-lilac dark:border-cs-lilac/40 rounded-[2.5rem] shadow-[0_8px_0_#A178AF] dark:shadow-[0_8px_0_rgba(161,120,175,0.2)] border-l-8 hover:-translate-y-1">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-lilac text-white">
+                        <i data-lucide="users" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Diversity</h3>
+                    <p class="font-medium opacity-80">Actively support and uplift minorities in the tech and gamedev fields.</p>
+                </div>
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-pink dark:border-cs-lilac/40 rounded-[2.5rem] shadow-[0_8px_0_#F4C6C9] dark:shadow-[0_8px_0_rgba(161,120,175,0.2)] hover:-translate-y-1">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-pink text-white">
+                        <i data-lucide="cpu" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Transparency</h3>
+                    <p class="font-medium opacity-80">Be transparent about AI use, focusing on high-quality human-AI partnerships.</p>
+                </div>
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-blue dark:border-cs-lilac/40 rounded-[2.5rem] shadow-[0_8px_0_#B9E1F1] dark:shadow-[0_8px_0_rgba(161,120,175,0.2)] hover:-translate-y-1">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-blue text-white">
+                        <i data-lucide="megaphone" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Advocacy</h3>
+                    <p class="font-medium opacity-80">Advocate for creative and diverse new industry voices around the world.</p>
+                </div>
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-lilac dark:border-cs-lilac/40 rounded-[2.5rem] shadow-[0_8px_0_#A178AF] dark:shadow-[0_8px_0_rgba(161,120,175,0.2)] bg-gradient-to-br from-cs-pink/5 to-cs-blue/5 hover:-translate-y-1">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-lilac text-white">
+                        <i data-lucide="heart" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 italic">CuteSense</h3>
+                    <p class="font-bold gradient-text text-xl">Cuteness that makes sense!~</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Wall -->
+    <section id="signatures" class="py-32 px-6 bg-cs-lilac/5 dark:bg-slate-900/40 border-y border-cs-lilac/10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">Signature Wall</h2>
+            <p class="opacity-70 mb-12 text-lg">Leave your mark in our collective database.</p>
+            
+            <form onsubmit="signWall(event)" class="max-w-md mx-auto mb-16 space-y-4">
+                <div class="flex gap-4">
+                    <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25"
+                           class="flex-1 px-6 py-4 rounded-3xl bg-white dark:bg-slate-800 border-4 border-cs-pink focus:outline-none focus:border-cs-lilac transition-all dark:text-white shadow-lg text-lg">
+                    <button type="submit" class="px-10 py-4 bg-cs-lilac text-white rounded-3xl font-bold hover:scale-105 transition-all text-lg shadow-lg disabled:opacity-50">Sign</button>
+                </div>
+                <p id="form-status" class="text-sm font-bold text-cs-lilac h-4"></p>
+            </form>
+
+            <div class="relative">
+                <p class="text-sm font-bold uppercase tracking-widest text-cs-lilac mb-10">
+                    <span id="signature-count" class="text-2xl">...</span> Friends have signed
+                </p>
+                <div id="signature-list" class="flex flex-wrap justify-center gap-4 max-h-[500px] overflow-hidden pb-10 signature-list-container">
+                    <p class="text-slate-400 animate-pulse italic">Connecting to the wall...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 border-t-4 border-dotted border-cs-lilac/20 px-6 text-center">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+            <div class="flex items-center gap-4">
+                <img src="CuteSense Studios Logo.png" alt="Logo" class="h-12 w-auto" onerror="this.src='https://img.icons8.com/color/96/ribbon.png'">
+                <div class="text-left">
+                    <span class="text-3xl font-bold gradient-text cute-font block">CuteSense Studios</span>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-cs-lilac opacity-80">
+                        Art with Heart • © 2026 • built with Gemini
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-8">
+                <a href="https://github.com/CuteSense-Studios" target="_blank" class="text-cs-lilac hover:scale-125 transition-transform" aria-label="GitHub">
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-cs-lilac hover:scale-125 transition-transform" aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-6 h-6"></i>
+                </a>
+                <a href="#" class="text-cs-lilac hover:scale-125 transition-transform" aria-label="Email">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const mottos = [
+            "Cuteness that makes sense!~",
+            "ऐसी क्यूटनेस जो समझ में आए!~",
+            "बुद्धिदीप्त মিষ্টি ভাব!~",
+            "அர்த்தமுள்ள அழகு!~",
+            "అర్థవంతమైన క్యూట్‌నెస్!~",
+            "道理にかなう可愛さ！~",
+            "이유 있는 귀여움!~",
+            "¡Ternura que tiene sentido!~",
+            "La mignonnerie qui a du sens !~",
+            "有道理的可爱！~"
+        ];
+        
+        let mottoIndex = 0;
+        const mottoContainer = document.getElementById('motto-container');
+
+        function rotateMotto() {
+            if (!mottoContainer) return;
+            mottoContainer.style.opacity = '0';
+            mottoContainer.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                mottoIndex = (mottoIndex + 1) % mottos.length;
+                mottoContainer.innerText = mottos[mottoIndex];
+                mottoContainer.style.opacity = '1';
+                mottoContainer.style.transform = 'translateY(0)';
+            }, 500);
+        }
+        setInterval(rotateMotto, 4000);
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        window.toggleThemeManual = () => {
+            const isDark = !document.documentElement.classList.contains('dark');
+            applyTheme(isDark);
+        };
+
+        window.toggleMenu = () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+            lucide.createIcons();
+        };
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
