@@ -39,25 +39,31 @@
     </script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-        const firebaseConfig = JSON.parse(__firebase_config);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhJiNnmHxmLmRzRrjfeu5mhSfmAjMFHH0",
+            authDomain: "cutesense-studios.firebaseapp.com",
+            databaseURL: "https://cutesense-studios-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "cutesense-studios",
+            storageBucket: "cutesense-studios.firebasestorage.app",
+            messagingSenderId: "847619766993",
+            appId: "1:847619766993:web:bde44be73b3732fe24e3f0",
+            measurementId: "G-64LY73VLMW"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'cutesense-studios';
+        const appId = 'cutesense-studios';
 
         let unsubscribeSignatures = null;
 
         const initAuth = async () => {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                await signInAnonymously(auth);
             } catch (err) {
                 console.error("Auth failed:", err);
             }
@@ -141,7 +147,7 @@
 
         window.signWall = signWall;
     </script>
-
+    
     <style>
         /* Locally Hosted Fonts */
         /* Fredoka */
