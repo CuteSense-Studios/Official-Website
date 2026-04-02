@@ -132,11 +132,24 @@
                 
                 const list = document.getElementById('signature-list');
                 if (list) {
-                    list.innerHTML = signatures.slice(0, 24).map(s => `
-                        <div class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm border-2 border-cs-pink dark:border-cs-lilac/30 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500 font-medium whitespace-nowrap dark:text-white transition-all">
-                            ✨ ${escapeHtml(s.name)}
-                        </div>
-                    `).join('') || '<p class="text-slate-400 italic">Be the first to leave a mark!</p>';
+                    // Define brand color themes for the signature bubbles
+                    // Note: Slightly darker text colors are used for light mode to ensure readability
+                    const brandThemes = [
+                        'border-cs-pink bg-cs-pink/10 text-[#D87D85] dark:text-cs-pink dark:border-cs-pink',
+                        'border-cs-blue bg-cs-blue/10 text-[#599AB5] dark:text-cs-blue dark:border-cs-blue',
+                        'border-cs-lilac bg-cs-lilac/10 text-cs-lilac dark:text-[#E2CBEB] dark:border-cs-lilac'
+                    ];
+
+                    list.innerHTML = signatures.slice(0, 24).map(s => {
+                        // Randomly assign one of the 3 themes to the bubble
+                        const theme = brandThemes[Math.floor(Math.random() * brandThemes.length)];
+                        
+                        return `
+                            <div class="px-5 py-2.5 rounded-full text-sm border-2 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500 font-bold whitespace-nowrap transition-all ${theme}">
+                                ✨ ${escapeHtml(s.name)}
+                            </div>
+                        `;
+                    }).join('') || '<p class="text-slate-400 italic">Be the first to leave a mark!</p>';
                 }
             });
         }
