@@ -1,20 +1,22 @@
 class CuteSenseNavbar extends HTMLElement {
     connectedCallback() {
-        // Automatically check if we are in a subdirectory (like /pages/) to fix image and link paths
         const inSubDir = window.location.pathname.includes('/pages/');
         const path = inSubDir ? '../' : './';
 
         this.innerHTML = `
         <nav class="fixed w-full z-[100] px-4 md:px-8 py-6">
             <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b-4 border-cs-lilac/20 rounded-3xl px-6 py-3 shadow-lg transition-all duration-300">
+                
                 <a href="${path}index.html" class="flex items-center gap-3 shrink-0 hover:scale-105 transition-transform duration-300">
-                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="h-10 w-auto pixel-crisp">
-                    <span class="text-4xl gradient-text borel-font hidden sm:block translate-y-1">CuteSense</span>
+                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto" style="height: 36px;">
+                    <span class="text-3xl gradient-text borel-font hidden sm:block translate-y-2 pt-1">CuteSense</span>
                 </a>
+                
                 <div class="hidden md:flex items-center gap-8 font-semibold text-sm">
                     <a href="${path}pages/mission.html" class="hover:text-cs-lilac transition-colors">Philosophy</a>
                     <a href="${path}pages/motto.html" class="hover:text-cs-lilac transition-colors">Motto</a>
                 </div>
+                
                 <div class="flex items-center gap-3 sm:gap-4">
                     <a href="https://github.com/CuteSense-Studios" target="_blank" class="flex items-center gap-2 bg-cs-dark dark:bg-cs-lilac text-white px-4 py-2 rounded-full hover:opacity-90 transition-all shadow-md text-sm font-semibold">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
@@ -37,7 +39,7 @@ class CuteSenseNavbar extends HTMLElement {
 
         <div id="mobile-menu" class="fixed inset-0 z-[110] md:hidden flex flex-col p-10 bg-cs-cream dark:bg-cs-dark transition-all">
             <div class="flex justify-between items-center mb-16">
-                <span class="text-5xl gradient-text borel-font translate-y-1">CuteSense</span>
+                <span class="text-5xl gradient-text borel-font translate-y-2">CuteSense</span>
                 <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac rounded-full"><i data-lucide="x"></i></button>
             </div>
             <div class="flex flex-col gap-10 text-2xl font-bold cute-font">
@@ -48,17 +50,14 @@ class CuteSenseNavbar extends HTMLElement {
         </div>
         `;
 
-        // Re-initialize Lucide icons for the newly injected HTML
         if (window.lucide) {
             lucide.createIcons();
         }
     }
 }
 
-// Define the custom HTML tag <cs-navbar>
 customElements.define('cs-navbar', CuteSenseNavbar);
 
-// Attach the toggleMenu function globally so the buttons can find it
 window.toggleMenu = () => {
     const menu = document.getElementById('mobile-menu');
     if(menu) {
