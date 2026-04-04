@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ==========================================================================
    CuteSense Custom Cursor Module
    Location: /assets/css/cursor.css
@@ -74,5 +73,3 @@ p, h1, h2, h3, h4, h5, h6, span, input[type="text"] {
 /* But if a span or heading is inside a link, it should still be a sparkle */
 a p, a h1, a h2, a h3, a h4, a h5, a h6, a span {
     cursor: var(--cs-cursor-pointer);
->>>>>>> 73a6db5199eb10075da45f9b42b3fe9efc64aaa4
-}
