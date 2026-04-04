@@ -8,8 +8,8 @@ class CuteSenseNavbar extends HTMLElement {
             <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b-4 border-cs-lilac/20 rounded-2xl sm:rounded-3xl px-4 sm:px-6 py-3 shadow-lg transition-all duration-300">
                 
                 <a href="${path}index.html" class="flex items-center gap-2 sm:gap-3 shrink-0 hover:scale-105 transition-transform duration-300">
-                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto" style="height: clamp(28px, 5vw, 36px);">
-                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-none mt-1">CuteSense</span>
+                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto block" style="height: clamp(30px, 5vw, 40px);">
+                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-relaxed py-1 block">CuteSense</span>
                 </a>
                 
                 <div class="hidden md:flex items-center gap-6 lg:gap-8 font-semibold text-sm">
@@ -41,7 +41,7 @@ class CuteSenseNavbar extends HTMLElement {
 
         <div id="mobile-menu" class="fixed inset-0 z-[110] md:hidden flex flex-col p-8 sm:p-10 bg-cs-cream dark:bg-cs-dark transition-all">
             <div class="flex justify-between items-center mb-16">
-                <span class="text-4xl sm:text-5xl gradient-text borel-font leading-none mt-2">CuteSense</span>
+                <span class="text-4xl sm:text-5xl gradient-text borel-font leading-relaxed">CuteSense</span>
                 <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac rounded-full"><i data-lucide="x"></i></button>
             </div>
             <div class="flex flex-col gap-8 text-xl sm:text-2xl font-bold cute-font">
