@@ -41,7 +41,7 @@ CuteSense Studios aims to empower creative new voices by providing premium digit
 
 ## **📂 Repository Link**
 
-Find all our open-source projects and contributions at: [CuteSense Studios](https://github.com/CuteSense-Studios)
+Find all our open-source projects and contributions at our [GitHub](https://github.com/CuteSense-Studios)
 
 ---
 
