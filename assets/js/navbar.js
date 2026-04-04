@@ -4,67 +4,86 @@ class CuteSenseNavbar extends HTMLElement {
         const path = inSubDir ? '../' : './';
 
         this.innerHTML = `
-        <nav class="fixed w-full z-[100] px-4 md:px-8 py-4 sm:py-6">
-            <div class="max-w-7xl mx-auto flex items-center justify-between relative bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b-4 border-cs-lilac/20 rounded-2xl sm:rounded-3xl px-4 sm:px-6 py-3 shadow-lg transition-all duration-300 min-h-[70px] sm:min-h-[85px]">
-                
-                <div class="hidden md:flex items-center gap-6 lg:gap-8 font-semibold text-sm">
-                    <a href="${path}pages/mission.html" class="hover:text-cs-lilac transition-colors">Philosophy</a>
-                    <a href="${path}pages/motto.html" class="hover:text-cs-lilac transition-colors">Motto</a>
-                </div>
+        <style>
+            /* 1. ANIMATIONS & TRANSITIONS */
+            #mobile-menu {
+                transform: translateX(100%);
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            #mobile-menu.active {
+                transform: translateX(0);
+            }
+            
+            /* 2. FONT ALIGNMENT (Borel & Icons) */
+            .borel-font {
+                line-height: 1.1;
+                display: inline-flex;
+                align-items: center;
+                padding-bottom: 2px; /* Fixes baseline for script fonts */
+            }
 
-                <a href="${path}index.html" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-3 shrink-0 hover:scale-105 transition-transform duration-300 whitespace-nowrap">
-                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto block" style="height: clamp(30px, 5vw, 40px);">
-                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-relaxed translate-y-[4px] block">CuteSense</span>
-                </a>
+            /* 3. UNIVERSAL NAV GRID */
+            .nav-container-grid {
+                display: grid;
+                grid-template-columns: 1fr auto 1fr;
+                align-items: center;
+                width: 100%;
+            }
+
+            /* 4. PC HOVER EFFECTS */
+            .nav-link-pc {
+                position: relative;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                transition: all 0.3s ease;
+            }
+            .nav-link-pc::after {
+                content: '';
+                position: absolute;
+                bottom: -4px;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: #B19CD9; /* cs-lilac */
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+            .nav-link-pc:hover::after {
+                width: 100%;
+            }
+
+            /* 5. THEME TOGGLE ANIMATION */
+            .toggle-dot {
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .dark .toggle-dot {
+                transform: translateX(20px);
+            }
+        </style>
+
+        <nav class="fixed w-full z-[100] px-3 md:px-8 py-3 md:py-6">
+            <div class="max-w-7xl mx-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b-2 border-cs-lilac/10 rounded-3xl px-4 md:px-8 py-3 shadow-xl shadow-cs-lilac/5 transition-all duration-300 min-h-[70px] md:min-h-[85px] flex items-center">
                 
-                <div class="flex items-center gap-3 sm:gap-4 ml-auto">
-                    <a href="https://github.com/CuteSense-Studios" target="_blank" class="hidden sm:flex items-center gap-2 bg-cs-dark dark:bg-cs-lilac text-white px-4 py-2 rounded-full hover:opacity-90 transition-all shadow-md text-sm font-semibold">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                            <path d="M9 18c-4.51 2-5-2-7-2"/>
-                        </svg>
-                        <span>Repository</span>
-                    </a>
-                    
-                    <div class="hidden md:flex items-center gap-2 ml-2">
-                        <i data-lucide="sun" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
-                        <button onclick="toggleTheme()" class="relative inline-block w-10 h-5 sm:w-12 sm:h-6 align-middle select-none transition duration-200 ease-in bg-slate-200 dark:bg-cs-lilac rounded-full p-0">
-                            <span class="toggle-inner block w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in ml-0.5 mt-0.5 sm:mt-0"></span>
-                        </button>
-                        <i data-lucide="moon" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
+                <div class="nav-container-grid">
+                    <div class="hidden md:flex items-center gap-8">
+                        <a href="${path}pages/mission.html" class="nav-link-pc text-slate-600 dark:text-slate-300 hover:text-cs-lilac text-xs uppercase">Philosophy</a>
+                        <a href="${path}pages/motto.html" class="nav-link-pc text-slate-600 dark:text-slate-300 hover:text-cs-lilac text-xs uppercase">Motto</a>
                     </div>
-                    <button id="menu-toggle" class="md:hidden p-2 text-cs-lilac ml-1" onclick="toggleMenu()"><i data-lucide="menu" class="w-6 h-6"></i></button>
-                </div>
-            </div>
-        </nav>
 
-        <div id="mobile-menu" class="fixed inset-0 z-[110] md:hidden flex flex-col p-8 sm:p-10 bg-cs-cream dark:bg-cs-dark transition-all">
-            <div class="flex justify-between items-center mb-16">
-                <span class="text-4xl sm:text-5xl gradient-text borel-font leading-relaxed translate-y-[4px]">CuteSense</span>
-                <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac rounded-full"><i data-lucide="x"></i></button>
-            </div>
-            <div class="flex flex-col gap-8 text-xl sm:text-2xl font-bold cute-font">
-                <a href="${path}pages/mission.html" onclick="toggleMenu()" class="hover:text-cs-lilac">Philosophy</a>
-                <a href="${path}pages/motto.html" onclick="toggleMenu()" class="hover:text-cs-lilac">Motto</a>
-                <a href="https://github.com/CuteSense-Studios" target="_blank" class="hover:text-cs-lilac flex items-center justify-between"><span>Repository</span><i data-lucide="external-link" class="w-5 h-5 opacity-50"></i></a>
-                <button onclick="toggleTheme(); toggleMenu();" class="flex items-center justify-between w-full mt-4 pt-4 border-t border-cs-lilac/20"><span>Toggle Theme</span><i data-lucide="moon" class="dark:hidden"></i><i data-lucide="sun" class="hidden dark:block"></i></button>
-            </div>
-        </div>
-        `;
-
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    }
-}
-
-customElements.define('cs-navbar', CuteSenseNavbar);
-
-window.toggleMenu = () => {
-    const menu = document.getElementById('mobile-menu');
-    if(menu) {
-        menu.classList.toggle('active');
-        document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-        if (window.lucide) lucide.createIcons();
-    }
-};
+                    <div class="flex justify-center">
+                        <a href="${path}index.html" class="flex items-center gap-2 md:gap-3 shrink-0 hover:scale-105 transition-transform duration-300">
+                            <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto block h-[32px] md:h-[42px]">
+                            <span class="text-2xl md:text-3xl gradient-text borel-font">CuteSense</span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 justify-end">
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" class="hidden lg:flex items-center gap-2 bg-slate-900 dark:bg-cs-lilac text-white px-5 py-2.5 rounded-full hover:shadow-lg hover:-translate-y-0.5 transition-all text-xs font-bold uppercase">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                            <span>Github</span>
+                        </a>
+                        
+                        <button onclick="toggleTheme()" class="hidden md:flex items-center w-12 h-7 bg-slate-200 dark:bg-slate-700 rounded-full p-1 relative border border-cs-lilac/20" aria-label="Toggle Theme">
+                            <div class="toggle-dot w-5 h-5 bg-white dark:bg-cs-lilac rounded-full shadow-sm flex items-center justify-center">
+                                <i data-lucide="sun" class="w-3 h-3 text-orange-400 block dark:hidden"></i>
+                                <i data-lucide="moon" class="
