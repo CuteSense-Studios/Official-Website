@@ -9,10 +9,11 @@ class CuteSenseNavbar extends HTMLElement {
                 
                 <a href="${path}index.html" class="flex items-center gap-2 sm:gap-3 shrink-0 hover:scale-105 transition-transform duration-300">
                     <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto" style="height: clamp(28px, 5vw, 36px);">
-                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-none mt-2.3 sm:mt-2">CuteSense</span>
+                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-none mt-1">CuteSense</span>
                 </a>
                 
                 <div class="hidden md:flex items-center gap-6 lg:gap-8 font-semibold text-sm">
+                    <a href="${path}index.html" class="hover:text-cs-lilac transition-colors">Home</a>
                     <a href="${path}pages/mission.html" class="hover:text-cs-lilac transition-colors">Philosophy</a>
                     <a href="${path}pages/motto.html" class="hover:text-cs-lilac transition-colors">Motto</a>
                 </div>
@@ -44,6 +45,7 @@ class CuteSenseNavbar extends HTMLElement {
                 <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac rounded-full"><i data-lucide="x"></i></button>
             </div>
             <div class="flex flex-col gap-8 text-xl sm:text-2xl font-bold cute-font">
+                <a href="${path}index.html" onclick="toggleMenu()" class="hover:text-cs-lilac">Home</a>
                 <a href="${path}pages/mission.html" onclick="toggleMenu()" class="hover:text-cs-lilac">Philosophy</a>
                 <a href="${path}pages/motto.html" onclick="toggleMenu()" class="hover:text-cs-lilac">Motto</a>
                 <a href="https://github.com/CuteSense-Studios" target="_blank" class="hover:text-cs-lilac flex items-center justify-between"><span>Repository</span><i data-lucide="external-link" class="w-5 h-5 opacity-50"></i></a>
