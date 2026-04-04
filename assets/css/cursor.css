@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ==========================================================================
    CuteSense Custom Cursor Module
    Location: /assets/css/cursor.css
@@ -36,43 +35,4 @@ p, h1, h2, h3, h4, h5, h6, span, input[type="text"] {
 /* But if a span or heading is inside a link, it should still be a sparkle */
 a p, a h1, a h2, a h3, a h4, a h5, a h6, a span {
     cursor: var(--cs-cursor-pointer);
-=======
-/* ==========================================================================
-   CuteSense Custom Cursor Module
-   Location: /assets/css/cursor.css
-   ========================================================================== */
-
-:root {
-    /* Default Cursor: A chunky Lilac arrow with a crisp white border */
-    --cs-cursor-default: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3L18.5 13L12.5 14L9.5 20L5.5 3Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"), auto;
-    
-    /* Pointer Cursor: A cute Pink sparkle with a Lilac border for links */
-    --cs-cursor-pointer: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, pointer;
-}
-
-/* Apply default cursor to the whole document */
-body, html {
-    cursor: var(--cs-cursor-default);
-}
-
-/* Apply pointer cursor to all interactive elements */
-a, 
-button, 
-input[type="submit"], 
-select, 
-[role="button"], 
-.cursor-pointer,
-.toggle-inner {
-    cursor: var(--cs-cursor-pointer);
-}
-
-/* Ensure text selection still uses the standard text cursor so it doesn't get confusing */
-p, h1, h2, h3, h4, h5, h6, span, input[type="text"] {
-    cursor: text;
-}
-
-/* But if a span or heading is inside a link, it should still be a sparkle */
-a p, a h1, a h2, a h3, a h4, a h5, a h6, a span {
-    cursor: var(--cs-cursor-pointer);
->>>>>>> 73a6db5199eb10075da45f9b42b3fe9efc64aaa4
 }

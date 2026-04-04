@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @import "tailwindcss";
 
 /* 1. Tell Tailwind to use your manual toggle for Dark Mode */
@@ -11,18 +10,4 @@
   --color-cs-lilac: #A178AF;
   --color-cs-cream: #FFF9F4;
   --color-cs-dark: #1A161D;
-=======
-@import "tailwindcss";
-
-/* 1. Tell Tailwind to use your manual toggle for Dark Mode */
-@variant dark (&:is(.dark *));
-
-/* 2. Define your brand colors (This replaces the config file!) */
-@theme {
-  --color-cs-pink: #F4C6C9;
-  --color-cs-blue: #B9E1F1;
-  --color-cs-lilac: #A178AF;
-  --color-cs-cream: #FFF9F4;
-  --color-cs-dark: #1A161D;
->>>>>>> 73a6db5199eb10075da45f9b42b3fe9efc64aaa4
 }
