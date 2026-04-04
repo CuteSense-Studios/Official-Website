@@ -6,95 +6,51 @@
     <title>Our Motto | CuteSense Studios</title>
     
     <link rel="icon" type="image/webp" href="../assets/icons/companylogo.webp">
-    
     <link rel="stylesheet" href="../assets/css/cursor.css">
-    
     <link rel="stylesheet" href="../assets/css/tailwind.css">
     
     <script src="../assets/js/lucide.min.js"></script>
     
-    <script>
-        // Immediate Theme Check to prevent flash of unstyled content
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        })();
-    </script>
+    <script src="../assets/js/theme.js"></script>
 
     <style>
-        /* Fonts Configuration */
-        @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
         @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
         @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-
         @font-face { font-family: 'Quicksand'; src: url('../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Quicksand'; src: url('../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Quicksand'; src: url('../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Quicksand'; src: url('../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-
         @font-face { font-family: 'Noto Sans'; src: url('../assets/fonts/noto-sans-v42-latin/noto-sans-v42-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Noto Sans'; src: url('../assets/fonts/noto-sans-v42-latin/noto-sans-v42-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
 
         body { font-family: 'Quicksand', 'Noto Sans', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
         h1, h2, h3, .cute-font { font-family: 'Fredoka', 'Noto Sans', sans-serif; }
 
+        /* UPGRADED: Holographic Shine Effect */
         .gradient-text {
-            background: linear-gradient(90deg, #F08DA1 0%, #7CB9D4 100%);
+            background: linear-gradient(90deg, #F08DA1 0%, #7CB9D4 25%, #F08DA1 50%, #7CB9D4 75%, #F08DA1 100%);
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Animations */
-        .floating { animation: floating 4s ease-in-out infinite; }
-        .floating-delayed { animation: floating 5s ease-in-out infinite 1s; }
-        
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        .sparkle-slow {
-            animation: sparkle-pulse 4s infinite ease-in-out;
-            pointer-events: none;
-        }
+        .floating { animation: floating 4s ease-in-out infinite; transition: transform 0.2s ease-out; }
+        .floating-delayed { animation: floating 5s ease-in-out infinite 1s; transition: transform 0.2s ease-out; }
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
-        @keyframes sparkle-pulse {
-            0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
-            50% { opacity: 0.8; transform: scale(1.1) rotate(15deg); }
-        }
+        .sparkle-slow { animation: sparkle-pulse 4s infinite ease-in-out; pointer-events: none; }
+        @keyframes sparkle-pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); } 50% { opacity: 0.8; transform: scale(1.1) rotate(15deg); } }
 
-        /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Motto Wrapper specific for this page */
-        .motto-wrapper {
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .motto-wrapper { min-height: 200px; display: flex; align-items: center; justify-content: center; }
+        #motto-container { transition: all 0.5s ease-in-out; }
 
-        #motto-container {
-            transition: all 0.5s ease-in-out;
-        }
-
-        .glass-card {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        }
+        /* UPGRADED: Tactile Glass Card */
+        .glass-card { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
         .glass-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02) rotate(0.5deg);
+            box-shadow: 0 25px 50px -12px rgba(124, 185, 212, 0.3);
         }
 
         .dark .toggle-inner { transform: translateX(1.5rem); }
@@ -105,7 +61,7 @@
     <nav class="fixed w-full z-[100] px-4 md:px-8 py-6 transition-transform duration-300">
         <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b-4 border-cs-lilac/20 rounded-3xl px-6 py-3 shadow-lg">
             <a href="../index.html" class="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
-                <img src="../assets/icons/companylogo.webp" alt="Logo" class="h-10 w-auto" onerror="this.src='https://img.icons8.com/color/96/ribbon.png'">
+                <img src="../assets/icons/companylogo.webp" alt="Logo" class="h-10 w-auto">
                 <span class="text-xl font-bold gradient-text cute-font hidden sm:block">CuteSense</span>
             </a>
             
@@ -113,13 +69,11 @@
                 <a href="../index.html" class="text-sm font-bold hover:text-cs-lilac transition-colors flex items-center gap-2 group">
                     <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Home
                 </a>
-                <a href="mission.html" class="text-sm font-bold hover:text-cs-lilac transition-colors flex items-center gap-2">
-                    Mission
-                </a>
+                <a href="mission.html" class="text-sm font-bold hover:text-cs-lilac transition-colors flex items-center gap-2">Mission</a>
                 
                 <div class="flex items-center gap-2 ml-2">
                     <i data-lucide="sun" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
-                    <button onclick="toggleThemeManual()" class="relative inline-block w-12 h-6 align-middle select-none transition duration-200 ease-in bg-slate-200 dark:bg-cs-lilac rounded-full p-0 hover:scale-105">
+                    <button onclick="toggleTheme()" class="relative inline-block w-12 h-6 align-middle select-none transition duration-200 ease-in bg-slate-200 dark:bg-cs-lilac rounded-full p-0 hover:scale-105">
                         <span class="toggle-inner block w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in ml-0.5"></span>
                     </button>
                     <i data-lucide="moon" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
@@ -130,8 +84,8 @@
 
     <main class="flex-grow flex flex-col justify-center pt-32 pb-20 relative">
         <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-            <div class="absolute top-1/3 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[100px] md:blur-[150px] opacity-30 dark:opacity-20 floating"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[100px] md:blur-[150px] opacity-30 dark:opacity-20 floating-delayed"></div>
+            <div class="blob-parallax absolute top-1/3 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[100px] md:blur-[150px] opacity-30 dark:opacity-20"></div>
+            <div class="blob-parallax absolute bottom-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[100px] md:blur-[150px] opacity-30 dark:opacity-20"></div>
         </div>
 
         <div class="absolute top-[35%] left-[10%] sparkle-slow text-cs-lilac z-0"><i data-lucide="sparkles" class="w-12 h-12"></i></div>
@@ -139,7 +93,6 @@
 
         <section class="w-full px-6 text-center z-10">
             <div class="max-w-5xl mx-auto">
-                
                 <div class="inline-block p-1 bg-gradient-to-r from-cs-pink to-cs-blue rounded-full mb-10 floating">
                     <div class="bg-cs-cream dark:bg-slate-900 rounded-full px-6 py-2 flex items-center gap-2">
                         <i data-lucide="quote" class="w-4 h-4 text-cs-lilac"></i>
@@ -148,7 +101,7 @@
                 </div>
                 
                 <div class="motto-wrapper mb-16">
-                    <h1 id="motto-container" class="text-5xl md:text-8xl font-bold cute-font italic px-4 leading-tight gradient-text drop-shadow-sm">
+                    <h1 id="motto-container" class="text-5xl md:text-8xl font-bold cute-font italic px-4 leading-tight gradient-text drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform">
                         Cuteness that makes sense!~
                     </h1>
                 </div>
@@ -175,7 +128,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     </main>
@@ -186,7 +138,11 @@
                 <img src="../assets/icons/companylogo.webp" alt="Logo" class="h-8 w-auto opacity-70">
                 <span class="text-lg font-bold cute-font text-cs-lilac">CuteSense Studios</span>
             </div>
-            
+            <div class="flex gap-8">
+                <a href="https://github.com/CuteSense-Studios" target="_blank" class="text-cs-lilac hover:scale-125 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                </a>
+            </div>
             <div class="text-xs font-bold text-cs-lilac/60 uppercase tracking-widest flex items-center gap-2">
                 <i data-lucide="scale" class="w-4 h-4"></i> GNU AGPL v3
             </div>
@@ -194,28 +150,15 @@
     </footer>
 
     <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        // Motto Rotation Logic
         const mottos = [
-            "Cuteness that makes sense!~",      // English
-            "ऐसी क्यूटनेस जो समझ में आए!~",     // Hindi
-            "बुद्धिदीप्त মিষ্টি ভাব!~",               // Bengali
-            "அர்த்தமுள்ள அழகு!~",               // Tamil
-            "అర్థవంతమైన క్యూట్‌నెస్!~",            // Telugu
-            "道理にかなう可愛さ！~",               // Japanese
-            "이유 있는 귀여움!~",                 // Korean
-            "¡Ternura que tiene sentido!~",     // Spanish
-            "La mignonnerie qui a du sens !~",  // French
-            "有道理的可爱！~",                    // Chinese
-            "لطافة منطقية!~",                    // Arabic
-            "Niedlichkeit, die Sinn macht!~",   // German
-            "Tenerezza che ha senso!~",         // Italian
-            "Fofura que faz sentido!~",         // Portuguese
-            "Милота со смыслом!~",              // Russian
-            "Sự dễ thương đầy ý nghĩa!~",       // Vietnamese
-            "ความน่ารักที่มีความหมาย!~"               // Thai
+            "Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीপ্ত মিষ্টি ভাব!~",
+            "அர்த்தமுள்ள அழகு!~", "అర్థవంతమైన క్యూట్‌నెస్!~", "道理にかなう可愛さ！~",
+            "이유 있는 귀여움!~", "¡Ternura que tiene sentido!~", "La mignonnerie qui a du sens !",
+            "有道理的可爱！~", "لطافة منطقية!~", "Niedlichkeit, die Sinn macht!~",
+            "Tenerezza che ha senso!~", "Fofura que faz sentido!~", "Милота со смыслом!~",
+            "Sự dễ thương đầy ý nghĩa!~", "ความน่ารักที่มีความหมาย!~"
         ];
         
         let mottoIndex = 0;
@@ -223,47 +166,39 @@
 
         function rotateMotto() {
             if (!mottoContainer) return;
-            // Fade out and translate down
             mottoContainer.style.opacity = '0';
             mottoContainer.style.transform = 'translateY(15px) scale(0.98)';
             
             setTimeout(() => {
                 mottoIndex = (mottoIndex + 1) % mottos.length;
                 mottoContainer.innerText = mottos[mottoIndex];
-                
-                // Fade in and translate up
                 mottoContainer.style.opacity = '1';
                 mottoContainer.style.transform = 'translateY(0) scale(1)';
-            }, 600); // Wait for fade out to complete
+            }, 600);
         }
         
-        // Start rotation
-        setInterval(rotateMotto, 4500);
+        // UPGRADED: Magnetic Motto Toggle Logic
+        let mottoInterval = setInterval(rotateMotto, 4500);
+        
+        mottoContainer.addEventListener('click', () => {
+            clearInterval(mottoInterval);
+            rotateMotto();
+            mottoInterval = setInterval(rotateMotto, 4500);
+        });
 
-        // Theme Toggle Logic
-        function applyTheme(isDark) {
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-            setTimeout(() => lucide.createIcons(), 50);
-        }
+        // UPGRADED: Interactive Blob Parallax
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob-parallax');
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 40;
+                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
 
-        window.toggleThemeManual = () => {
-            const isDark = !document.documentElement.classList.contains('dark');
-            applyTheme(isDark);
-        };
-
-        // Scroll Reveal Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
