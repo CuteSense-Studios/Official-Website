@@ -9,7 +9,7 @@ class CuteSenseNavbar extends HTMLElement {
                 
                 <a href="${path}index.html" class="flex items-center gap-2 sm:gap-3 shrink-0 hover:scale-105 transition-transform duration-300">
                     <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="w-auto" style="height: clamp(28px, 5vw, 36px);">
-                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-none mt-1.5 sm:mt-2">CuteSense</span>
+                    <span class="text-2xl sm:text-3xl gradient-text borel-font leading-none mt-2.3 sm:mt-2">CuteSense</span>
                 </a>
                 
                 <div class="hidden md:flex items-center gap-6 lg:gap-8 font-semibold text-sm">

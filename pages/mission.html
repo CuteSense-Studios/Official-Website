@@ -9,254 +9,142 @@
     <link rel="stylesheet" href="../assets/css/cursor.css">
     <link rel="stylesheet" href="../assets/css/tailwind.css">
     
+    <link rel="stylesheet" href="../assets/css/global.css">
+    
     <script src="../assets/js/lucide.min.js"></script>
-    
     <script src="../assets/js/theme.js"></script>
-
-    <style>
-        /* Fonts Configuration */
-        @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Fredoka'; src: url('../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Quicksand'; src: url('../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-        @font-face { font-family: 'Noto Sans'; src: url('../assets/fonts/noto-sans-v42-latin/noto-sans-v42-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-
-        body { font-family: 'Quicksand', 'Noto Sans', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
-        h1, h2, h3, .cute-font { font-family: 'Fredoka', 'Noto Sans', sans-serif; }
-
-        /* UPGRADED: Holographic Shine Effect */
-        /* Refined Holographic Shine with Subtle Outline */
-        /* REFINED: Holographic Shine with Invisible Ink Fix */
-       /* FINAL POLISH: Holographic Shine & Performance Anti-Aliasing */
-        .gradient-text {
-    background: linear-gradient(
-        90deg, 
-        #F08DA1 0%, 
-        #7CB9D4 25%, 
-        #F08DA1 50%, 
-        #7CB9D4 75%, 
-        #F08DA1 100%
-    );
-    background-size: 200% auto;
-    animation: shine 8s linear infinite; /* Slowed down for a more "premium" feel */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    
-    /* THE INK FIX: Reduced to 15% opacity to be virtually invisible */
-    /* It still prevents jagged edges without adding a perceivable "border" */
-    filter: drop-shadow(0 0 1px rgba(30, 41, 59, 0.15));
-    
-    /* DEPTH: Added a multi-layered soft shadow for better legibility on cream/white */
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3), 
-                 0 0 0px rgba(30, 41, 59, 0.05);
-
-    /* PERFORMANCE: Hardware acceleration to prevent flickering during animation */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-/* TYPOGRAPHY REFINEMENT: Improved breathing room for Fredoka headers */
-h1, h2, h3, .cute-font {
-    font-family: 'Fredoka', 'Noto Sans', sans-serif;
-    letter-spacing: -0.01em; /* Tightens up the rounded font for a modern look */
-}
-
-/* SELECTION REFINEMENT: Matches the brand's lilac/pink palette */
-::selection {
-    background-color: rgba(240, 141, 161, 0.3); /* Soft pink highlight */
-    color: #D87D85;
-}
-
-@keyframes shine { 
-    to { background-position: 200% center; } 
-}
-        
-        @keyframes shine { to { background-position: 200% center; } }
-
-        .floating { animation: floating 4s ease-in-out infinite; }
-        .floating-delayed { animation: floating 5s ease-in-out infinite 1s; }
-        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-
-        .sparkle-slow { animation: sparkle-pulse 4s infinite ease-in-out; pointer-events: none; }
-        @keyframes sparkle-pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); } 50% { opacity: 0.8; transform: scale(1.1) rotate(15deg); } }
-
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* UPGRADED: Mission Card Micro-Interactions */
-        .mission-card {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        }
-        .mission-card:hover {
-            transform: translateY(-8px) scale(1.02) rotate(0.5deg);
-            box-shadow: 0 25px 50px -12px rgba(124, 185, 212, 0.3);
-        }
-        .mission-card:hover .icon-container { transform: scale(1.1) rotate(5deg); }
-        .icon-container { transition: transform 0.3s ease; }
-
-        .dark .toggle-inner { transform: translateX(1.5rem); }
-    </style>
 </head>
-<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden">
+<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden min-h-screen flex flex-col">
 
-    <nav class="fixed w-full z-[100] px-4 md:px-8 py-6 transition-transform duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b-4 border-cs-lilac/20 rounded-3xl px-6 py-3 shadow-lg">
-            <a href="../index.html" class="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
-                <img src="../assets/icons/companylogo.webp" alt="Logo" class="h-10 w-auto">
-                <span class="text-xl font-bold gradient-text cute-font hidden sm:block">CuteSense</span>
-            </a>
+    <cs-navbar></cs-navbar>
+    <script src="../assets/js/navbar.js"></script>
+
+    <main class="flex-grow">
+        <section class="relative pt-48 pb-20 px-6 text-center overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none -z-10">
+                <div class="blob-parallax absolute top-[30%] left-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[100px] opacity-20"></div>
+                <div class="blob-parallax absolute bottom-[20%] right-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[100px] opacity-20"></div>
+            </div>
             
-            <div class="flex items-center gap-4 sm:gap-8">
-                <a href="../index.html" class="text-sm font-bold hover:text-cs-lilac transition-colors flex items-center gap-2 group">
-                    <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Home
-                </a>
+            <div class="absolute top-[30%] left-[15%] sparkle-slow text-cs-blue z-0"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
+            <div class="absolute bottom-[20%] right-[15%] sparkle-slow text-cs-pink z-0"><i data-lucide="sparkle" class="w-14 h-14"></i></div>
+
+            <div class="max-w-4xl mx-auto relative z-10">
+                <div class="floating inline-block px-4 py-1.5 bg-cs-pink/20 text-[#D87D85] dark:bg-cs-pink/10 dark:text-cs-pink rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-[#D87D85]/20 dark:border-cs-pink/20 backdrop-blur-sm">
+                    Our Manifesto
+                </div>
+                <h1 class="text-5xl md:text-8xl font-bold mb-8 leading-tight floating-delayed">
+                    Meaningful Art, <br class="md:hidden"/> <span class="gradient-text">Boundless Creation.</span>
+                </h1>
+                <p class="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed font-medium reveal">
+                    At CuteSense Studios, we believe that emotional storytelling and premium creative tools belong to everyone. We are breaking down barriers to make art open, inclusive, and deeply human.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-20 px-6">
+            <div class="max-w-6xl mx-auto grid gap-12">
                 
-                <div class="flex items-center gap-2">
-                    <i data-lucide="sun" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
-                    <button onclick="toggleTheme()" class="relative inline-block w-12 h-6 align-middle select-none transition duration-200 ease-in bg-slate-200 dark:bg-cs-lilac rounded-full p-0 hover:scale-105">
-                        <span class="toggle-inner block w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in ml-0.5"></span>
-                    </button>
-                    <i data-lucide="moon" class="w-4 h-4 opacity-70 text-cs-lilac"></i>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <section class="relative pt-48 pb-20 px-6 text-center overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none -z-10">
-            <div class="blob-parallax absolute top-[30%] left-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[100px] opacity-20"></div>
-            <div class="blob-parallax absolute bottom-[20%] right-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[100px] opacity-20"></div>
-        </div>
-        
-        <div class="absolute top-[30%] left-[15%] sparkle-slow text-cs-blue z-0"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
-        <div class="absolute bottom-[20%] right-[15%] sparkle-slow text-cs-pink z-0"><i data-lucide="sparkle" class="w-14 h-14"></i></div>
-
-        <div class="max-w-4xl mx-auto relative z-10">
-            <div class="floating inline-block px-4 py-1.5 bg-cs-pink/20 text-[#D87D85] dark:bg-cs-pink/10 dark:text-cs-pink rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-[#D87D85]/20 dark:border-cs-pink/20 backdrop-blur-sm">
-                Our Manifesto
-            </div>
-            <h1 class="text-5xl md:text-8xl font-bold mb-8 leading-tight floating-delayed">
-                Meaningful Art, <br class="md:hidden"/> <span class="gradient-text">Boundless Creation.</span>
-            </h1>
-            <p class="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed font-medium reveal">
-                At CuteSense Studios, we believe that emotional storytelling and premium creative tools belong to everyone. We are breaking down barriers to make art open, inclusive, and deeply human.
-            </p>
-        </div>
-    </section>
-
-    <section class="py-20 px-6">
-        <div class="max-w-6xl mx-auto grid gap-12">
-            
-            <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-pink dark:border-cs-pink/30 shadow-lg flex flex-col md:flex-row gap-10 items-center">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="icon-container w-32 h-32 bg-cs-pink/20 dark:bg-cs-pink/10 rounded-full flex items-center justify-center text-[#D87D85] dark:text-cs-pink">
-                        <i data-lucide="gem" class="w-16 h-16"></i>
+                <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-pink dark:border-cs-pink/30 shadow-lg flex flex-col md:flex-row gap-10 items-center">
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="icon-container w-32 h-32 bg-cs-pink/20 dark:bg-cs-pink/10 rounded-full flex items-center justify-center text-[#D87D85] dark:text-cs-pink">
+                            <i data-lucide="gem" class="w-16 h-16"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4">Emotional High-Quality</h2>
+                        <p class="text-lg opacity-80 leading-relaxed font-medium">
+                            We don't settle for "good enough." Every project under the CuteSense banner aims for a premium feel—from smooth UI animations to deeply resonant narratives. We believe independent art deserves the exact same polish as major studios, delivered with the authentic heart only an indie team can provide.
+                        </p>
                     </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-3xl font-bold mb-4">Emotional High-Quality</h2>
-                    <p class="text-lg opacity-80 leading-relaxed font-medium">
-                        We don't settle for "good enough." Every project under the CuteSense banner aims for a premium feel—from smooth UI animations to deeply resonant narratives. We believe independent art deserves the exact same polish as major studios, delivered with the authentic heart only an indie team can provide.
-                    </p>
-                </div>
-            </div>
 
-            <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-blue dark:border-cs-blue/30 shadow-lg flex flex-col md:flex-row-reverse gap-10 items-center">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="icon-container w-32 h-32 bg-cs-blue/20 dark:bg-cs-blue/10 rounded-full flex items-center justify-center text-[#599AB5] dark:text-cs-blue">
-                        <i data-lucide="package" class="w-16 h-16"></i>
+                <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-blue dark:border-cs-blue/30 shadow-lg flex flex-col md:flex-row-reverse gap-10 items-center">
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="icon-container w-32 h-32 bg-cs-blue/20 dark:bg-cs-blue/10 rounded-full flex items-center justify-center text-[#599AB5] dark:text-cs-blue">
+                            <i data-lucide="package" class="w-16 h-16"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4">Radical Open Source</h2>
+                        <p class="text-lg opacity-80 leading-relaxed font-medium">
+                            The digital canvas belongs to everyone. We ensure our creative frameworks remain a shared garden—grounded in practical utility, yet expanding boundlessly as the community nurtures it. We provide the architecture so the next generation of developers can freely study, improve, and bloom.
+                        </p>
                     </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-3xl font-bold mb-4">Radical Open Source</h2>
-                    <p class="text-lg opacity-80 leading-relaxed font-medium">
-                        The digital canvas belongs to everyone. We ensure our creative frameworks remain a shared garden—grounded in practical utility, yet expanding boundlessly as the community nurtures it. We provide the architecture so the next generation of developers can freely study, improve, and bloom.
-                    </p>
-                </div>
-            </div>
 
-            <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-lilac dark:border-cs-lilac/30 shadow-lg flex flex-col md:flex-row gap-10 items-center">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="icon-container w-32 h-32 bg-cs-lilac/20 dark:bg-cs-lilac/10 rounded-full flex items-center justify-center text-cs-lilac dark:text-[#E2CBEB]">
-                        <i data-lucide="users" class="w-16 h-16"></i>
+                <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-lilac dark:border-cs-lilac/30 shadow-lg flex flex-col md:flex-row gap-10 items-center">
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="icon-container w-32 h-32 bg-cs-lilac/20 dark:bg-cs-lilac/10 rounded-full flex items-center justify-center text-cs-lilac dark:text-[#E2CBEB]">
+                            <i data-lucide="users" class="w-16 h-16"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4">Diversity & Upliftment</h2>
+                        <p class="text-lg opacity-80 leading-relaxed font-medium">
+                            We believe the most vibrant worlds are built from a tapestry of perspectives. By actively supporting and uplifting marginalized voices in the tech and gamedev fields, we aren't just leveling the playing field—we are enriching the very fabric of our medium and ensuring our digital future looks like all of us.
+                        </p>
                     </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-3xl font-bold mb-4">Diversity & Upliftment</h2>
-                    <p class="text-lg opacity-80 leading-relaxed font-medium">
-                        We believe the most vibrant worlds are built from a tapestry of perspectives. By actively supporting and uplifting marginalized voices in the tech and gamedev fields, we aren't just leveling the playing field—we are enriching the very fabric of our medium and ensuring our digital future looks like all of us.
-                    </p>
-                </div>
-            </div>
 
-            <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-pink dark:border-cs-pink/30 shadow-lg flex flex-col md:flex-row-reverse gap-10 items-center">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="icon-container w-32 h-32 bg-cs-pink/20 dark:bg-cs-pink/10 rounded-full flex items-center justify-center text-[#D87D85] dark:text-cs-pink">
-                        <i data-lucide="cpu" class="w-16 h-16"></i>
+                <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-pink dark:border-cs-pink/30 shadow-lg flex flex-col md:flex-row-reverse gap-10 items-center">
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="icon-container w-32 h-32 bg-cs-pink/20 dark:bg-cs-pink/10 rounded-full flex items-center justify-center text-[#D87D85] dark:text-cs-pink">
+                            <i data-lucide="cpu" class="w-16 h-16"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4">Transparent AI Partnership</h2>
+                        <p class="text-lg opacity-80 leading-relaxed font-medium">
+                            We embrace the future with radical honesty. AI is our collaborator, not our replacement. We utilize these tools to bridge the gap between abstract imagination and tangible execution, focusing fiercely on high-quality human-AI partnerships that prioritize human creative intent above all else.
+                        </p>
                     </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-3xl font-bold mb-4">Transparent AI Partnership</h2>
-                    <p class="text-lg opacity-80 leading-relaxed font-medium">
-                        We embrace the future with radical honesty. AI is our collaborator, not our replacement. We utilize these tools to bridge the gap between abstract imagination and tangible execution, focusing fiercely on high-quality human-AI partnerships that prioritize human creative intent above all else.
-                    </p>
-                </div>
-            </div>
 
-            <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-blue dark:border-cs-blue/30 shadow-lg flex flex-col md:flex-row gap-10 items-center">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="icon-container w-32 h-32 bg-cs-blue/20 dark:bg-cs-blue/10 rounded-full flex items-center justify-center text-[#599AB5] dark:text-cs-blue">
-                        <i data-lucide="megaphone" class="w-16 h-16"></i>
+                <div class="reveal mission-card bg-white dark:bg-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-blue dark:border-cs-blue/30 shadow-lg flex flex-col md:flex-row gap-10 items-center">
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="icon-container w-32 h-32 bg-cs-blue/20 dark:bg-cs-blue/10 rounded-full flex items-center justify-center text-[#599AB5] dark:text-cs-blue">
+                            <i data-lucide="megaphone" class="w-16 h-16"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4">Global Advocacy</h2>
+                        <p class="text-lg opacity-80 leading-relaxed font-medium">
+                            A global stage requires a global choir. We stand as a megaphone for creative, unseen talent across the world. Through open platforms and a deeply rooted community focus, we fiercely advocate for the diverse storytellers and new industry voices who dare to dream differently.
+                        </p>
                     </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-3xl font-bold mb-4">Global Advocacy</h2>
-                    <p class="text-lg opacity-80 leading-relaxed font-medium">
-                        A global stage requires a global choir. We stand as a megaphone for creative, unseen talent across the world. Through open platforms and a deeply rooted community focus, we fiercely advocate for the diverse storytellers and new industry voices who dare to dream differently.
-                    </p>
-                </div>
-            </div>
 
-            <div class="reveal mission-card bg-gradient-to-br from-cs-lilac/5 to-white dark:from-slate-800/60 dark:to-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-lilac dark:border-cs-lilac/30 shadow-lg flex flex-col md:flex-row-reverse gap-10 items-center">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="icon-container w-32 h-32 bg-cs-lilac/20 dark:bg-cs-lilac/10 rounded-full flex items-center justify-center text-cs-lilac dark:text-[#E2CBEB]">
-                        <i data-lucide="heart" class="w-16 h-16"></i>
+                <div class="reveal mission-card bg-gradient-to-br from-cs-lilac/5 to-white dark:from-slate-800/60 dark:to-slate-800/60 p-8 md:p-12 rounded-[3rem] border-2 border-cs-lilac dark:border-cs-lilac/30 shadow-lg flex flex-col md:flex-row-reverse gap-10 items-center">
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="icon-container w-32 h-32 bg-cs-lilac/20 dark:bg-cs-lilac/10 rounded-full flex items-center justify-center text-cs-lilac dark:text-[#E2CBEB]">
+                            <i data-lucide="heart" class="w-16 h-16"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-4 italic cute-font text-cs-lilac">Cuteness That Makes Sense!~</h2>
+                        <p class="text-lg opacity-80 leading-relaxed font-medium">
+                            It’s more than an aesthetic; it’s our core design philosophy. Crafting experiences that are welcoming, intuitive, and emotionally resonant. It is the perfect marriage of rigorous technical architecture and a warm, inviting soul. We build spaces where technology feels like a friend.
+                        </p>
                     </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-3xl font-bold mb-4 italic cute-font text-cs-lilac">Cuteness That Makes Sense!~</h2>
-                    <p class="text-lg opacity-80 leading-relaxed font-medium">
-                        It’s more than an aesthetic; it’s our core design philosophy. Crafting experiences that are welcoming, intuitive, and emotionally resonant. It is the perfect marriage of rigorous technical architecture and a warm, inviting soul. We build spaces where technology feels like a friend.
-                    </p>
-                </div>
-            </div>
 
-        </div>
-    </section>
-
-    <footer class="py-20 border-t-4 border-dotted border-cs-lilac/20 px-6 text-center mt-10">
-        <div class="max-w-4xl mx-auto reveal">
-            <img src="../assets/icons/companylogo.webp" alt="Logo" class="h-16 w-auto mx-auto mb-6 opacity-60 hover:opacity-100 transition-opacity duration-300">
-            <h3 class="text-2xl font-bold gradient-text cute-font mb-2">CuteSense Studios</h3>
-            <p class="text-sm font-bold text-cs-lilac uppercase tracking-[0.2em] mb-10">Art with Heart</p>
-            
-            <div class="flex flex-col items-center gap-6">
-                <div class="flex items-center gap-3 px-6 py-3 bg-cs-lilac/5 rounded-2xl border border-cs-lilac/20 dark:border-cs-lilac/10 hover:bg-cs-lilac/10 transition-colors cursor-default">
-                    <i data-lucide="scale" class="w-5 h-5 text-cs-lilac"></i>
-                    <span class="text-xs font-bold uppercase tracking-widest text-cs-lilac">Licensed under GNU AGPL v3</span>
-                </div>
-                <div class="text-[10px] font-bold text-cs-lilac/50 uppercase tracking-tighter">
-                    Built with Gemini • 2026 • © CuteSense Studios
-                </div>
             </div>
-        </div>
-    </footer>
+        </section>
+    </main>
+
+    <cs-footer></cs-footer>
+    <script src="../assets/js/footer.js"></script>
 
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+        });
 
-        // UPGRADED: Interactive Blob Parallax
+        // Interactive Blob Parallax
         document.addEventListener('mousemove', (e) => {
             const blobs = document.querySelectorAll('.blob-parallax');
+            if (blobs.length === 0) return;
             const x = (e.clientX / window.innerWidth) - 0.5;
             const y = (e.clientY / window.innerHeight) - 0.5;
             blobs.forEach((blob, i) => {
