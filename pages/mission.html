@@ -25,19 +25,26 @@
 
         /* UPGRADED: Holographic Shine Effect */
         .gradient-text {
-            background: linear-gradient(
-                90deg, 
-                #F08DA1 0%, 
-                #7CB9D4 25%, 
-                #F08DA1 50%, 
-                #7CB9D4 75%, 
-                #F08DA1 100%
-            );
-            background-size: 200% auto;
-            animation: shine 5s linear infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        background: linear-gradient(
+        90deg, 
+        #F08DA1 0%, 
+        #7CB9D4 25%, 
+        #F08DA1 50%, 
+        #7CB9D4 75%, 
+        #F08DA1 100%
+    );
+    background-size: 200% auto;
+    animation: shine 5s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* The "Ink" Outline Fix */
+    filter: drop-shadow(0 0 1px #1e293b) drop-shadow(0 0 1px #1e293b);
+    
+    /* Adds a slight "lift" so it doesn't look flat */
+    text-shadow: 2px 2px 4px rgba(30, 41, 59, 0.2);
+}
+
 
         @keyframes shine { to { background-position: 200% center; } }
 
@@ -95,9 +102,9 @@
             <div class="blob-parallax absolute top-[30%] left-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[100px] opacity-20"></div>
             <div class="blob-parallax absolute bottom-[20%] right-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[100px] opacity-20"></div>
         </div>
-
-        <div class="absolute top-[30%] left-[15%] sparkle-slow text-cs-pink z-0"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
-        <div class="absolute bottom-[20%] right-[15%] sparkle-slow text-cs-blue z-0"><i data-lucide="sparkle" class="w-14 h-14"></i></div>
+        
+        <div class="absolute top-[30%] left-[15%] sparkle-slow text-cs-blue z-0"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
+        <div class="absolute bottom-[20%] right-[15%] sparkle-slow text-cs-pink z-0"><i data-lucide="sparkle" class="w-14 h-14"></i></div>
 
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="floating inline-block px-4 py-1.5 bg-cs-pink/20 text-[#D87D85] dark:bg-cs-pink/10 dark:text-cs-pink rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-[#D87D85]/20 dark:border-cs-pink/20 backdrop-blur-sm">
