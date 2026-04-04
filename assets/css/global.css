@@ -1,0 +1,98 @@
+/* =========================================
+   Typography & Fonts
+========================================= */
+@font-face { font-family: 'Fredoka'; src: url('../fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Fredoka'; src: url('../fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Quicksand'; src: url('../fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Noto Sans'; src: url('../fonts/noto-sans-v42-latin/noto-sans-v42-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Borel'; src: url('../fonts/borel-v10-latin/borel-v10-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+
+body { 
+    font-family: 'Quicksand', 'Noto Sans', sans-serif; 
+    transition: background-color 0.4s ease, color 0.4s ease; 
+}
+
+h1, h2, h3, .cute-font { 
+    font-family: 'Fredoka', 'Noto Sans', sans-serif; 
+    letter-spacing: -0.01em; 
+}
+
+.borel-font { 
+    font-family: 'Borel', cursive; 
+}
+
+::selection {
+    background-color: rgba(240, 141, 161, 0.3); 
+    color: #D87D85;
+}
+
+/* =========================================
+   Holographic Gradient Effects
+========================================= */
+.gradient-text {
+    background: linear-gradient(90deg, #F08DA1 0%, #7CB9D4 25%, #F08DA1 50%, #7CB9D4 75%, #F08DA1 100%);
+    background-size: 200% auto;
+    animation: shine 8s linear infinite; 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 1px rgba(30, 41, 59, 0.15));
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3), 0 0 0px rgba(30, 41, 59, 0.05);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+@keyframes shine { 
+    to { background-position: 200% center; } 
+}
+
+/* =========================================
+   Animations & Keyframes
+========================================= */
+.floating { animation: floating 4s ease-in-out infinite; transition: transform 0.2s ease-out; }
+.floating-delayed { animation: floating 5s ease-in-out infinite 1s; transition: transform 0.2s ease-out; }
+
+@keyframes floating { 
+    0%, 100% { transform: translateY(0px); } 
+    50% { transform: translateY(-12px); } 
+}
+
+.sparkle-slow { animation: sparkle-pulse 4s infinite ease-in-out; pointer-events: none; }
+
+@keyframes sparkle-pulse { 
+    0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); } 
+    50% { opacity: 0.8; transform: scale(1.1) rotate(15deg); } 
+}
+
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* =========================================
+   Components & Layout Elements
+========================================= */
+.motto-wrapper { min-height: 180px; display: flex; align-items: center; justify-content: center; }
+#motto-container { transition: all 0.5s ease-in-out; }
+
+#mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
+#mobile-menu.active { transform: translateX(0); }
+
+/* Glass/Mission Cards Interactive Hover */
+.glass-card, .mission-card { 
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; 
+}
+
+.glass-card:hover, .mission-card:hover {
+    transform: translateY(-8px) scale(1.02) rotate(0.5deg);
+    box-shadow: 0 25px 50px -12px rgba(124, 185, 212, 0.3);
+}
+
+.mission-card:hover .icon-container { transform: scale(1.1) rotate(5deg); }
+.icon-container { transition: transform 0.3s ease; }
+
+/* Dark Mode Toggle Micro-Interaction */
+.dark .toggle-inner { transform: translateX(1.5rem); }
+
+.pixel-crisp {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}

@@ -11,8 +11,8 @@ class CuteSenseFooter extends HTMLElement {
                     <div class="flex items-center gap-4 text-center md:text-left">
                         <img src="${path}assets/icons/companylogo.webp" alt="CuteSense Studios Logo" class="h-10 w-auto">
                         <div>
-                            <span class="text-2xl font-bold gradient-text borel-font block leading-none pb-1">CuteSense Studios</span>
-                            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-cs-lilac opacity-80 mt-1">Art with Heart • © 2026 • Built with Gemini</p>
+                            <span class="text-2xl gradient-text borel-font block leading-none pb-1">CuteSense Studios</span>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-cs-lilac opacity-80 mt-1">Art with Heart • © 2026 • Built with Gemini</p>
                         </div>
                     </div>
                     <div class="flex gap-6">
