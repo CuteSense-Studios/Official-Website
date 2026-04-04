@@ -1,5 +1,0 @@
-# Ignore the Tailwind standalone CLI
-tailwindcss.exe
-
-# Also ignore the Mac/Linux version just in case you ever collaborate with someone on another OS
-tailwindcss
