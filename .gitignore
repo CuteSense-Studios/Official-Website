@@ -2,4 +2,8 @@
 tailwindcss.exe
 
 # Also ignore the Mac/Linux version just in case you ever collaborate with someone on another OS
+<<<<<<< HEAD
 tailwindcss
+=======
+tailwindcss
+>>>>>>> 73a6db5199eb10075da45f9b42b3fe9efc64aaa4
