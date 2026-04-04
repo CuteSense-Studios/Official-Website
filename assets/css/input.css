@@ -1,23 +1,13 @@
-
 @import "tailwindcss";
 
-/* 1. Tell Tailwind to use your manual toggle for Dark Mode */
+/* 1. Explicitly tell Tailwind where to look for your JS files */
+/* Adjust this path if your navbar.js is in a specific folder (e.g., "./js" or "./components") */
+@source "../"; 
+
+/* 2. Tell Tailwind to use your manual toggle for Dark Mode */
 @variant dark (&:is(.dark *));
 
-/* 2. Define your brand colors (This replaces the config file!) */
-@theme {
-  --color-cs-pink: #F4C6C9;
-  --color-cs-blue: #B9E1F1;
-  --color-cs-lilac: #A178AF;
-  --color-cs-cream: #FFF9F4;
-  --color-cs-dark: #1A161D;
-=======
-@import "tailwindcss";
-
-/* 1. Tell Tailwind to use your manual toggle for Dark Mode */
-@variant dark (&:is(.dark *));
-
-/* 2. Define your brand colors (This replaces the config file!) */
+/* 3. Define your brand colors */
 @theme {
   --color-cs-pink: #F4C6C9;
   --color-cs-blue: #B9E1F1;
