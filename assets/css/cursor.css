@@ -1,75 +1,71 @@
 /* ==========================================================================
-   CuteSense Custom Cursor Module
+   CuteSense Custom Cursor Module (V2.0)
    Location: /assets/css/cursor.css
+   Improvements: Added Forbidden, Help, and Active states + SVG optimization.
    ========================================================================== */
 
-:root {
-    /* Default Cursor: A chunky Lilac arrow with a crisp white border */
-    --cs-cursor-default: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3L18.5 13L12.5 14L9.5 20L5.5 3Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"), auto;
+   :root {
+    /* Default: Chunky Lilac Arrow (Optimized with rounded corners) */
+    --cs-cursor-default: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3.21V19.09C5.5 20.01 6.64 20.44 7.24 19.74L11.14 15.19C11.33 14.97 11.61 14.85 11.9 14.85H17.58C18.55 14.85 19 13.65 18.28 13L6.44 3.14C6.18 2.92 5.5 3.01 5.5 3.21Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"), auto;
     
-    /* Pointer Cursor: A cute Pink sparkle with a Lilac border for links */
+    /* Pointer: Pink Sparkle (Centered hotspot) */
     --cs-cursor-pointer: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, pointer;
+
+    /* Forbidden: Soft Red "X" for disabled states */
+    --cs-cursor-not-allowed: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='9' fill='%23E57373' stroke='white' stroke-width='2'/%3E%3Cpath d='M15 9L9 15M9 9L15 15' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 12 12, not-allowed;
+
+    /* Help: Lilac Arrow with a Pink Question Mark */
+    --cs-cursor-help: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3L18.5 13L12.5 14L9.5 20L5.5 3Z' fill='%23A178AF' stroke='white' stroke-width='2'/%3E%3Ccircle cx='18' cy='18' r='5' fill='%23F4C6C9'/%3E%3Cpath d='M18 16V18M18 20H18.01' stroke='%23A178AF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"), help;
 }
 
-/* Apply default cursor to the whole document */
-body, html {
+/* 1. Global Reset */
+html, body {
     cursor: var(--cs-cursor-default);
+    min-height: 100vh;
 }
 
-/* Apply pointer cursor to all interactive elements */
+/* 2. Interactive Elements */
 a, 
 button, 
 input[type="submit"], 
+input[type="button"],
+input[type="reset"],
 select, 
+summary,
 [role="button"], 
-.cursor-pointer,
-.toggle-inner {
+.cursor-pointer {
     cursor: var(--cs-cursor-pointer);
 }
 
-/* Ensure text selection still uses the standard text cursor so it doesn't get confusing */
-p, h1, h2, h3, h4, h5, h6, span, input[type="text"] {
+/* 3. Text Inputs & Content (Maintain usability) */
+p, h1, h2, h3, h4, h5, h6, span, label,
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+textarea {
     cursor: text;
 }
 
-/* But if a span or heading is inside a link, it should still be a sparkle */
-a p, a h1, a h2, a h3, a h4, a h5, a h6, a span {
-    cursor: var(--cs-cursor-pointer);
-=======
-/* ==========================================================================
-   CuteSense Custom Cursor Module
-   Location: /assets/css/cursor.css
-   ========================================================================== */
-
-:root {
-    /* Default Cursor: A chunky Lilac arrow with a crisp white border */
-    --cs-cursor-default: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3L18.5 13L12.5 14L9.5 20L5.5 3Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"), auto;
-    
-    /* Pointer Cursor: A cute Pink sparkle with a Lilac border for links */
-    --cs-cursor-pointer: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, pointer;
-}
-
-/* Apply default cursor to the whole document */
-body, html {
-    cursor: var(--cs-cursor-default);
-}
-
-/* Apply pointer cursor to all interactive elements */
-a, 
-button, 
-input[type="submit"], 
-select, 
-[role="button"], 
-.cursor-pointer,
-.toggle-inner {
+/* 4. Nested Logic: Links override text cursors */
+a p, a h1, a h2, a h3, a h4, a h5, a h6, a span, a label {
     cursor: var(--cs-cursor-pointer);
 }
 
-/* Ensure text selection still uses the standard text cursor so it doesn't get confusing */
-p, h1, h2, h3, h4, h5, h6, span, input[type="text"] {
-    cursor: text;
+/* 5. Specialized States */
+:disabled, 
+[disabled], 
+.is-disabled {
+    cursor: var(--cs-cursor-not-allowed) !important;
 }
 
-/* But if a span or heading is inside a link, it should still be a sparkle */
-a p, a h1, a h2, a h3, a h4, a h5, a h6, a span {
-    cursor: var(--cs-cursor-pointer);
+[data-tooltip], 
+.help-icon {
+    cursor: var(--cs-cursor-help);
+}
+
+/* 6. Active State: Shrink slightly when clicking for feedback */
+a:active, button:active {
+    /* Note: We can't scale SVG cursors via CSS transforms, 
+       but we can swap to a slightly different variation if needed. */
+    filter: brightness(0.9);
+}
