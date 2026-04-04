@@ -24,8 +24,11 @@
         h1, h2, h3, .cute-font { font-family: 'Fredoka', 'Noto Sans', sans-serif; }
 
         /* UPGRADED: Holographic Shine Effect */
+        /* Refined Holographic Shine with Subtle Outline */
+        /* REFINED: Holographic Shine with Invisible Ink Fix */
+       /* FINAL POLISH: Holographic Shine & Performance Anti-Aliasing */
         .gradient-text {
-        background: linear-gradient(
+    background: linear-gradient(
         90deg, 
         #F08DA1 0%, 
         #7CB9D4 25%, 
@@ -34,18 +37,39 @@
         #F08DA1 100%
     );
     background-size: 200% auto;
-    animation: shine 5s linear infinite;
+    animation: shine 8s linear infinite; /* Slowed down for a more "premium" feel */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
-    /* The "Ink" Outline Fix */
-    filter: drop-shadow(0 0 1px #1e293b) drop-shadow(0 0 1px #1e293b);
+    /* THE INK FIX: Reduced to 15% opacity to be virtually invisible */
+    /* It still prevents jagged edges without adding a perceivable "border" */
+    filter: drop-shadow(0 0 1px rgba(30, 41, 59, 0.15));
     
-    /* Adds a slight "lift" so it doesn't look flat */
-    text-shadow: 2px 2px 4px rgba(30, 41, 59, 0.2);
+    /* DEPTH: Added a multi-layered soft shadow for better legibility on cream/white */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3), 
+                 0 0 0px rgba(30, 41, 59, 0.05);
+
+    /* PERFORMANCE: Hardware acceleration to prevent flickering during animation */
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
+/* TYPOGRAPHY REFINEMENT: Improved breathing room for Fredoka headers */
+h1, h2, h3, .cute-font {
+    font-family: 'Fredoka', 'Noto Sans', sans-serif;
+    letter-spacing: -0.01em; /* Tightens up the rounded font for a modern look */
+}
 
+/* SELECTION REFINEMENT: Matches the brand's lilac/pink palette */
+::selection {
+    background-color: rgba(240, 141, 161, 0.3); /* Soft pink highlight */
+    color: #D87D85;
+}
+
+@keyframes shine { 
+    to { background-position: 200% center; } 
+}
+        
         @keyframes shine { to { background-position: 200% center; } }
 
         .floating { animation: floating 4s ease-in-out infinite; }
