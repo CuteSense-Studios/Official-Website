@@ -3,9 +3,11 @@ class CuteSenseNavbar extends HTMLElement {
         super();
         this._lastScrollY = window.scrollY;
         this._isMenuOpen = false;
+        this._isDark = false;
     }
 
     connectedCallback() {
+        this._isDark = this._getInitialTheme();
         this._render();
         requestAnimationFrame(() => this._init());
     }
@@ -24,6 +26,19 @@ class CuteSenseNavbar extends HTMLElement {
         return page || 'index';
     }
 
+    _getInitialTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) return savedTheme === 'dark';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    // CRITICAL FIX: Only render the active icon, not both
+    _getThemeIcon() {
+        return this._isDark 
+            ? `<i data-lucide="moon" class="w-3 h-3 text-white"></i>`
+            : `<i data-lucide="sun" class="w-3 h-3 text-orange-500"></i>`;
+    }
+
     _render() {
         const path = this._getPath();
         const active = this._getActivePage();
@@ -34,38 +49,48 @@ class CuteSenseNavbar extends HTMLElement {
         <style>
             cs-navbar { display: block; height: 80px; z-index: 1000; position: relative; }
             
-            /* FIX: Absolute Centering for Toggle Knob */
-            .toggle-knob { 
-                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                overflow: hidden;
-            }
-            html.dark .toggle-knob { transform: translateX(1.25rem); }
-
-            /* FIX: Centering Lucide SVG Glitch */
-            .toggle-knob svg, .toggle-knob i {
-                width: 14px !important;
-                height: 14px !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                flex-shrink: 0;
+            /* FIXED TOGGLE: Clean, no-conflict styling */
+            #theme-toggle-btn {
+                width: 44px;
+                height: 24px;
+                border-radius: 9999px;
+                position: relative;
+                padding: 2px;
+                cursor: pointer;
+                border: none;
+                outline: none;
+                transition: background-color 0.3s ease;
+                background: ${this._isDark ? '#1e293b' : '#e2e8f0'};
             }
             
-            /* Active Page Highlight */
+            #theme-toggle-btn .toggle-knob {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+                background: ${this._isDark ? '#c084fc' : '#ffffff'};
+                transform: translateX(${this._isDark ? '20px' : '0px'});
+            }
+
+            /* Active Link Styling */
             .nav-link { position: relative; transition: color 0.3s; }
-            .nav-link-active { color: #a78bfa !important; }
+            .nav-link-active { color: #F08DA1 !important; }
             .nav-link-active::after {
                 content: '';
                 position: absolute;
                 bottom: -6px;
                 left: 0;
                 width: 100%;
-                height: 2px;
-                background: linear-gradient(135deg, #F08DA1 0%, #7CB9D4 100%);
-                border-radius: 2px;
+                height: 2.5px;
+                background: linear-gradient(90deg, #F08DA1, #4169E1);
+                border-radius: 99px;
             }
 
             #mobile-menu.active { display: flex !important; opacity: 1; transform: translateY(0); }
@@ -77,74 +102,86 @@ class CuteSenseNavbar extends HTMLElement {
             <div class="max-w-7xl mx-auto flex items-center justify-between md:justify-center relative bg-white/90 dark:bg-slate-900/95 backdrop-blur-md border-b-4 border-cs-lilac/20 rounded-[2rem] px-4 h-16 shadow-xl">
                 
                 <div class="flex items-center gap-4 md:absolute md:left-6 z-10">
-                    <button id="hamburger-btn" class="md:hidden p-2 text-cs-lilac" aria-label="Menu">
-                        <i data-lucide="menu"></i>
+                    <button id="hamburger-btn" class="md:hidden p-2 text-cs-lilac hover:bg-cs-lilac/10 rounded-full transition-colors" aria-label="Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                     <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                        <a href="${path}pages/mission.html" class="nav-link ${isMission ? 'nav-link-active' : 'hover:text-cs-lilac'}">Philosophy</a>
-                        <a href="${path}pages/motto.html" class="nav-link ${isMotto ? 'nav-link-active' : 'hover:text-cs-lilac'}">Motto</a>
+                        <a href="${path}pages/mission.html" class="nav-link ${isMission ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Philosophy</a>
+                        <a href="${path}pages/motto.html" class="nav-link ${isMotto ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Motto</a>
                     </div>
                 </div>
 
-                <a href="${path}index.html" class="flex items-center gap-2 hover:scale-105 transition-transform md:mx-auto">
-                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="h-7 w-auto pixel-crisp" onerror="this.style.opacity='0'">
+                <a href="${path}index.html" class="flex items-center gap-2 hover:scale-105 transition-transform duration-300 md:mx-auto group">
+                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="h-7 w-auto pixel-crisp group-hover:rotate-12 transition-transform duration-300">
                     <span class="text-xl sm:text-2xl gradient-text borel-font pt-1">CuteSense</span>
                 </a>
                 
                 <div class="flex items-center gap-3 md:absolute md:right-6 z-10">
-                    <a href="https://github.com/CuteSense-Studios" target="_blank" class="hidden sm:flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700">
-                         <i data-lucide="github" class="w-4 h-4"></i>
-                         <span class="text-[9px] font-bold uppercase">GitHub</span>
-                    </a>
-                    
-                    <button type="button" id="theme-toggle-btn" class="w-11 h-6 bg-slate-200 dark:bg-slate-800 rounded-full relative p-1 transition-colors flex items-center">
-                        <div class="toggle-knob w-4 h-4 bg-white dark:bg-cs-lilac rounded-full shadow-md">
-                            <i data-lucide="sun" class="text-orange-400 dark:hidden"></i>
-                            <i data-lucide="moon" class="text-white hidden dark:block"></i>
+                    <button type="button" id="theme-toggle-btn" aria-label="Toggle ${this._isDark ? 'light' : 'dark'} mode">
+                        <div class="toggle-knob">
+                            ${this._getThemeIcon()}
                         </div>
                     </button>
                 </div>
             </div>
         </nav>
 
-        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 hidden flex-col p-6 transition-all duration-300">
+        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 hidden flex-col p-6 transition-all duration-300 opacity-0 translate-y-[-10px]">
             <div class="flex justify-between items-center mb-10">
                 <span class="text-3xl gradient-text borel-font">CuteSense</span>
-                <button id="mobile-close-btn" class="p-2 bg-cs-lilac/10 rounded-full"><i data-lucide="x"></i></button>
+                <button id="mobile-close-btn" class="p-2 bg-cs-lilac/10 hover:bg-cs-lilac/20 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-6 h-6 text-slate-700 dark:text-slate-200"></i>
+                </button>
             </div>
             <div class="flex flex-col gap-8 text-2xl font-bold">
-                <a href="${path}pages/mission.html" class="${isMission ? 'text-cs-lilac' : ''}">Philosophy</a>
-                <a href="${path}pages/motto.html" class="${isMotto ? 'text-cs-lilac' : ''}">Motto</a>
-                <a href="https://github.com/CuteSense-Studios" class="opacity-50">GitHub</a>
+                <a href="${path}pages/mission.html" class="mobile-nav-link ${isMission ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Philosophy</a>
+                <a href="${path}pages/motto.html" class="mobile-nav-link ${isMotto ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Motto</a>
             </div>
         </div>
         `;
     }
 
     _init() {
+        if (this._isDark) {
+            document.documentElement.classList.add('dark');
+        }
         this._attachListeners();
         this._initScroll();
         this._initIcons();
     }
 
     _initIcons() {
-        if (window.lucide) lucide.createIcons();
+        if (window.lucide) {
+            lucide.createIcons();
+        }
     }
 
     _initScroll() {
         const threshold = 10;
+        let ticking = false;
+        
         window.addEventListener('scroll', () => {
-            const nav = this.querySelector('[data-navbar]');
-            const current = window.scrollY;
-            if (!nav || this._isMenuOpen) return;
-            
-            if (Math.abs(current - this._lastScrollY) > threshold) {
-                if (current > this._lastScrollY && current > 100) {
-                    nav.classList.replace('nav-visible', 'nav-hidden');
-                } else {
-                    nav.classList.replace('nav-hidden', 'nav-visible');
-                }
-                this._lastScrollY = current;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const nav = this.querySelector('[data-navbar]');
+                    const current = window.scrollY;
+                    
+                    if (!nav || this._isMenuOpen) {
+                        ticking = false;
+                        return;
+                    }
+                    
+                    if (Math.abs(current - this._lastScrollY) > threshold) {
+                        if (current > this._lastScrollY && current > 100) {
+                            nav.classList.replace('nav-visible', 'nav-hidden');
+                        } else {
+                            nav.classList.replace('nav-hidden', 'nav-visible');
+                        }
+                        this._lastScrollY = current;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         }, { passive: true });
     }
@@ -155,22 +192,77 @@ class CuteSenseNavbar extends HTMLElement {
         const closeBtn = this.querySelector('#mobile-close-btn');
 
         themeBtn?.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            this._initIcons(); 
+            this._isDark = !this._isDark;
+            
+            // Update HTML class for global styling
+            if (this._isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            localStorage.setItem('theme', this._isDark ? 'dark' : 'light');
+            
+            // CRITICAL FIX: Re-render only the icon button content instead of manipulating classes
+            this._updateToggleButton();
         });
 
         menuBtn?.addEventListener('click', () => this._toggleMenu(true));
         closeBtn?.addEventListener('click', () => this._toggleMenu(false));
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this._isMenuOpen) {
+                this._toggleMenu(false);
+            }
+        });
+    }
+
+    // CRITICAL FIX: Complete button re-render ensures no icon duplication
+    _updateToggleButton() {
+        const btn = this.querySelector('#theme-toggle-btn');
+        if (!btn) return;
+        
+        // Update button styling
+        btn.style.background = this._isDark ? '#1e293b' : '#e2e8f0';
+        btn.setAttribute('aria-label', `Toggle ${this._isDark ? 'light' : 'dark'} mode`);
+        
+        // Update knob styling
+        const knob = btn.querySelector('.toggle-knob');
+        knob.style.background = this._isDark ? '#c084fc' : '#ffffff';
+        knob.style.transform = this._isDark ? 'translateX(20px)' : 'translateX(0px)';
+        
+        // CRITICAL: Replace icon HTML completely, don't just hide/show
+        knob.innerHTML = this._getThemeIcon();
+        
+        // Re-initialize only this icon
+        if (window.lucide) {
+            lucide.createIcons({ attrs: { 'stroke-width': 2.5 } });
+        }
     }
 
     _toggleMenu(open) {
         this._isMenuOpen = open;
         const menu = this.querySelector('#mobile-menu');
-        menu.classList.toggle('active', open);
-        document.body.style.overflow = open ? 'hidden' : '';
-        if (open) this._initIcons();
+        const body = document.body;
+        
+        if (open) {
+            menu.classList.remove('hidden');
+            menu.offsetHeight; // Force reflow
+            menu.classList.add('active');
+            body.style.overflow = 'hidden';
+            this._initIcons();
+        } else {
+            menu.classList.remove('active');
+            setTimeout(() => {
+                if (!this._isMenuOpen) {
+                    menu.classList.add('hidden');
+                    body.style.overflow = '';
+                }
+            }, 300);
+        }
     }
 }
 
-if (!customElements.get('cs-navbar')) customElements.define('cs-navbar', CuteSenseNavbar);
+if (!customElements.get('cs-navbar')) {
+    customElements.define('cs-navbar', CuteSenseNavbar);
+}
