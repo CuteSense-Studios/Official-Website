@@ -6,7 +6,7 @@
     src: url('../fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2') format('woff2'); 
     font-weight: 400; 
     font-style: normal; 
-    font-display: optional; /* Better performance */
+    font-display: optional; 
 }
 @font-face { 
     font-family: 'Fredoka'; 
@@ -34,7 +34,7 @@
     src: url('../fonts/borel-v10-latin/borel-v10-latin-regular.woff2') format('woff2'); 
     font-weight: 400; 
     font-style: normal; 
-    font-display: optional;
+    font-display: swap; /* FIXED: Ensures branding font loads reliably */
 }
 
 body { 
@@ -67,7 +67,7 @@ h1, h2, h3, .cute-font {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: #F08DA1; /* Fallback for browsers that don't support background-clip */
+    color: #F08DA1; 
     filter: drop-shadow(0 0 1px rgba(30, 41, 59, 0.15));
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
     transform: translateZ(0);
@@ -75,7 +75,6 @@ h1, h2, h3, .cute-font {
     will-change: background-position;
 }
 
-/* Fixed fallback for browsers that don't support background-clip: text */
 @supports not (background-clip: text) {
     .gradient-text {
         background: none;
@@ -171,10 +170,8 @@ h1, h2, h3, .cute-font {
     will-change: transform;
 }
 
-/* Dark Mode Toggle Micro-Interaction (Preserved) */
-.dark .toggle-inner { 
-    transform: translateX(1.5rem); 
-}
+/* FIXED: Removed active toggle-inner style to resolve "ghost circle" bug in navbar */
+/* .dark .toggle-inner { transform: translateX(1.5rem); } */
 
 .pixel-crisp {
     image-rendering: pixelated;
