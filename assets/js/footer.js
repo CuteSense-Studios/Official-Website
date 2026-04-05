@@ -61,8 +61,9 @@ class CuteSenseFooter extends HTMLElement {
                 <div class="flex flex-col md:flex-row items-center justify-between gap-10 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
                     
                     <div class="flex items-center gap-4 text-left">
+                        <!-- Logo size increased from h-10 to h-12 for better visibility -->
                         <img src="${path}assets/icons/companylogo.webp" alt="Logo" 
-                             class="h-10 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
+                             class="h-12 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
                              loading="lazy"
                              decoding="async"
                              data-footer-logo
@@ -79,6 +80,7 @@ class CuteSenseFooter extends HTMLElement {
                     </div>
 
                     <div class="flex gap-8 items-center" data-social-links>
+                        <!-- Original GitHub icon -->
                         <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
                            class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
                            aria-label="Visit our GitHub">
@@ -88,6 +90,12 @@ class CuteSenseFooter extends HTMLElement {
                            class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
                            aria-label="Send us an email">
                             <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                        <!-- NEW second GitHub icon -->
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
+                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                           aria-label="Visit our GitHub (additional link)">
+                            <i data-lucide="github" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
@@ -200,15 +208,17 @@ class CuteSenseFooter extends HTMLElement {
 
     _initLinkPrefetch() {
         // Smart prefetch: preload GitHub on hover to make it feel instant
-        const githubLink = this.querySelector('a[href*="github.com"]');
-        if (githubLink && 'IntersectionObserver' in window) {
-            githubLink.addEventListener('mouseenter', () => {
-                const prefetch = document.createElement('link');
-                prefetch.rel = 'prefetch';
-                prefetch.href = 'https://github.com/CuteSense-Studios';
-                document.head.appendChild(prefetch);
-            }, { once: true });
-        }
+        const githubLinks = this.querySelectorAll('a[href*="github.com"]');
+        githubLinks.forEach(link => {
+            if (link && 'IntersectionObserver' in window) {
+                link.addEventListener('mouseenter', () => {
+                    const prefetch = document.createElement('link');
+                    prefetch.rel = 'prefetch';
+                    prefetch.href = 'https://github.com/CuteSense-Studios';
+                    document.head.appendChild(prefetch);
+                }, { once: true });
+            }
+        });
     }
 
     // Public API for manual refresh (if dynamic content changes)

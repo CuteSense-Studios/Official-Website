@@ -1,278 +1,252 @@
-class CuteSenseNavbar extends HTMLElement {
+class CuteSenseFooter extends HTMLElement {
     constructor() {
         super();
-        this._lastScrollY = window.scrollY;
-        this._isMenuOpen = false;
-        this._isDark = false;
+        this._observer = null;
+        this._resizeObserver = null;
+        this._isVisible = false;
     }
 
     connectedCallback() {
-        this._isDark = this._getInitialTheme();
         this._render();
-        requestAnimationFrame(() => this._init());
+        this._initializeSmartFeatures();
+    }
+
+    disconnectedCallback() {
+        // Cleanup observers to prevent memory leaks
+        if (this._observer) {
+            this._observer.disconnect();
+            this._observer = null;
+        }
+        if (this._resizeObserver) {
+            this._resizeObserver.disconnect();
+            this._resizeObserver = null;
+        }
     }
 
     _getPath() {
+        // More robust path detection with fallback
         try {
             const path = window.location.pathname;
             const depth = (path.match(/\//g) || []).length - 1;
-            return (path.includes('/pages/') || path.includes('/docs/') || depth > 1) ? '../' : './';
-        } catch (e) { return './'; }
+            
+            // Check if we're in a subdirectory
+            if (path.includes('/pages/') || path.includes('/docs/') || depth > 1) {
+                return '../';
+            }
+            return './';
+        } catch (e) {
+            console.warn('CuteSenseFooter: Path detection failed, using default', e);
+            return './';
+        }
     }
 
-    _getActivePage() {
-        const path = window.location.pathname;
-        const page = path.split('/').pop().replace('.html', '');
-        return page || 'index';
-    }
-
-    _getInitialTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) return savedTheme === 'dark';
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-
-    _getThemeIcon() {
-        return this._isDark 
-            ? `<i data-lucide="moon" class="w-3 h-3 text-white"></i>`
-            : `<i data-lucide="sun" class="w-3 h-3 text-orange-500"></i>`;
+    _getCurrentYear() {
+        // Auto-updating year so you never have to manually update 2026 again
+        try {
+            return new Date().getFullYear();
+        } catch (e) {
+            return '2026'; // Fallback
+        }
     }
 
     _render() {
         const path = this._getPath();
-        const active = this._getActivePage();
-        const isMission = active === 'mission';
-        const isMotto = active === 'motto';
-
+        const year = this.getAttribute('static-year') || this._getCurrentYear();
+        
+        // Preserve exact original structure and classes
         this.innerHTML = `
-        <style>
-            cs-navbar { display: block; height: 80px; z-index: 1000; position: relative; }
-            
-            /* Theme toggle styling (unchanged) */
-            #theme-toggle-btn {
-                width: 44px;
-                height: 24px;
-                border-radius: 9999px;
-                position: relative;
-                padding: 2px;
-                cursor: pointer;
-                border: none;
-                outline: none;
-                transition: background-color 0.3s ease;
-                background: ${this._isDark ? '#1e293b' : '#e2e8f0'};
-            }
-            
-            #theme-toggle-btn .toggle-knob {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
-                background: ${this._isDark ? '#c084fc' : '#ffffff'};
-                transform: translateX(${this._isDark ? '20px' : '0px'});
-            }
-
-            /* Active link styling */
-            .nav-link { position: relative; transition: color 0.3s; }
-            .nav-link-active { color: #F08DA1 !important; }
-            .nav-link-active::after {
-                content: '';
-                position: absolute;
-                bottom: -6px;
-                left: 0;
-                width: 100%;
-                height: 2.5px;
-                background: linear-gradient(90deg, #F08DA1, #4169E1);
-                border-radius: 99px;
-            }
-
-            #mobile-menu.active { display: flex !important; opacity: 1; transform: translateY(0); }
-            .nav-hidden { transform: translateY(-110%); }
-            .nav-visible { transform: translateY(0); }
-
-            /* ========== FIX: Prevent text clipping on small screens ========== */
-            /* On tablet screens (768px – 1024px) ensure the brand doesn't overlap absolute side elements */
-            @media (min-width: 768px) and (max-width: 1024px) {
-                .brand-container {
-                    max-width: calc(100% - 200px);
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-            }
-            /* On extra small screens (< 480px) reduce brand text size and gap */
-            @media (max-width: 480px) {
-                .brand-container span {
-                    font-size: 1rem !important; /* text-base */
-                }
-                .brand-container {
-                    gap: 0.25rem !important; /* gap-1 */
-                }
-            }
-        </style>
-
-        <nav class="fixed top-0 left-0 w-full z-[1000] px-2 sm:px-4 pt-4 transition-transform duration-500 ease-out nav-visible" data-navbar>
-            <div class="max-w-7xl mx-auto flex items-center justify-between md:justify-center relative bg-white/90 dark:bg-slate-900/95 backdrop-blur-md border-b-4 border-cs-lilac/20 rounded-[2rem] px-4 h-16 shadow-xl">
+        <footer class="py-10 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-500 opacity-0" data-footer-root>
+            <div class="max-w-6xl mx-auto" data-footer-content>
                 
-                <div class="flex items-center gap-4 md:absolute md:left-6 z-10">
-                    <button id="hamburger-btn" class="md:hidden p-2 text-cs-lilac hover:bg-cs-lilac/10 rounded-full transition-colors" aria-label="Menu">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                    <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                        <a href="${path}pages/mission.html" class="nav-link ${isMission ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Philosophy</a>
-                        <a href="${path}pages/motto.html" class="nav-link ${isMotto ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Motto</a>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-10 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
+                    
+                    <div class="flex items-center gap-4 text-left">
+                        <!-- Logo size increased from h-10 to h-12 for better visibility -->
+                        <img src="${path}assets/icons/companylogo.webp" alt="Logo" 
+                             class="h-12 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
+                             loading="lazy"
+                             decoding="async"
+                             data-footer-logo
+                             onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0';">
+                        
+                        <div class="flex flex-col">
+                            <span class="text-xl sm:text-2xl gradient-text borel-font leading-tight py-1">
+                                CuteSense Studios
+                            </span>
+                            <p class="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-cs-lilac/80">
+                                Art with Heart • © ${year} • Built with Gemini
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-8 items-center" data-social-links>
+                        <!-- Original GitHub icon -->
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
+                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                           aria-label="Visit our GitHub">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="mailto:contact@cutesense.studios" 
+                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                           aria-label="Send us an email">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                        <!-- NEW second GitHub icon -->
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
+                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                           aria-label="Visit our GitHub (additional link)">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <!-- Added third GitHub icon for extra visibility and style -->
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
+                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                           aria-label="Visit our GitHub (third link)">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Added class "brand-container" for responsive fixes -->
-                <a href="${path}index.html" class="brand-container flex items-center gap-2 hover:scale-105 transition-transform duration-300 md:mx-auto group">
-                    <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="h-7 w-auto pixel-crisp group-hover:rotate-12 transition-transform duration-300">
-                    <span class="text-xl sm:text-2xl gradient-text borel-font pt-1">CuteSense</span>
-                </a>
-                
-                <div class="flex items-center gap-3 md:absolute md:right-6 z-10">
-                    <button type="button" id="theme-toggle-btn" aria-label="Toggle ${this._isDark ? 'light' : 'dark'} mode">
-                        <div class="toggle-knob">
-                            ${this._getThemeIcon()}
-                        </div>
-                    </button>
+                <div class="flex justify-center my-8 opacity-0 transition-opacity duration-1000 delay-300" data-animate-divider>
+                    <div class="w-12 h-[1px] bg-cs-lilac/20 rounded-full"></div>
+                </div>
+
+                <div class="flex justify-center items-center gap-2 opacity-30 hover:opacity-70 transition-opacity cursor-default focus-within:opacity-70"
+                     tabindex="0" role="contentinfo" aria-label="License information">
+                    <i data-lucide="scale" class="w-3 h-3 text-cs-lilac"></i>
+                    <span class="text-[8px] uppercase tracking-[0.5em] font-bold text-cs-lilac">
+                        GNU AGPL v3
+                    </span>
                 </div>
             </div>
-        </nav>
-
-        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 hidden flex-col p-6 transition-all duration-300 opacity-0 translate-y-[-10px]">
-            <div class="flex justify-between items-center mb-10">
-                <span class="text-3xl gradient-text borel-font">CuteSense</span>
-                <button id="mobile-close-btn" class="p-2 bg-cs-lilac/10 hover:bg-cs-lilac/20 rounded-full transition-colors">
-                    <i data-lucide="x" class="w-6 h-6 text-slate-700 dark:text-slate-200"></i>
-                </button>
-            </div>
-            <div class="flex flex-col gap-8 text-2xl font-bold">
-                <a href="${path}pages/mission.html" class="mobile-nav-link ${isMission ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Philosophy</a>
-                <a href="${path}pages/motto.html" class="mobile-nav-link ${isMotto ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Motto</a>
-            </div>
-        </div>
+        </footer>
         `;
     }
 
-    _init() {
-        if (this._isDark) {
-            document.documentElement.classList.add('dark');
-        }
-        this._attachListeners();
-        this._initScroll();
+    _initializeSmartFeatures() {
+        // Initialize Lucide icons with retry logic
         this._initIcons();
+        
+        // Intersection Observer for scroll-triggered fade-in animations
+        this._initScrollAnimations();
+        
+        // Handle reduced motion preference
+        this._respectMotionPreferences();
+        
+        // Prefetch links on hover for faster navigation
+        this._initLinkPrefetch();
     }
 
     _initIcons() {
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    }
-
-    _initScroll() {
-        const threshold = 10;
-        let ticking = false;
-        
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const nav = this.querySelector('[data-navbar]');
-                    const current = window.scrollY;
-                    
-                    if (!nav || this._isMenuOpen) {
-                        ticking = false;
-                        return;
-                    }
-                    
-                    if (Math.abs(current - this._lastScrollY) > threshold) {
-                        if (current > this._lastScrollY && current > 100) {
-                            nav.classList.replace('nav-visible', 'nav-hidden');
-                        } else {
-                            nav.classList.replace('nav-hidden', 'nav-visible');
-                        }
-                        this._lastScrollY = current;
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-    }
-
-    _attachListeners() {
-        const themeBtn = this.querySelector('#theme-toggle-btn');
-        const menuBtn = this.querySelector('#hamburger-btn');
-        const closeBtn = this.querySelector('#mobile-close-btn');
-
-        themeBtn?.addEventListener('click', () => {
-            this._isDark = !this._isDark;
-            
-            if (this._isDark) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-            
-            localStorage.setItem('theme', this._isDark ? 'dark' : 'light');
-            this._updateToggleButton();
-        });
-
-        menuBtn?.addEventListener('click', () => this._toggleMenu(true));
-        closeBtn?.addEventListener('click', () => this._toggleMenu(false));
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this._isMenuOpen) {
-                this._toggleMenu(false);
-            }
-        });
-    }
-
-    _updateToggleButton() {
-        const btn = this.querySelector('#theme-toggle-btn');
-        if (!btn) return;
-        
-        btn.style.background = this._isDark ? '#1e293b' : '#e2e8f0';
-        btn.setAttribute('aria-label', `Toggle ${this._isDark ? 'light' : 'dark'} mode`);
-        
-        const knob = btn.querySelector('.toggle-knob');
-        knob.style.background = this._isDark ? '#c084fc' : '#ffffff';
-        knob.style.transform = this._isDark ? 'translateX(20px)' : 'translateX(0px)';
-        knob.innerHTML = this._getThemeIcon();
-        
-        if (window.lucide) {
-            lucide.createIcons({ attrs: { 'stroke-width': 2.5 } });
-        }
-    }
-
-    _toggleMenu(open) {
-        this._isMenuOpen = open;
-        const menu = this.querySelector('#mobile-menu');
-        const body = document.body;
-        
-        if (open) {
-            menu.classList.remove('hidden');
-            menu.offsetHeight;
-            menu.classList.add('active');
-            body.style.overflow = 'hidden';
-            this._initIcons();
-        } else {
-            menu.classList.remove('active');
-            setTimeout(() => {
-                if (!this._isMenuOpen) {
-                    menu.classList.add('hidden');
-                    body.style.overflow = '';
+        const attemptIcons = (retries = 3) => {
+            if (window.lucide) {
+                try {
+                    lucide.createIcons({ attrs: { 'aria-hidden': 'true' } });
+                    this._isVisible = true;
+                } catch (e) {
+                    console.warn('CuteSenseFooter: Lucide initialization failed', e);
                 }
+            } else if (retries > 0) {
+                setTimeout(() => attemptIcons(retries - 1), 100);
+            }
+        };
+        
+        // Small delay to ensure DOM is fully parsed
+        requestAnimationFrame(() => attemptIcons());
+    }
+
+    _initScrollAnimations() {
+        if (!('IntersectionObserver' in window)) {
+            // Fallback for older browsers - show immediately
+            this._revealFooter();
+            return;
+        }
+
+        this._observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this._revealFooter();
+                    this._observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+
+        const footer = this.querySelector('[data-footer-root]');
+        if (footer) this._observer.observe(footer);
+    }
+
+    _revealFooter() {
+        const root = this.querySelector('[data-footer-root]');
+        const content = this.querySelector('[data-animate="true"]');
+        const divider = this.querySelector('[data-animate-divider]');
+        
+        if (root) {
+            root.classList.remove('opacity-0');
+            root.classList.add('opacity-100');
+        }
+        if (content) {
+            content.classList.remove('translate-y-4');
+            content.classList.add('translate-y-0');
+        }
+        if (divider) {
+            setTimeout(() => {
+                divider.classList.remove('opacity-0');
+                divider.classList.add('opacity-100');
             }, 300);
+        }
+    }
+
+    _respectMotionPreferences() {
+        // Disable animations if user prefers reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (prefersReducedMotion) {
+            const animatedElements = this.querySelectorAll('[data-animate], [data-animate-divider], [data-footer-root]');
+            animatedElements.forEach(el => {
+                el.style.transition = 'none';
+                el.classList.remove('opacity-0', 'translate-y-4');
+                el.classList.add('opacity-100', 'translate-y-0');
+            });
+        }
+    }
+
+    _initLinkPrefetch() {
+        // Smart prefetch: preload GitHub on hover to make it feel instant
+        const githubLinks = this.querySelectorAll('a[href*="github.com"]');
+        githubLinks.forEach(link => {
+            if (link && 'IntersectionObserver' in window) {
+                link.addEventListener('mouseenter', () => {
+                    const prefetch = document.createElement('link');
+                    prefetch.rel = 'prefetch';
+                    prefetch.href = 'https://github.com/CuteSense-Studios';
+                    document.head.appendChild(prefetch);
+                }, { once: true });
+            }
+        });
+    }
+
+    // Public API for manual refresh (if dynamic content changes)
+    refresh() {
+        this._render();
+        this._initializeSmartFeatures();
+    }
+
+    // Public API to update year programmatically
+    setYear(year) {
+        const yearSpan = this.querySelector('p[class*="text-cs-lilac"]');
+        if (yearSpan && year) {
+            yearSpan.innerHTML = `Art with Heart • © ${year} • Built with Gemini`;
         }
     }
 }
 
-if (!customElements.get('cs-navbar')) {
-    customElements.define('cs-navbar', CuteSenseNavbar);
+// Define with error handling
+if (!customElements.get('cs-footer')) {
+    try {
+        customElements.define('cs-footer', CuteSenseFooter);
+    } catch (e) {
+        console.error('CuteSenseFooter: Failed to define custom element', e);
+    }
 }
