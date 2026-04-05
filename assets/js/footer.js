@@ -4,6 +4,8 @@ class CuteSenseFooter extends HTMLElement {
         this._observer = null;
         this._resizeObserver = null;
         this._isVisible = false;
+        this._iconRetryCount = 0;
+        this._maxIconRetries = 5;
     }
 
     connectedCallback() {
@@ -12,7 +14,6 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     disconnectedCallback() {
-        // Cleanup observers to prevent memory leaks
         if (this._observer) {
             this._observer.disconnect();
             this._observer = null;
@@ -24,12 +25,9 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _getPath() {
-        // More robust path detection with fallback
         try {
             const path = window.location.pathname;
             const depth = (path.match(/\//g) || []).length - 1;
-            
-            // Check if we're in a subdirectory
             if (path.includes('/pages/') || path.includes('/docs/') || depth > 1) {
                 return '../';
             }
@@ -41,11 +39,10 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _getCurrentYear() {
-        // Auto-updating year so you never have to manually update 2026 again
         try {
             return new Date().getFullYear();
         } catch (e) {
-            return '2026'; // Fallback
+            return '2026';
         }
     }
 
@@ -53,7 +50,6 @@ class CuteSenseFooter extends HTMLElement {
         const path = this._getPath();
         const year = this.getAttribute('static-year') || this._getCurrentYear();
         
-        // Preserve exact original structure and classes
         this.innerHTML = `
         <footer class="py-10 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-500 opacity-0" data-footer-root>
             <div class="max-w-6xl mx-auto" data-footer-content>
@@ -61,9 +57,9 @@ class CuteSenseFooter extends HTMLElement {
                 <div class="flex flex-col md:flex-row items-center justify-between gap-10 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
                     
                     <div class="flex items-center gap-4 text-left">
-                        <!-- Logo size increased from h-10 to h-12 for better visibility -->
+                        <!-- Logo size increased from h-12 to h-16 for better visibility -->
                         <img src="${path}assets/icons/companylogo.webp" alt="Logo" 
-                             class="h-12 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
+                             class="h-16 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
                              loading="lazy"
                              decoding="async"
                              data-footer-logo
@@ -80,22 +76,17 @@ class CuteSenseFooter extends HTMLElement {
                     </div>
 
                     <div class="flex gap-8 items-center" data-social-links>
-                        <!-- Original GitHub icon -->
+                        <!-- Single GitHub icon -->
                         <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
                            class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
                            aria-label="Visit our GitHub">
                             <i data-lucide="github" class="w-5 h-5"></i>
                         </a>
+                        <!-- Email icon -->
                         <a href="mailto:contact@cutesense.studios" 
                            class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
                            aria-label="Send us an email">
                             <i data-lucide="mail" class="w-5 h-5"></i>
-                        </a>
-                        <!-- NEW second GitHub icon -->
-                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
-                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
-                           aria-label="Visit our GitHub (additional link)">
-                            <i data-lucide="github" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
@@ -117,40 +108,52 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _initializeSmartFeatures() {
-        // Initialize Lucide icons with retry logic
-        this._initIcons();
-        
-        // Intersection Observer for scroll-triggered fade-in animations
+        this._initIconsWithFallback();
         this._initScrollAnimations();
-        
-        // Handle reduced motion preference
         this._respectMotionPreferences();
-        
-        // Prefetch links on hover for faster navigation
         this._initLinkPrefetch();
     }
 
-    _initIcons() {
-        const attemptIcons = (retries = 3) => {
-            if (window.lucide) {
+    _initIconsWithFallback() {
+        const attemptIcons = () => {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
                 try {
                     lucide.createIcons({ attrs: { 'aria-hidden': 'true' } });
                     this._isVisible = true;
+                    console.log('CuteSenseFooter: Lucide icons loaded successfully');
                 } catch (e) {
-                    console.warn('CuteSenseFooter: Lucide initialization failed', e);
+                    console.warn('CuteSenseFooter: Lucide creation failed', e);
+                    this._fallbackToTextIcons();
                 }
-            } else if (retries > 0) {
-                setTimeout(() => attemptIcons(retries - 1), 100);
+            } else if (this._iconRetryCount < this._maxIconRetries) {
+                this._iconRetryCount++;
+                setTimeout(attemptIcons, 200);
+            } else {
+                console.warn('CuteSenseFooter: Lucide not available after retries, using fallback');
+                this._fallbackToTextIcons();
             }
         };
         
-        // Small delay to ensure DOM is fully parsed
-        requestAnimationFrame(() => attemptIcons());
+        requestAnimationFrame(attemptIcons);
+    }
+
+    _fallbackToTextIcons() {
+        const iconElements = this.querySelectorAll('[data-lucide]');
+        iconElements.forEach(el => {
+            const iconName = el.getAttribute('data-lucide');
+            if (iconName === 'github') {
+                el.outerHTML = `<span class="inline-block w-5 h-5 text-cs-lilac" aria-hidden="true">🐙</span>`;
+            } else if (iconName === 'mail') {
+                el.outerHTML = `<span class="inline-block w-5 h-5 text-cs-lilac" aria-hidden="true">✉️</span>`;
+            } else if (iconName === 'scale') {
+                el.outerHTML = `<span class="inline-block w-3 h-3 text-cs-lilac" aria-hidden="true">⚖️</span>`;
+            }
+        });
+        console.log('CuteSenseFooter: Used emoji fallback for missing icons');
     }
 
     _initScrollAnimations() {
         if (!('IntersectionObserver' in window)) {
-            // Fallback for older browsers - show immediately
             this._revealFooter();
             return;
         }
@@ -193,9 +196,7 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _respectMotionPreferences() {
-        // Disable animations if user prefers reduced motion
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        
         if (prefersReducedMotion) {
             const animatedElements = this.querySelectorAll('[data-animate], [data-animate-divider], [data-footer-root]');
             animatedElements.forEach(el => {
@@ -207,7 +208,6 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _initLinkPrefetch() {
-        // Smart prefetch: preload GitHub on hover to make it feel instant
         const githubLinks = this.querySelectorAll('a[href*="github.com"]');
         githubLinks.forEach(link => {
             if (link && 'IntersectionObserver' in window) {
@@ -221,13 +221,11 @@ class CuteSenseFooter extends HTMLElement {
         });
     }
 
-    // Public API for manual refresh (if dynamic content changes)
     refresh() {
         this._render();
         this._initializeSmartFeatures();
     }
 
-    // Public API to update year programmatically
     setYear(year) {
         const yearSpan = this.querySelector('p[class*="text-cs-lilac"]');
         if (yearSpan && year) {
@@ -236,7 +234,6 @@ class CuteSenseFooter extends HTMLElement {
     }
 }
 
-// Define with error handling
 if (!customElements.get('cs-footer')) {
     try {
         customElements.define('cs-footer', CuteSenseFooter);
