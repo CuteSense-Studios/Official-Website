@@ -21,7 +21,6 @@ class CuteSenseNavbar extends HTMLElement {
                 pointer-events: auto;
                 transform: translateY(0);
             }
-            /* Prevent body scroll when menu is active */
             body.menu-open {
                 overflow: hidden;
             }
@@ -29,12 +28,16 @@ class CuteSenseNavbar extends HTMLElement {
                 padding-left: 0.1rem;
                 padding-right: 0.1rem;
             }
+            /* Ensure the logo text doesn't wrap awkwardly on tiny screens */
+            .nav-logo-text {
+                white-space: nowrap;
+            }
         </style>
 
         <nav class="fixed top-0 left-0 w-full z-[100] px-3 sm:px-4 pt-4">
-            <div class="relative max-w-7xl mx-auto flex justify-between items-center bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b-4 border-cs-lilac/20 rounded-[2rem] px-4 sm:px-10 h-14 sm:h-16 shadow-xl">
+            <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b-4 border-cs-lilac/20 rounded-[2rem] px-4 sm:px-10 h-14 sm:h-16 shadow-xl">
                 
-                <div class="flex items-center justify-start z-10 min-w-[40px]">
+                <div class="flex-1 flex items-center justify-start z-10">
                     <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest opacity-80">
                         <a href="${path}pages/mission.html" class="hover:text-cs-lilac transition-all">Philosophy</a>
                         <a href="${path}pages/motto.html" class="hover:text-cs-lilac transition-all">Motto</a>
@@ -44,20 +47,20 @@ class CuteSenseNavbar extends HTMLElement {
                     </button>
                 </div>
 
-                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center z-10 pointer-events-none">
-                    <a href="${path}index.html" class="pointer-events-auto flex items-center gap-1.5 hover:scale-105 transition-transform shrink-0">
+                <div class="flex-none flex justify-center z-10">
+                    <a href="${path}index.html" class="flex items-center gap-1.5 hover:scale-105 transition-transform shrink-0">
                         <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="h-5 sm:h-6 w-auto block pixel-crisp">
-                        <span class="text-base sm:text-xl gradient-text borel-font whitespace-nowrap pt-1">CuteSense</span>
+                        <span class="text-base sm:text-xl gradient-text borel-font nav-logo-text pt-1">CuteSense</span>
                     </a>
                 </div>
                 
-                <div class="flex items-center justify-end gap-3 sm:gap-5 z-10 min-w-[40px]">
-                    <div class="flex items-center gap-2 sm:gap-3">
-                        <i data-lucide="sun" class="w-3.5 h-3.5 text-cs-lilac opacity-50 dark:opacity-20 transition-opacity"></i>
-                        <button onclick="toggleTheme()" class="w-9 h-5 bg-slate-200 dark:bg-cs-lilac rounded-full relative transition-all shadow-inner outline-none">
-                            <div class="absolute top-1 left-1 w-3 h-3 bg-white rounded-full shadow-md transition-transform duration-300 translate-x-0 dark:translate-x-4"></div>
+                <div class="flex-1 flex items-center justify-end gap-3 sm:gap-5 z-10">
+                    <div class="flex items-center gap-1.5 sm:gap-3">
+                        <i data-lucide="sun" class="hidden xs:block w-3.5 h-3.5 text-cs-lilac opacity-50 dark:opacity-20 transition-opacity"></i>
+                        <button onclick="toggleTheme()" class="w-8 h-4.5 sm:w-9 sm:h-5 bg-slate-200 dark:bg-cs-lilac rounded-full relative transition-all shadow-inner outline-none">
+                            <div class="absolute top-0.5 left-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-white rounded-full shadow-md transition-transform duration-300 translate-x-0 dark:translate-x-3.5 sm:dark:translate-x-4"></div>
                         </button>
-                        <i data-lucide="moon" class="w-3.5 h-3.5 text-cs-lilac opacity-20 dark:opacity-100 transition-opacity"></i>
+                        <i data-lucide="moon" class="hidden xs:block w-3.5 h-3.5 text-cs-lilac opacity-20 dark:opacity-100 transition-opacity"></i>
                     </div>
                     <a href="https://github.com/CuteSense-Studios" target="_blank" class="text-cs-dark dark:text-cs-lilac hover:rotate-12 transition-transform">
                         <i data-lucide="github" class="w-5 h-5"></i>
@@ -105,7 +108,7 @@ if (!customElements.get('cs-navbar')) {
     customElements.define('cs-navbar', CuteSenseNavbar);
 }
 
-// Global UI Logic
+// Global UI Logic (Preserved exactly as provided)
 window.toggleMenu = () => {
     const menu = document.getElementById('mobile-menu');
     const isOpening = !menu.classList.contains('active');
