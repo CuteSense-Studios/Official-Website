@@ -5,14 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Motto | CuteSense Studios</title>
     
+    <!-- SEO & Social -->
+    <meta name="description" content="The philosophy behind 'Cuteness that makes sense!~' – our guiding principle for welcoming, emotionally resonant design powered by open-source logic.">
+    <meta name="keywords" content="CuteSense motto, design philosophy, open source art, cute technology">
+    <meta name="author" content="CuteSense Studios">
+    <link rel="canonical" href="https://cutesense-studios.com/pages/motto.html">
+    <meta property="og:title" content="Our Motto | CuteSense Studios">
+    <meta property="og:description" content="Cuteness that makes sense!~ The philosophy behind our welcoming, emotionally resonant design and rigorous open-source architecture.">
+    <meta property="og:image" content="../assets/icons/companylogo.webp">
+    <meta property="og:url" content="https://cutesense-studios.com/pages/motto.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Our Motto | CuteSense Studios">
+    <meta name="twitter:description" content="Discover the meaning behind 'Cuteness that makes sense!~' – warmth meets logic.">
+    <meta name="twitter:image" content="../assets/icons/companylogo.webp">
+
     <link rel="icon" type="image/webp" href="../assets/icons/companylogo.webp">
     <link rel="stylesheet" href="../assets/css/cursor.css">
     <link rel="stylesheet" href="../assets/css/tailwind.css">
-    
     <link rel="stylesheet" href="../assets/css/global.css">
     
-    <script src="../assets/js/lucide.min.js"></script>
-    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/lucide.min.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
 </head>
 <body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden min-h-screen flex flex-col">
 
@@ -25,8 +39,8 @@
             <div class="blob-parallax absolute bottom-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[100px] md:blur-[150px] opacity-30 dark:opacity-20"></div>
         </div>
 
-        <div class="absolute top-[35%] left-[10%] sparkle-slow text-cs-lilac z-0"><i data-lucide="sparkles" class="w-12 h-12"></i></div>
-        <div class="absolute bottom-[25%] right-[12%] sparkle-slow text-cs-pink z-0"><i data-lucide="sparkle" class="w-8 h-8"></i></div>
+        <div class="absolute top-[35%] left-[10%] sparkle-slow text-cs-lilac z-0" aria-hidden="true"><i data-lucide="sparkles" class="w-12 h-12"></i></div>
+        <div class="absolute bottom-[25%] right-[12%] sparkle-slow text-cs-pink z-0" aria-hidden="true"><i data-lucide="sparkle" class="w-8 h-8"></i></div>
 
         <section class="w-full px-6 text-center z-10">
             <div class="max-w-5xl mx-auto">
@@ -38,7 +52,11 @@
                 </div>
                 
                 <div class="motto-wrapper mb-16">
-                    <h1 id="motto-container" class="text-5xl md:text-8xl font-bold cute-font italic px-4 leading-tight gradient-text drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform">
+                    <h1 id="motto-container" 
+                        class="text-5xl md:text-8xl font-bold cute-font italic px-4 leading-tight gradient-text drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform focus:outline-none focus:ring-4 focus:ring-cs-lilac/50 rounded-lg" 
+                        role="button" 
+                        tabindex="0" 
+                        aria-label="Click or press Enter to change motto – currently 'Cuteness that makes sense!~'">
                         Cuteness that makes sense!~
                     </h1>
                 </div>
@@ -73,71 +91,127 @@
     <script src="../assets/js/footer.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) lucide.createIcons();
-        });
-
-        const mottos = [
-            "Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीপ্ত মিষ্টি ভাব!~",
-            "அர்த்தமுள்ள அழகு!~", "అర్థవంతమైన క్యూట్‌నెస్!~", "道理にかなう可愛さ！~",
-            "이유 있는 귀여움!~", "¡Ternura que tiene sentido!~", "La mignonnerie qui a du sens !",
-            "有道理的可爱！~", "لطافة منطقية!~", "Niedlichkeit, die Sinn macht!~",
-            "Tenerezza che ha senso!~", "Fofura que faz sentido!~", "Милота со смыслом!~",
-            "Sự dễ thương đầy ý nghĩa!~", "ความน่ารักที่มีความหมาย!~"
-        ];
-        
-        let mottoIndex = 0;
-        const mottoContainer = document.getElementById('motto-container');
-
-        function rotateMotto() {
-            if (!mottoContainer) return;
-            mottoContainer.style.opacity = '0';
-            mottoContainer.style.transform = 'translateY(15px) scale(0.98)';
-            
-            setTimeout(() => {
-                mottoIndex = (mottoIndex + 1) % mottos.length;
-                mottoContainer.innerText = mottos[mottoIndex];
-                mottoContainer.style.opacity = '1';
-                mottoContainer.style.transform = 'translateY(0) scale(1)';
-            }, 600);
-        }
-        
-        let mottoInterval = setInterval(rotateMotto, 4500);
-        
-        if (mottoContainer) {
-            mottoContainer.addEventListener('click', () => {
-                clearInterval(mottoInterval);
-                rotateMotto();
-                mottoInterval = setInterval(rotateMotto, 4500);
-            });
-        }
-
-        document.addEventListener('mousemove', (e) => {
-            const blobs = document.querySelectorAll('.blob-parallax');
-            if (blobs.length === 0) return;
-            const x = (e.clientX / window.innerWidth) - 0.5;
-            const y = (e.clientY / window.innerHeight) - 0.5;
-            
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 40;
-                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
-        });
-
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
+        (function() {
+            // --- Lucide Icons initialization (deferred but safe)
+            function initLucide() {
+                if (window.lucide) {
+                    lucide.createIcons();
+                } else {
+                    setTimeout(initLucide, 100);
                 }
-            });
-        }, observerOptions);
+            }
+            document.addEventListener('DOMContentLoaded', initLucide);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const revealElements = document.querySelectorAll('.reveal');
-            revealElements.forEach(el => observer.observe(el));
-        });
+            // --- Motto rotation with accessibility and cleanup
+            const mottos = [
+                "Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीপ্ত মিষ্টি ভাব!~",
+                "அர்த்தமுள்ள அழகு!~", "అర్థవంతమైన క్యూట్‌నెస్!~", "道理にかなう可愛さ！~",
+                "이유 있는 귀여움!~", "¡Ternura que tiene sentido!~", "La mignonnerie qui a du sens !",
+                "有道理的可爱！~", "لطافة منطقية!~", "Niedlichkeit, die Sinn macht!~",
+                "Tenerezza che ha senso!~", "Fofura que faz sentido!~", "Милота со смыслом!~",
+                "Sự dễ thương đầy ý nghĩa!~", "ความน่ารักที่มีความหมาย!~"
+            ];
+            
+            let mottoIndex = 0;
+            const mottoContainer = document.getElementById('motto-container');
+            let mottoInterval = null;
+
+            function updateAriaLabel() {
+                if (mottoContainer) {
+                    mottoContainer.setAttribute('aria-label', `Click or press Enter to change motto – currently '${mottos[mottoIndex]}'`);
+                }
+            }
+
+            function rotateMotto() {
+                if (!mottoContainer) return;
+                mottoContainer.style.opacity = '0';
+                mottoContainer.style.transform = 'translateY(15px) scale(0.98)';
+                
+                setTimeout(() => {
+                    mottoIndex = (mottoIndex + 1) % mottos.length;
+                    mottoContainer.innerText = mottos[mottoIndex];
+                    updateAriaLabel();
+                    mottoContainer.style.opacity = '1';
+                    mottoContainer.style.transform = 'translateY(0) scale(1)';
+                }, 600);
+            }
+            
+            function startMottoRotation() {
+                if (mottoInterval) clearInterval(mottoInterval);
+                mottoInterval = setInterval(rotateMotto, 4500);
+            }
+
+            if (mottoContainer) {
+                startMottoRotation();
+                
+                const handleMottoClick = () => {
+                    clearInterval(mottoInterval);
+                    rotateMotto();
+                    startMottoRotation();
+                };
+                
+                mottoContainer.addEventListener('click', handleMottoClick);
+                mottoContainer.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleMottoClick();
+                    }
+                });
+                
+                updateAriaLabel();
+            }
+
+            // Cleanup interval on page unload
+            window.addEventListener('beforeunload', () => {
+                if (mottoInterval) clearInterval(mottoInterval);
+            });
+
+            // --- Throttled blob parallax (performance + reduced motion)
+            const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!motionMedia.matches) {
+                const blobs = document.querySelectorAll('.blob-parallax');
+                if (blobs.length) {
+                    let ticking = false;
+                    blobs.forEach(blob => blob.style.willChange = 'transform');
+                    
+                    const handleMouseMove = (e) => {
+                        if (ticking) return;
+                        ticking = true;
+                        requestAnimationFrame(() => {
+                            const x = (e.clientX / window.innerWidth) - 0.5;
+                            const y = (e.clientY / window.innerHeight) - 0.5;
+                            blobs.forEach((blob, index) => {
+                                const speed = (index + 1) * 40;
+                                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                            });
+                            ticking = false;
+                        });
+                    };
+                    
+                    document.addEventListener('mousemove', handleMouseMove);
+                }
+            }
+
+            // --- Intersection Observer for reveal animations (with reduced motion fallback)
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // If reduced motion is preferred, reveal immediately without animation
+            if (motionMedia.matches) {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.add('active');
+                });
+            } else {
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            }
+        })();
     </script>
 </body>
 </html>

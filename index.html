@@ -4,15 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CuteSense Studios | Emotive Open Source Art</title>
+    
+    <!-- SEO & Social -->
+    <meta name="description" content="CuteSense Studios creates high-quality, open-source art tools with a human-AI partnership. Empowering diverse voices through cute, meaningful design.">
+    <meta name="keywords" content="open source art, cute design, AI tools, game dev, diversity in tech">
+    <meta name="author" content="CuteSense Studios">
+    <link rel="canonical" href="https://cutesense-studios.com/">
+    <meta property="og:title" content="CuteSense Studios | Emotive Open Source Art">
+    <meta property="og:description" content="Quality art, openly created. Empowering creative new voices through high-quality open-source tools and human-AI partnership.">
+    <meta property="og:image" content="./assets/icons/companylogo.webp">
+    <meta property="og:url" content="https://cutesense-studios.com/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CuteSense Studios">
+    <meta name="twitter:description" content="Cuteness that makes sense!~ Open source, diverse, and high-quality creative tools.">
+    <meta name="twitter:image" content="./assets/icons/companylogo.webp">
 
     <link rel="icon" type="image/webp" href="./assets/icons/companylogo.webp">
     <link rel="stylesheet" href="./assets/css/cursor.css">
     <link rel="stylesheet" href="./assets/css/tailwind.css">
-    
     <link rel="stylesheet" href="./assets/css/global.css">
     
-    <script src="./assets/js/lucide.min.js"></script>
-    <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/lucide.min.js" defer></script>
+    <script src="./assets/js/theme.js" defer></script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
@@ -62,12 +76,22 @@
             if (!user) return;
             
             const nameInput = document.getElementById('signer-name');
-            const name = nameInput.value.trim() || "Anonymous Friend";
+            const rawName = nameInput.value.trim();
+            if (rawName.length < 2) {
+                const status = document.getElementById('form-status');
+                status.innerText = "Please enter at least 2 characters ✨";
+                setTimeout(() => status.innerText = '', 3000);
+                return;
+            }
+            const name = rawName || "Anonymous Friend";
             const submitBtn = e.target.querySelector('button');
+            const originalBtnText = submitBtn.innerHTML;
             const status = document.getElementById('form-status');
             
             try {
                 submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i data-lucide="loader" class="animate-spin w-5 h-5 inline"></i> Signing...';
+                if (window.lucide) lucide.createIcons();
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'signatures'), {
                     name: name,
                     timestamp: serverTimestamp(),
@@ -77,9 +101,12 @@
                 status.innerText = "Signed successfully! ✨";
                 setTimeout(() => status.innerText = '', 3000);
             } catch (err) {
+                console.error(err);
                 status.innerText = "Error signing. Try again!";
             } finally {
                 submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                if (window.lucide) lucide.createIcons();
             }
         }
 
@@ -141,21 +168,39 @@
                 <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-40"></div>
             </div>
             <div class="max-w-5xl mx-auto text-center px-6 relative z-20">
-                <div class="mb-10 flex justify-center"><div class="floating"><img src="./assets/icons/companylogo.webp" alt="Logo" class="h-40 md:h-56 w-auto drop-shadow-2xl pixel-crisp"></div></div>
+                <div class="mb-10 flex justify-center">
+                    <div class="floating">
+                        <img src="./assets/icons/companylogo.webp" alt="CuteSense Studios Logo – a cute, stylized emblem representing open source art" class="h-40 md:h-56 w-auto drop-shadow-2xl pixel-crisp" loading="lazy">
+                    </div>
+                </div>
                 <h1 class="text-5xl md:text-8xl font-bold mb-6 leading-tight">Quality Art, <br/><span class="gradient-text">Openly Created</span></h1>
                 <p class="text-lg md:text-2xl opacity-80 max-w-3xl mx-auto mb-14 font-medium">Empowering creative new voices through high-quality open-source tools and human-AI partnership.</p>
-                <div class="flex justify-center"><a href="./pages/mission.html" class="px-12 py-5 bg-cs-lilac text-white rounded-3xl font-bold text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-2">Our Mission <i data-lucide="compass"></i></a></div>
+                <div class="flex justify-center">
+                    <a href="./pages/mission.html" class="px-12 py-5 bg-cs-lilac text-white rounded-3xl font-bold text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/50" aria-label="Learn more about our mission">
+                        Our Mission <i data-lucide="compass"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
         <section id="founder" class="py-20 px-6 relative bg-white/60 dark:bg-slate-900/40 border-y-4 border-dotted border-cs-lilac/30">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="motto-wrapper">
-                    <h2 id="motto-container" class="text-3xl md:text-5xl font-bold cute-font italic px-4 cursor-pointer hover:scale-105 transition-transform active:scale-95">Cuteness that makes sense!~</h2>
+                    <h2 id="motto-container" class="text-3xl md:text-5xl font-bold cute-font italic px-4 cursor-pointer hover:scale-105 transition-transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-cs-lilac rounded-lg" 
+                        role="button" 
+                        tabindex="0" 
+                        aria-label="Click to change motto – currently 'Cuteness that makes sense!~'">
+                        Cuteness that makes sense!~
+                    </h2>
                 </div>
                 <div class="mt-8 flex justify-center items-center gap-3">
-                    <div class="w-14 h-14 rounded-full border-4 border-cs-pink bg-white dark:bg-slate-800 flex items-center justify-center shadow-md"><i data-lucide="flower" class="text-[#FF9EBB]"></i></div>
-                    <div class="text-left"><p class="font-bold text-xl">Crossie</p><p class="text-[10px] text-cs-lilac font-bold uppercase tracking-tighter">Chief Creative</p></div>
+                    <div class="w-14 h-14 rounded-full border-4 border-cs-pink bg-white dark:bg-slate-800 flex items-center justify-center shadow-md">
+                        <i data-lucide="flower" class="text-[#FF9EBB]" aria-hidden="true"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="font-bold text-xl">Crossie</p>
+                        <p class="text-[10px] text-cs-lilac font-bold uppercase tracking-tighter">Chief Creative</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -167,6 +212,7 @@
                     <div class="w-32 h-2 bg-gradient-to-r from-cs-pink to-cs-blue mx-auto rounded-full mt-8"></div>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Cards unchanged for brevity, all original content preserved -->
                     <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-pink rounded-[2.5rem] shadow-[0_8px_0_#F4C6C9] dark:shadow-none">
                         <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-pink text-white"><i data-lucide="gem"></i></div>
                         <h3 class="text-2xl font-bold mb-3">High Quality</h3>
@@ -203,11 +249,17 @@
 
         <section id="signatures" class="py-32 px-6 bg-cs-lilac/5 dark:bg-slate-900/40">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl md:text-6xl font-bold mb-6">Signature Wall</h2>
+                <div class="flex items-center justify-center gap-4 flex-wrap mb-6">
+                    <h2 class="text-4xl md:text-6xl font-bold">Signature Wall</h2>
+                    <span id="signature-count" class="bg-cs-pink text-white text-xl font-bold px-4 py-1 rounded-full shadow-md">0</span>
+                </div>
+                <p class="text-sm opacity-70 mb-8">Join our community – leave a kind mark!</p>
                 <form onsubmit="signWall(event)" class="max-w-md mx-auto mb-16 space-y-4">
                     <div class="flex gap-4">
-                        <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25" class="flex-1 px-6 py-4 rounded-3xl bg-white dark:bg-slate-800 border-4 border-cs-pink focus:outline-none focus:border-cs-lilac transition-all">
-                        <button type="submit" class="px-10 py-4 bg-cs-lilac text-white rounded-3xl font-bold hover:scale-105 transition-all">Sign</button>
+                        <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25" minlength="2" autocomplete="off" class="flex-1 px-6 py-4 rounded-3xl bg-white dark:bg-slate-800 border-4 border-cs-pink focus:outline-none focus:border-cs-lilac transition-all">
+                        <button type="submit" class="px-10 py-4 bg-cs-lilac text-white rounded-3xl font-bold hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-cs-lilac/50 flex items-center gap-2">
+                            Sign <i data-lucide="pen-tool"></i>
+                        </button>
                     </div>
                     <p id="form-status" class="text-sm font-bold text-cs-lilac h-4"></p>
                 </form>
@@ -220,33 +272,86 @@
     <script src="./assets/js/footer.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) lucide.createIcons();
-        });
+        (function() {
+            // --- Lucide Icons initialization (deferred but safe)
+            function initLucide() {
+                if (window.lucide) {
+                    lucide.createIcons();
+                } else {
+                    setTimeout(initLucide, 100);
+                }
+            }
+            document.addEventListener('DOMContentLoaded', initLucide);
 
-        document.addEventListener('mousemove', (e) => {
+            // --- Throttled mousemove for blob parallax (performance + reduced motion)
+            let ticking = false;
             const blobs = document.querySelectorAll('.blob-parallax');
-            if(blobs.length === 0) return;
-            const x = (e.clientX / window.innerWidth) - 0.5;
-            const y = (e.clientY / window.innerHeight) - 0.5;
-            blobs.forEach((blob, i) => { const speed = (i + 1) * 40; blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`; });
-        });
+            const handleMouseMove = (e) => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const x = (e.clientX / window.innerWidth) - 0.5;
+                    const y = (e.clientY / window.innerHeight) - 0.5;
+                    blobs.forEach((blob, i) => {
+                        const speed = (i + 1) * 40;
+                        blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                    });
+                    ticking = false;
+                });
+            };
 
-        const mottos = ["Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीপ্ত মিষ্টি ভাব!~", "道理にかなう可愛さ！~", "L’adorabile che ha senso!~"];
-        let mottoIndex = 0;
-        const mottoContainer = document.getElementById('motto-container');
+            // Respect reduced motion preference
+            const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!motionMedia.matches && blobs.length) {
+                document.addEventListener('mousemove', handleMouseMove);
+                // Optional: add will-change hint
+                blobs.forEach(blob => blob.style.willChange = 'transform');
+            }
 
-        function rotateMotto() {
-            if (!mottoContainer) return;
-            mottoContainer.style.opacity = '0';
-            setTimeout(() => { mottoIndex = (mottoIndex + 1) % mottos.length; mottoContainer.innerText = mottos[mottoIndex]; mottoContainer.style.opacity = '1'; }, 500);
-        }
+            // --- Motto rotation with accessibility and cleanup
+            const mottos = ["Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीপ্ত মিষ্টি ভাব!~", "道理にかなう可愛さ！~", "L’adorabile che ha senso!~"];
+            let mottoIndex = 0;
+            const mottoContainer = document.getElementById('motto-container');
+            let mottoInterval = null;
 
-        let mottoInterval = setInterval(rotateMotto, 4000);
-        if(mottoContainer) {
-            mottoContainer.addEventListener('click', () => { clearInterval(mottoInterval); rotateMotto(); mottoInterval = setInterval(rotateMotto, 4000); });
-        }
-        // toggleMenu function removed - it is now safely managed inside navbar.js!
+            function rotateMotto() {
+                if (!mottoContainer) return;
+                mottoContainer.style.opacity = '0';
+                setTimeout(() => {
+                    mottoIndex = (mottoIndex + 1) % mottos.length;
+                    mottoContainer.innerText = mottos[mottoIndex];
+                    mottoContainer.setAttribute('aria-label', `Click to change motto – currently '${mottos[mottoIndex]}'`);
+                    mottoContainer.style.opacity = '1';
+                }, 500);
+            }
+
+            function startMottoRotation() {
+                if (mottoInterval) clearInterval(mottoInterval);
+                mottoInterval = setInterval(rotateMotto, 4000);
+            }
+
+            if (mottoContainer) {
+                startMottoRotation();
+                // Click and keyboard support
+                const handleMottoClick = () => {
+                    clearInterval(mottoInterval);
+                    rotateMotto();
+                    startMottoRotation();
+                };
+                mottoContainer.addEventListener('click', handleMottoClick);
+                mottoContainer.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleMottoClick();
+                    }
+                });
+            }
+
+            // Cleanup intervals on page unload (optional, good practice)
+            window.addEventListener('beforeunload', () => {
+                if (mottoInterval) clearInterval(mottoInterval);
+            });
+        })();
     </script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 /* ==========================================================================
-   CuteSense Custom Cursor Module (V2.0)
+   CuteSense Custom Cursor Module (V2.1)
    Location: /assets/css/cursor.css
-   Improvements: Added Forbidden, Help, and Active states + SVG optimization.
+   Improvements: Accessibility, performance, extended interactive elements
    ========================================================================== */
 
-   :root {
+:root {
     /* Default: Chunky Lilac Arrow (Optimized with rounded corners) */
     --cs-cursor-default: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3.21V19.09C5.5 20.01 6.64 20.44 7.24 19.74L11.14 15.19C11.33 14.97 11.61 14.85 11.9 14.85H17.58C18.55 14.85 19 13.65 18.28 13L6.44 3.14C6.18 2.92 5.5 3.01 5.5 3.21Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"), auto;
     
@@ -24,16 +24,20 @@ html, body {
     min-height: 100vh;
 }
 
-/* 2. Interactive Elements */
+/* 2. Interactive Elements (Extended for better coverage) */
 a, 
-button, 
+button,
 input[type="submit"], 
 input[type="button"],
 input[type="reset"],
 select, 
 summary,
-[role="button"], 
-.cursor-pointer {
+details,
+[role="button"],
+[contenteditable="true"],
+.cursor-pointer,
+label:has(input:is([type="checkbox"], [type="radio"])),
+input:is([type="checkbox"], [type="radio"]) + label {
     cursor: var(--cs-cursor-pointer);
 }
 
@@ -42,7 +46,8 @@ p, h1, h2, h3, h4, h5, h6, span, label,
 input[type="text"], 
 input[type="email"], 
 input[type="password"], 
-textarea {
+textarea,
+[contenteditable="true"]:empty {
     cursor: text;
 }
 
@@ -51,21 +56,49 @@ a p, a h1, a h2, a h3, a h4, a h5, a h6, a span, a label {
     cursor: var(--cs-cursor-pointer);
 }
 
-/* 5. Specialized States */
+/* 5. Specialized States (Improved disabled detection) */
 :disabled, 
 [disabled], 
-.is-disabled {
+.is-disabled,
+[aria-disabled="true"],
+[inert] {
     cursor: var(--cs-cursor-not-allowed) !important;
 }
 
 [data-tooltip], 
-.help-icon {
+.help-icon,
+[aria-describedby*="tooltip"],
+[data-help] {
     cursor: var(--cs-cursor-help);
 }
 
-/* 6. Active State: Shrink slightly when clicking for feedback */
-a:active, button:active {
-    /* Note: We can't scale SVG cursors via CSS transforms, 
-       but we can swap to a slightly different variation if needed. */
+/* 6. Active State with Performance & Accessibility Improvements */
+a:active, 
+button:active,
+[role="button"]:active {
     filter: brightness(0.9);
+    will-change: filter; /* GPU acceleration */
+    transition: filter 0.05s ease; /* Instant but smooth */
+}
+
+/* 7. Keyboard Accessibility: Focus indicators */
+:focus-visible {
+    outline: 2px solid #A178AF;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* 8. Reduced Motion Preference (Accessibility) */
+@media (prefers-reduced-motion: reduce) {
+    a:active, 
+    button:active,
+    [role="button"]:active {
+        filter: brightness(0.95);
+        transition: none;
+    }
+    
+    :focus-visible {
+        outline-offset: 1px;
+        transition: none;
+    }
 }
