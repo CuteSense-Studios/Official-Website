@@ -75,7 +75,7 @@ class CuteSenseFooter extends HTMLElement {
                     </div>
 
                     <div class="flex gap-8 items-center" data-social-links>
-                        <a href="mailto:contact@cutesense.studios" 
+                        <a href="mailto:cutesensestudios@protonmail.com" 
                            class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
                            aria-label="Send us an email">
                             <i data-lucide="mail" class="w-5 h-5"></i>
