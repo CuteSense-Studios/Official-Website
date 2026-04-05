@@ -40,7 +40,7 @@ class CuteSenseNavbar extends HTMLElement {
             <div class="relative max-w-7xl mx-auto flex justify-between items-center bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b-4 border-cs-lilac/20 rounded-[2.5rem] px-5 sm:px-10 h-16 sm:h-20 shadow-xl">
                 
                 <div class="flex items-center justify-start z-10">
-                    <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest opacity-80">
+                    <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest opacity-80">
                         <a href="${path}pages/mission.html" class="hover:text-cs-lilac active:scale-95 transition-all whitespace-nowrap">Philosophy</a>
                         <a href="${path}pages/motto.html" class="hover:text-cs-lilac active:scale-95 transition-all whitespace-nowrap">Motto</a>
                     </div>
@@ -52,7 +52,7 @@ class CuteSenseNavbar extends HTMLElement {
                 <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center z-10 pointer-events-none w-max">
                     <a href="${path}index.html" class="pointer-events-auto flex items-center gap-2 sm:gap-4 hover:scale-105 active:scale-95 transition-transform shrink-0">
                         <img src="${path}assets/icons/companylogo.webp" alt="Logo" class="h-8 sm:h-12 w-auto block drop-shadow-md pixel-crisp">
-                        <span class="text-3xl sm:text-4xl gradient-text borel-font whitespace-nowrap inline-block pt-2 pb-1">CuteSense</span>
+                        <span class="text-2xl sm:text-3xl gradient-text borel-font whitespace-nowrap inline-block pt-2 pb-1">CuteSense</span>
                     </a>
                 </div>
                 
@@ -65,7 +65,7 @@ class CuteSenseNavbar extends HTMLElement {
                         <i data-lucide="moon" class="hidden sm:block w-4 h-4 opacity-50 text-cs-lilac"></i>
                     </div>
                     <a href="https://github.com/CuteSense-Studios" target="_blank" class="text-cs-dark dark:text-cs-lilac hover:rotate-12 active:scale-90 transition-transform">
-                        <i data-lucide="github" class="w-6 h-6"></i>
+                        <i data-lucide="github" class="w-5 h-5 sm:w-6 sm:h-6"></i>
                     </a>
                 </div>
             </div>
@@ -73,16 +73,21 @@ class CuteSenseNavbar extends HTMLElement {
 
         <div id="mobile-menu" class="fixed inset-0 z-[110] bg-cs-cream dark:bg-cs-dark p-8 sm:p-10 flex flex-col md:hidden overscroll-contain">
             <div class="flex justify-between items-center mb-12">
-                <span class="text-4xl gradient-text borel-font inline-block py-2">CuteSense</span>
-                <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac active:scale-90 rounded-full transition-transform"><i data-lucide="x" class="w-8 h-8"></i></button>
+                <span class="text-3xl gradient-text borel-font inline-block py-2">CuteSense</span>
+                <button onclick="toggleMenu()" class="p-3 bg-cs-lilac/10 text-cs-lilac active:scale-90 rounded-full transition-transform"><i data-lucide="x" class="w-7 h-7"></i></button>
             </div>
-            <div class="flex flex-col gap-8 text-3xl font-bold cute-font">
+            <div class="flex flex-col gap-6 text-xl font-bold cute-font">
                 <a href="${path}pages/mission.html" onclick="toggleMenu()" class="active:text-cs-lilac active:translate-x-2 transition-all">Philosophy</a>
                 <a href="${path}pages/motto.html" onclick="toggleMenu()" class="active:text-cs-lilac active:translate-x-2 transition-all">Motto</a>
                 
                 <div class="mt-auto pt-10 border-t-4 border-dotted border-cs-lilac/20 flex justify-between items-center">
-                    <span class="text-sm uppercase tracking-widest opacity-50 font-sans">Dark Mode</span>
-                    <button onclick="toggleTheme()" class="w-16 h-8 bg-cs-lilac rounded-full p-1.5 relative active:scale-95 transition-transform">
+                    
+                    <span class="text-xs uppercase tracking-widest opacity-50 font-sans transition-all">
+                        <span class="inline dark:hidden">Dark Mode</span>
+                        <span class="hidden dark:inline">Light Mode</span>
+                    </span>
+
+                    <button onclick="toggleTheme()" class="w-14 h-7 bg-cs-lilac rounded-full p-1 relative active:scale-95 transition-transform">
                         <div class="toggle-inner w-5 h-5 bg-white rounded-full"></div>
                     </button>
                 </div>
