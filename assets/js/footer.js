@@ -5,7 +5,7 @@ class CuteSenseFooter extends HTMLElement {
         this._resizeObserver = null;
         this._isVisible = false;
         this._iconRetryCount = 0;
-        this._maxIconRetries = 5;
+        this._maxIconRetries = 10; // Increased retries
     }
 
     connectedCallback() {
@@ -57,7 +57,6 @@ class CuteSenseFooter extends HTMLElement {
                 <div class="flex flex-col md:flex-row items-center justify-between gap-10 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
                     
                     <div class="flex items-center gap-4 text-left">
-                        <!-- Logo size increased from h-12 to h-16 for better visibility -->
                         <img src="${path}assets/icons/companylogo.webp" alt="Logo" 
                              class="h-16 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
                              loading="lazy"
@@ -76,17 +75,16 @@ class CuteSenseFooter extends HTMLElement {
                     </div>
 
                     <div class="flex gap-8 items-center" data-social-links>
-                        <!-- Single GitHub icon -->
-                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
-                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
-                           aria-label="Visit our GitHub">
-                            <i data-lucide="github" class="w-5 h-5"></i>
-                        </a>
-                        <!-- Email icon -->
                         <a href="mailto:contact@cutesense.studios" 
                            class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
                            aria-label="Send us an email">
                             <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
+                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                           aria-label="Visit our GitHub">
+                            <i data-lucide="github" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
@@ -115,41 +113,48 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _initIconsWithFallback() {
-        const attemptIcons = () => {
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                try {
-                    lucide.createIcons({ attrs: { 'aria-hidden': 'true' } });
-                    this._isVisible = true;
-                    console.log('CuteSenseFooter: Lucide icons loaded successfully');
-                } catch (e) {
-                    console.warn('CuteSenseFooter: Lucide creation failed', e);
-                    this._fallbackToTextIcons();
-                }
-            } else if (this._iconRetryCount < this._maxIconRetries) {
-                this._iconRetryCount++;
-                setTimeout(attemptIcons, 200);
-            } else {
-                console.warn('CuteSenseFooter: Lucide not available after retries, using fallback');
+    const attemptIcons = () => {
+        // Check for Lucide
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            try {
+                // BUG FIX: Explicitly target 'this' as the root
+                window.lucide.createIcons({
+                    root: this, 
+                    attrs: { 
+                        'stroke-width': '2',
+                        'class': 'shrink-0' // Prevents the icon from squishing to 0px
+                    }
+                });
+                this._isVisible = true;
+            } catch (e) {
+                console.error('CuteSenseFooter: Icon rendering failed', e);
                 this._fallbackToTextIcons();
             }
-        };
-        
-        requestAnimationFrame(attemptIcons);
-    }
+        } else if (this._iconRetryCount < this._maxIconRetries) {
+            this._iconRetryCount++;
+            setTimeout(attemptIcons, 100);
+        } else {
+            this._fallbackToTextIcons();
+        }
+    };
+    
+    attemptIcons();
+}
 
     _fallbackToTextIcons() {
         const iconElements = this.querySelectorAll('[data-lucide]');
         iconElements.forEach(el => {
             const iconName = el.getAttribute('data-lucide');
+            const colorClass = "text-cs-lilac";
+            
             if (iconName === 'github') {
-                el.outerHTML = `<span class="inline-block w-5 h-5 text-cs-lilac" aria-hidden="true">🐙</span>`;
+                el.outerHTML = `<span class="inline-block w-5 h-5 ${colorClass}" aria-hidden="true">GitHub</span>`;
             } else if (iconName === 'mail') {
-                el.outerHTML = `<span class="inline-block w-5 h-5 text-cs-lilac" aria-hidden="true">✉️</span>`;
+                el.outerHTML = `<span class="inline-block w-5 h-5 ${colorClass}" aria-hidden="true">Email</span>`;
             } else if (iconName === 'scale') {
-                el.outerHTML = `<span class="inline-block w-3 h-3 text-cs-lilac" aria-hidden="true">⚖️</span>`;
+                el.outerHTML = `<span class="inline-block w-3 h-3 ${colorClass}" aria-hidden="true">⚖️</span>`;
             }
         });
-        console.log('CuteSenseFooter: Used emoji fallback for missing icons');
     }
 
     _initScrollAnimations() {
