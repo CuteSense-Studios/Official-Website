@@ -6,6 +6,7 @@ class CuteSenseFooter extends HTMLElement {
         this.innerHTML = `
         <footer class="py-10 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto">
             <div class="max-w-6xl mx-auto">
+                
                 <div class="flex flex-col md:flex-row items-center justify-between gap-10">
                     
                     <div class="flex items-center gap-4 text-left">
@@ -30,6 +31,17 @@ class CuteSenseFooter extends HTMLElement {
                             <i data-lucide="mail" class="w-5 h-5"></i>
                         </a>
                     </div>
+                </div>
+
+                <div class="flex justify-center my-8">
+                    <div class="w-12 h-[1px] bg-cs-lilac/20 rounded-full"></div>
+                </div>
+
+                <div class="flex justify-center items-center gap-2 opacity-30 hover:opacity-70 transition-opacity cursor-default">
+                    <i data-lucide="scale" class="w-3 h-3 text-cs-lilac"></i>
+                    <span class="text-[8px] uppercase tracking-[0.5em] font-bold text-cs-lilac">
+                        GNU AGPL v3
+                    </span>
                 </div>
             </div>
         </footer>
