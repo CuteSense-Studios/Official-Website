@@ -1,2 +1,0 @@
-Compiler script for windows edition of TailWindcss
- ./tailwindcss.exe -i ./assets/css/input.css -o ./assets/css/tailwind.css        

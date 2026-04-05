@@ -82,10 +82,10 @@ class CuteSenseFooter extends HTMLElement {
                         </a>
 
                         <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
-                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
-                           aria-label="Visit our GitHub">
-                            <i data-lucide="github" class="w-5 h-5"></i>
-                        </a>
+                        class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
+                        aria-label="Visit our GitHub">
+    <img src="${path}assets/icons/github.svg" alt="GitHub" class="w-5 h-5 opacity-90">
+                    </a>
                     </div>
                 </div>
 
