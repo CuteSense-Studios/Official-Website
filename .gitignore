@@ -1,5 +1,17 @@
-# Ignore the Tailwind standalone CLI
+# --- Tailwind Standalone CLI ---
+# Ignores the renamed binaries for Windows, Mac, and Linux
+tailwindcss
 tailwindcss.exe
 
-# Also ignore the Mac/Linux version just in case you ever collaborate with someone on another OS
-tailwindcss
+# Ignores the default downloaded filenames (e.g., tailwindcss-windows-x64.exe)
+tailwindcss-*
+
+# --- Build Output ---
+# If you follow the documentation's default naming, ignore the generated file.
+# You usually want your CI/CD or build process to generate this, not Git.
+dist/
+output.css
+
+# --- Misc / OS Garbage ---
+.DS_Store
+Thumbs.db
