@@ -69,7 +69,7 @@ class CuteSenseFooter extends HTMLElement {
                                 CuteSense Studios
                             </span>
                             <p class="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-cs-lilac/80">
-                                Art with Heart • © ${year} • Built with Gemini
+                                Art with Heart • © ${year} • Built with Gemini, Human Verified
                             </p>
                         </div>
                     </div>
