@@ -1,104 +1,110 @@
 /* ==========================================================================
-   CuteSense Custom Cursor Module (V2.1)
-   Location: /assets/css/cursor.css
-   Improvements: Accessibility, performance, extended interactive elements
+   CuteSense Custom Cursor – Fully Local, No External Files
+   Works in any browser with custom cursor support.
    ========================================================================== */
 
 :root {
-    /* Default: Chunky Lilac Arrow (Optimized with rounded corners) */
-    --cs-cursor-default: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3.21V19.09C5.5 20.01 6.64 20.44 7.24 19.74L11.14 15.19C11.33 14.97 11.61 14.85 11.9 14.85H17.58C18.55 14.85 19 13.65 18.28 13L6.44 3.14C6.18 2.92 5.5 3.01 5.5 3.21Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"), auto;
-    
-    /* Pointer: Pink Sparkle (Centered hotspot) */
-    --cs-cursor-pointer: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, pointer;
-
-    /* Forbidden: Soft Red "X" for disabled states */
-    --cs-cursor-not-allowed: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='9' fill='%23E57373' stroke='white' stroke-width='2'/%3E%3Cpath d='M15 9L9 15M9 9L15 15' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 12 12, not-allowed;
-
-    /* Help: Lilac Arrow with a Pink Question Mark */
-    --cs-cursor-help: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 3L18.5 13L12.5 14L9.5 20L5.5 3Z' fill='%23A178AF' stroke='white' stroke-width='2'/%3E%3Ccircle cx='18' cy='18' r='5' fill='%23F4C6C9'/%3E%3Cpath d='M18 16V18M18 20H18.01' stroke='%23A178AF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"), help;
+    /* Default arrow */
+    --cs-default: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.5 5.5L20.5 14.5L14.5 15.5L11.5 21.5L8.5 5.5Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='20' r='3' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.5'/%3E%3C/svg%3E") 10 6, auto;
+    /* Pointer hand */
+    --cs-pointer: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.5 13.5V8.5C9.5 7.5 10 7 11 7C12 7 12.5 7.5 12.5 8.5V12.5M12.5 12.5V7C12.5 6 13 5.5 14 5.5C15 5.5 15.5 6 15.5 7V12.5M15.5 12.5V8C15.5 7 16 6.5 17 6.5C18 6.5 18.5 7 18.5 8V13.5M18.5 13.5V10.5C18.5 9.5 19 9 20 9C21 9 21.5 9.5 21.5 10.5V16C21.5 19.5 19 22 15.5 22H13C10 22 8.5 20 8.5 17.5L9.5 13.5Z' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 12 4, pointer;
+    /* Not allowed */
+    --cs-not-allowed: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='14' cy='14' r='11' fill='%23E57373' stroke='white' stroke-width='2'/%3E%3Cpath d='M10 10L18 18M18 10L10 18' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") 14 14, not-allowed;
+    /* Help */
+    --cs-help: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 6L20 15L13 16L10 22L7 6Z' fill='%23A178AF' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='19' r='6' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.8'/%3E%3Cpath d='M21 17V19M21 21H21.01' stroke='%23A178AF' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 8 6, help;
+    /* Wait / loading */
+    --cs-wait: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='7' y='5' width='14' height='18' rx='3' fill='%23A178AF' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M10 9H18M10 19H18M10 14H18' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='14' r='2' fill='%23F4C6C9'/%3E%3C/svg%3E") 14 14, wait;
+    /* Grab */
+    --cs-grab: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12V8C9 7 9.5 6.5 10.5 6.5C11.5 6.5 12 7 12 8V12M12 12V7.5C12 6.5 12.5 6 13.5 6C14.5 6 15 6.5 15 7.5V12M15 12V8.5C15 7.5 15.5 7 16.5 7C17.5 7 18 7.5 18 8.5V13.5M18 13.5V11C18 10 18.5 9.5 19.5 9.5C20.5 9.5 21 10 21 11V17.5C21 20 18.5 22 15.5 22H13C10 22 8.5 20 8.5 18L9 12Z' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 14 10, grab;
+    /* Grabbing */
+    --cs-grabbing: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 12V9C9 8 9.5 7.5 10.5 7.5C11.5 7.5 12 8 12 9V12M12 12V8.5C12 7.5 12.5 7 13.5 7C14.5 7 15 7.5 15 8.5V12M15 12V9.5C15 8.5 15.5 8 16.5 8C17.5 8 18 8.5 18 9.5V14M18 14V11.5C18 10.5 18.5 10 19.5 10C20.5 10 21 10.5 21 11.5V17.5C21 19.5 19 21.5 16 21.5H13.5C10.5 21.5 9 19.5 9 18L9.5 12Z' fill='%23D9A8E0' stroke='%23A178AF' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 14 10, grabbing;
+    /* Zoom in */
+    --cs-zoom-in: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='8' stroke='%23A178AF' stroke-width='2.5' fill='%23F4C6C9'/%3E%3Cpath d='M18 18L23 23' stroke='%23A178AF' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M12 9V15M9 12H15' stroke='%23A178AF' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") 14 14, zoom-in;
+    /* Zoom out */
+    --cs-zoom-out: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='8' stroke='%23A178AF' stroke-width='2.5' fill='%23F4C6C9'/%3E%3Cpath d='M18 18L23 23' stroke='%23A178AF' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M9 12H15' stroke='%23A178AF' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") 14 14, zoom-out;
+    /* Copy */
+    --cs-copy: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='8' y='8' width='12' height='12' rx='2' stroke='%23A178AF' stroke-width='2' fill='%23F4C6C9'/%3E%3Cpath d='M12 12L20 12M16 8L16 16' stroke='%23A178AF' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 14 14, copy;
+    /* Move */
+    --cs-move: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 4L18 10H10L14 4Z' fill='%23A178AF' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M14 24L10 18H18L14 24Z' fill='%23A178AF' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M4 14L10 10V18L4 14Z' fill='%23A178AF' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M24 14L18 10V18L24 14Z' fill='%23A178AF' stroke='white' stroke-width='1.5'/%3E%3Ccircle cx='14' cy='14' r='2.5' fill='%23F4C6C9' stroke='%23A178AF' stroke-width='1.5'/%3E%3C/svg%3E") 14 14, move;
 }
 
-/* 1. Global Reset */
-html, body {
-    cursor: var(--cs-cursor-default);
-    min-height: 100vh;
+/* Apply cursors */
+html { cursor: var(--cs-default); }
+body { cursor: inherit; }
+
+/* Interactive elements */
+a, button, input[type="submit"], input[type="button"], input[type="reset"],
+select, summary, details, [role="button"], [contenteditable="true"],
+.cursor-pointer, .nav-link, .card-link, .pagination a, .menu-item,
+label, input[type="checkbox"] + label, input[type="radio"] + label {
+    cursor: var(--cs-pointer);
+}
+/* Fallback for :has() – modern browsers only */
+label:has(input:is([type="checkbox"], [type="radio"])) {
+    cursor: var(--cs-pointer);
 }
 
-/* 2. Interactive Elements (Extended for better coverage) */
-a, 
-button,
-input[type="submit"], 
-input[type="button"],
-input[type="reset"],
-select, 
-summary,
-details,
-[role="button"],
-[contenteditable="true"],
-.cursor-pointer,
-label:has(input:is([type="checkbox"], [type="radio"])),
-input:is([type="checkbox"], [type="radio"]) + label {
-    cursor: var(--cs-cursor-pointer);
-}
-
-/* 3. Text Inputs & Content (Maintain usability) */
-p, h1, h2, h3, h4, h5, h6, span, label,
-input[type="text"], 
-input[type="email"], 
-input[type="password"], 
-textarea,
-[contenteditable="true"]:empty {
+/* Text inputs */
+input[type="text"], input[type="email"], input[type="password"],
+input[type="search"], input[type="tel"], input[type="url"],
+textarea, [contenteditable="true"]:empty, p, h1, h2, h3, h4, h5, h6, span {
     cursor: text;
 }
 
-/* 4. Nested Logic: Links override text cursors */
-a p, a h1, a h2, a h3, a h4, a h5, a h6, a span, a label {
-    cursor: var(--cs-cursor-pointer);
+/* Disabled states */
+:disabled, [disabled], .is-disabled, [aria-disabled="true"],
+[inert], fieldset[disabled], button:disabled, input:disabled {
+    cursor: var(--cs-not-allowed) !important;
 }
 
-/* 5. Specialized States (Improved disabled detection) */
-:disabled, 
-[disabled], 
-.is-disabled,
-[aria-disabled="true"],
-[inert] {
-    cursor: var(--cs-cursor-not-allowed) !important;
+/* Help */
+[data-tooltip], .help-icon, [aria-describedby*="tooltip"],
+[data-help], .tooltip-trigger, [data-question-mark] {
+    cursor: var(--cs-help);
 }
 
-[data-tooltip], 
-.help-icon,
-[aria-describedby*="tooltip"],
-[data-help] {
-    cursor: var(--cs-cursor-help);
+/* Loading */
+.loading, [data-loading="true"], .async-load, .spinner-trigger {
+    cursor: var(--cs-wait);
 }
 
-/* 6. Active State with Performance & Accessibility Improvements */
-a:active, 
-button:active,
-[role="button"]:active {
-    filter: brightness(0.9);
-    will-change: filter; /* GPU acceleration */
-    transition: filter 0.05s ease; /* Instant but smooth */
+/* Draggable */
+[draggable="true"], .draggable { cursor: var(--cs-grab); }
+[draggable="true"]:active, .draggable:active { cursor: var(--cs-grabbing); }
+
+/* Zoom */
+.zoomable, [data-zoom="in"], .gallery-image { cursor: var(--cs-zoom-in); }
+.zoomable.zoomed, [data-zoom="out"] { cursor: var(--cs-zoom-out); }
+
+/* Copy & move */
+[data-copy], .copy-target { cursor: var(--cs-copy); }
+[data-move], .move-handle { cursor: var(--cs-move); }
+
+/* Resize handles */
+[style*="resize: both"], .resize-handle-both { cursor: nw-resize; }
+[style*="resize: horizontal"], .resize-handle-x { cursor: ew-resize; }
+[style*="resize: vertical"], .resize-handle-y { cursor: ns-resize; }
+
+/* Active state effect */
+a:active, button:active, [role="button"]:active,
+.draggable:active, .zoomable:active {
+    filter: brightness(0.92);
+    transition: filter 0.05s ease;
 }
 
-/* 7. Keyboard Accessibility: Focus indicators */
+/* Focus indicator */
 :focus-visible {
-    outline: 2px solid #A178AF;
-    outline-offset: 2px;
-    border-radius: 4px;
+    outline: 3px solid #A178AF;
+    outline-offset: 3px;
+    border-radius: 5px;
 }
 
-/* 8. Reduced Motion Preference (Accessibility) */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    a:active, 
-    button:active,
-    [role="button"]:active {
+    a:active, button:active, [role="button"]:active,
+    .draggable:active, .zoomable:active {
         filter: brightness(0.95);
         transition: none;
     }
-    
-    :focus-visible {
-        outline-offset: 1px;
-        transition: none;
-    }
+    * { transition: none !important; }
 }
