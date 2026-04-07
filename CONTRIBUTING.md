@@ -48,7 +48,7 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 
 * **Format** – Use open formats (PNG, SVG, WebP, etc.) unless the project specifies otherwise.
 * **Source files** – Include source (.psd, .kra, .blend) if possible, especially for complex assets.
-* **AI disclosure** – Include a `.txt` with or credit the source inside the README.md file or embed metadata (EXIF). Example:
+* **AI disclosure** – Include a `.txt` with or credit the source inside the README.md file or embed metadata (EXIF) or `ATTRIBUTION.md` file. Example:
 
   ```text
   forest_background.txt:
@@ -61,7 +61,7 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 ### Music & Sound Effects
 
 * **Formats** – OGG, WAV, or FLAC (lossless preferred for source).
-* **AI disclosure** – Include a `.txt` with or credit the source inside the README.md file:
+* **AI disclosure** – Include a `.txt` with or credit the source inside the README.md or  `ATTRIBUTION.md` file:
 
   ```text
   bgm_cave_loop.txt:
@@ -73,13 +73,13 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 
 ### Writing & Narrative (dialogue, descriptions, documentation)
 
-* **AI assistance** – Using LLMs to overcome writer’s block or rephrase is fine, but **substantial AI‑generated text** must be disclosed in the PR.
+* **AI Assistance:** While using LLMs to overcome writer’s block or to rephrase content is permitted, any **substantial AI-generated text** must be disclosed. Please note this in your Pull Request (PR) or a `.txt` file, and ensure the source is credited within the `README.md` or `ATTRIBUTION.md` file.
 * **Final human polish** – Every text contribution must be read and edited by a human for tone, accuracy, and “cuteness”.
 * **Disclosure example** – “Dialogue for NPC X was drafted using Claude 3 (prompt: ‘write three shy greeting lines for a bunny baker’) and then rewritten by me.”
 
 ---
 
-## 🤖 AI Usage & Transparency Policy
+## 4. AI Usage & Transparency Policy
 
 ### ✅ Permitted Use
 
