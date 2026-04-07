@@ -36,7 +36,7 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 
 * **Style** – Follow the project’s `.editorconfig` and linting rules (if any). When in doubt, match existing code.
 * **Tests** – Add or update tests for new functionality.
-* **AI Disclosure:** Any AI-generated code (>10 lines) or complex algorithms must be credited in the `README.md`, an `AI_CREDITS.txt` file, or via inline code comments:
+* **AI Disclosure:** Any AI-generated code (>10 lines) or complex algorithms must be credited in the `README.md`, an `ATTRIBUTION.md` file, or via inline code comments:
 
   ```python
   # AI‑assisted (GPT-4, prompt: "function to validate email format") – reviewed and adapted by @yourname
