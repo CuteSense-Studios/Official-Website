@@ -1,9 +1,16 @@
 /**
  * CuteSense Studios - Universal Favicon Loader
- * Managed centrally to ensure brand consistency.
+ * Dynamically calculates path to handle GitHub Pages subdirectories.
  */
 (function() {
-    const FAVICON_PATH = 'assets/icons/companylogo.webp';
+    // 1. Get the full URL of THIS script (e.g., .../assets/js/favicon.js)
+    const scriptURL = document.currentScript.src;
+    
+    // 2. Derive the base 'assets' directory by removing '/js/favicon.js'
+    const assetsBase = scriptURL.substring(0, scriptURL.lastIndexOf('/js/'));
+    
+    // 3. Construct the icon path relative to the assets folder
+    const FAVICON_PATH = `${assetsBase}/icons/companylogo.webp`;
     
     const iconConfigs = [
         { rel: 'icon', type: 'image/webp', href: FAVICON_PATH },
@@ -12,7 +19,6 @@
     ];
 
     iconConfigs.forEach(config => {
-        // Check if the link tag already exists
         let link = document.querySelector(`link[rel*="${config.rel}"]`);
         
         if (!link) {
@@ -20,12 +26,10 @@
             document.head.appendChild(link);
         }
         
-        // Apply attributes
         link.rel = config.rel;
         link.href = config.href;
         if (config.type) link.type = config.type;
     });
 
-    // Optional: Log to confirm central management for CuteSense Studios
-    console.log("CuteSense Brand Assets Loaded.");
+    console.log("CuteSense Brand Assets Loaded from: " + assetsBase);
 })();
