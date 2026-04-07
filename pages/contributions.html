@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute | CuteSense Studios</title>
+    
+    <meta name="description" content="Join CuteSense Studios. Learn how to contribute code, art, and music through our ethical human-AI partnership framework.">
+    <link rel="icon" type="image/webp" href="../assets/icons/companylogo.webp">
+    
+    <link rel="stylesheet" href="../assets/css/cursor.css">
+    <link rel="stylesheet" href="../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    
+    <script src="../assets/js/lucide.min.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
+</head>
+<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden flex flex-col min-h-screen">
+
+    <cs-navbar></cs-navbar>
+    <script src="../assets/js/navbar.js"></script>
+
+    <main class="flex-grow">
+        <section class="relative pt-32 pb-20 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none -z-10">
+                <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-cs-lilac rounded-full blur-[100px] opacity-20"></div>
+            </div>
+            <div class="max-w-5xl mx-auto text-center px-6">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">Building <span class="gradient-text">Together</span></h1>
+                <p class="text-lg md:text-xl opacity-80 max-w-2xl mx-auto font-medium">
+                    Thank you for your interest in contributing! We welcome code, art, music, and voices from all backgrounds.
+                </p>
+                <div class="mt-8 inline-flex items-center gap-2 px-4 py-2 bg-cs-pink/10 border-2 border-cs-pink/30 rounded-2xl text-cs-pink font-bold text-sm">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> AI is a collaborator, not a replacement.
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 px-6">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-8 border-2 border-cs-blue rounded-[2.5rem] shadow-[0_8px_0_#B9E1F1] dark:shadow-none">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-cs-blue text-white"><i data-lucide="zap"></i></div>
+                        <h2 class="text-2xl font-bold">Quick Start</h2>
+                    </div>
+                    <ul class="space-y-4 font-medium opacity-90">
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-cs-blue shrink-0"></i> Comply with the project's specific license (MIT, CC BY-SA, etc.).</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-cs-blue shrink-0"></i> <strong>Disclosure is mandatory</strong> if AI tools are used.</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-cs-blue shrink-0"></i> You are responsible for the legality of your training data/tools.</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-cs-blue shrink-0"></i> Human review is mandatory for every single submission.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card bg-white dark:bg-slate-800/60 p-8 border-2 border-cs-pink rounded-[2.5rem] shadow-[0_8px_0_#F4C6C9] dark:shadow-none">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-cs-pink text-white"><i data-lucide="git-branch"></i></div>
+                        <h2 class="text-2xl font-bold">Workflow</h2>
+                    </div>
+                    <ol class="space-y-3 font-medium opacity-90 list-decimal ml-4">
+                        <li>Find an issue or propose a new idea.</li>
+                        <li>Discuss significant changes before starting.</li>
+                        <li>Fork & branch with a descriptive name.</li>
+                        <li>Follow the <strong>AI disclosure rules</strong>.</li>
+                        <li>Test locally and open a Pull Request (PR).</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-6 bg-cs-lilac/5 dark:bg-slate-900/40 border-y-4 border-dotted border-cs-lilac/20">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Contribution Types</h2>
+                    <p class="opacity-70">Specific rules for different creative fields</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border-l-8 border-cs-blue shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="code"></i> Code</h3>
+                        <p class="text-sm mb-4 opacity-80 font-medium text-pretty">Follow .editorconfig and linting rules. Add tests for new features. For AI use (>10 lines), include an inline comment with the tool and prompt used.</p>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border-l-8 border-cs-pink shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="palette"></i> Art</h3>
+                        <p class="text-sm mb-4 opacity-80 font-medium text-pretty">Use open formats (PNG, SVG, WebP). AI assets must include a side-car <code>_ai.txt</code> file. <strong>No raw outputs</strong>—meaningful human editing is required.</p>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border-l-8 border-cs-lilac shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="music"></i> Music & SFX</h3>
+                        <p class="text-sm mb-4 opacity-80 font-medium text-pretty">OGG, WAV, or FLAC preferred. Disclose AI tools and prompts in a .txt file. You must verify the AI tool's license allows open-source distribution.</p>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border-l-8 border-cs-dark dark:border-slate-500 shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="pen-tool"></i> Writing</h3>
+                        <p class="text-sm mb-4 opacity-80 font-medium text-pretty">Substantial AI text must be disclosed. Every contribution must receive a final human polish for tone, accuracy, and "cuteness".</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 px-6">
+            <div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-[3rem] border-4 border-cs-lilac p-8 md:p-16 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10">
+                    <i data-lucide="cpu" class="w-32 h-32"></i>
+                </div>
+                
+                <h2 class="text-3xl md:text-5xl font-bold mb-10 text-center">AI Usage & Transparency</h2>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-cs-blue font-bold text-xl mb-4 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-6 h-6"></i> Permitted
+                        </h3>
+                        <ul class="space-y-3 text-sm font-medium opacity-80">
+                            <li>• Ideation, drafts, and boilerplate</li>
+                            <li>• Code refactoring & optimization</li>
+                            <li>• Foundational assets (as a start)</li>
+                            <li>• Accessibility improvements</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-cs-pink font-bold text-xl mb-4 flex items-center gap-2">
+                            <i data-lucide="x-circle" class="w-6 h-6"></i> Prohibited
+                        </h3>
+                        <ul class="space-y-3 text-sm font-medium opacity-80">
+                            <li>• Raw, unmodified AI outputs</li>
+                            <li>• Unethical/Copyright-violating models</li>
+                            <li>• Restrictive/Non-OSS licenses</li>
+                            <li>• Non-disclosure of AI usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-12 p-6 bg-cs-lilac/10 rounded-2xl border-2 border-cs-lilac/20">
+                    <h4 class="font-bold mb-2">How to Disclose:</h4>
+                    <p class="text-sm opacity-80 leading-relaxed">
+                        Include <strong>In-File Attribution</strong> (comments or metadata) and a summary in your <strong>PR Description</strong> detailing which tools were used and which components they influenced.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-32 px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6">Questions?</h2>
+                <p class="opacity-80 mb-10 font-medium">
+                    For technical questions, open a GitHub Discussion. For policy or legal concerns, reach out to us directly.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="mailto:cutesensestudios@protonmail.com" class="px-8 py-3 bg-cs-dark dark:bg-white dark:text-cs-dark text-white rounded-2xl font-bold hover:scale-105 transition-all">
+                        Contact via Email
+                    </a>
+                    <a href="#" class="px-8 py-3 border-2 border-cs-dark dark:border-white rounded-2xl font-bold hover:bg-cs-dark hover:text-white dark:hover:bg-white dark:hover:text-cs-dark transition-all">
+                        Code of Conduct
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <cs-footer></cs-footer>
+    <script src="../assets/js/footer.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
