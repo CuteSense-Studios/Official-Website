@@ -1,67 +1,150 @@
-# CuteSense Studios Code of Conduct
+# Contributing to CuteSense Studios Projects
 
-## 1. Our Pledge
+**Thank you for your interest in contributing!** We welcome contributions of all kinds – code, art, music, writing, testing, documentation, and translations.
 
-In the interest of fostering an open, welcoming, and "cute" environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+This guide applies to **all CuteSense Studios projects** (tools, games, libraries, assets). It explains how to contribute effectively and how we handle AI‑assisted contributions with transparency and fairness.
 
----
-
-## 2. Our Standards
-
-### ✅ Positive Behavior
-
-Examples of behavior that contributes to creating a positive environment include:
-
-* **Being Kind and Inclusive:** Using welcoming and inclusive language.
-* **Respecting Differences:** Being respectful of differing viewpoints and experiences.
-* **Graceful Acceptance:** Gracefully accepting constructive criticism.
-* **Focusing on Community:** Focusing on what is best for the community and the project’s goals.
-* **Showing Empathy:** Exercising empathy towards other community members.
-* **Transparency:** Being honest about the use of AI tools in your creative process.
-
-### ❌ Unacceptable Behavior
-
-Examples of unacceptable behavior by participants include:
-
-* **Harassment:** The use of sexualized language or imagery and unwelcome sexual attention or advances.
-* **Trolling:** Trolling, insulting/derogatory comments, and personal or political attacks.
-* **Doxing:** Publishing others' private information, such as a physical or electronic address, without explicit permission.
-* **Dishonesty:** Intentionally hiding the use of AI tools to bypass our [Contribution Guidelines](CONTRIBUTING.md).
-* **Unprofessional Conduct:** Other conduct which could reasonably be considered inappropriate in a professional or community setting.
+> 💡 **Our core belief** – AI is a collaborator, not a replacement.
+> Human creativity and final responsibility always come first.
 
 ---
 
-## 3. Enforcement Responsibilities
+## 1. Quick Start – What You Need to Know
 
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
-
-Maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
-
----
-
-## 4. Scope
-
-This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
+* **All contributions** must comply with the project’s license (MIT, Apache‑2.0, GPL‑3.0, CC BY‑SA, etc.). Check the `LICENSE` file in the repository.
+* **If you use AI** to generate any part of your contribution (code, art, music, text), you **must disclose it** – see section 4.
+* **You are responsible** for your contribution’s legality (copyright, training data, terms of service of AI tools you use).
+* **Human review** is mandatory – every pull request or asset submission will be reviewed by a human maintainer.
 
 ---
 
-## 5. Reporting and Enforcement
+## 2. How to Contribute (General Workflow)
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at: [cutesensestudios@protonmail.com]
-
-All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident.
-
-### Enforcement Escalation
-
-1. **Correction:** A private, written warning providing clarity around the nature of the violation.
-2. **Warning:** A warning with consequences for continued behavior.
-3. **Temporary Ban:** A temporary ban from any sort of interaction or communication for a specified period.
-4. **Permanent Ban:** A permanent ban from the community, including all public repositories and communication channels.
+1. **Find an issue or idea** – Look for labels like `good first issue`, `help wanted`, or propose a new feature via an issue.
+2. **Discuss first** – For significant changes, open an issue to discuss before working (saves you time).
+3. **Fork & branch** – Create a branch with a descriptive name (`fix‑ui‑crash`, `add‑new‑background‑art`).
+4. **Make your changes** – Follow the AI disclosure rules below.
+5. **Test locally** – Ensure your changes work and don’t break existing functionality.
+6. **Open a pull request (PR)** – Fill out the PR template (including AI disclosure if applicable).
+7. **Wait for review** – A maintainer will review, request changes, or merge.
 
 ---
 
-## 6. Attribution
+## 3. Contribution Types & Specific Rules
 
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 1.4, available at [https://www.contributor-covenant.org/version/1/4/code-of-conduct.html](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html)
+### Code (Python, JavaScript, Rust, etc.)
 
-**Thank you for keeping CuteSense Studios a safe, creative, and kind space for everyone!**
+* **Style** – Follow the project’s `.editorconfig` and linting rules (if any). When in doubt, match existing code.
+* **Tests** – Add or update tests for new functionality.
+* **AI disclosure** – If AI generated >10 lines of code or a complex algorithm, add an inline comment:
+
+  ```python
+  # AI‑assisted (GPT-4, prompt: "function to validate email format") – reviewed and adapted by @yourname
+  ```
+
+  For smaller snippets (e.g., one‑line fixes, obvious boilerplate), no comment is required, but you may still note it in the PR description.
+
+### Art (sprites, backgrounds, UI, character designs)
+
+* **Format** – Use open formats (PNG, SVG, WebP, etc.) unless the project specifies otherwise.
+* **Source files** – Include source (.psd, .kra, .blend) if possible, especially for complex assets.
+* **AI disclosure** – Add a text file side‑car with the same name + `_ai.txt` or embed metadata (EXIF). Example:
+
+  ```text
+  forest_background_ai.txt:
+  Generated by: Stable Diffusion 3.5 (local, fine‑tuned on CC0 landscapes)
+  Prompt: "peaceful forest path, morning light, stylized for 2D game"
+  Human changes: Cropped, colour‑corrected, added a hidden character.
+  ```
+* **No unmodified raw AI outputs** – Every AI‑generated asset must be **meaningfully edited** by a human (adjust colours, composition, fix errors). Pure “prompt‑and‑publish” is not accepted.
+
+### Music & Sound Effects
+
+* **Formats** – OGG, WAV, or FLAC (lossless preferred for source).
+* **AI disclosure** – Include a `.txt` file with:
+
+  ```text
+  bgm_cave_loop_ai.txt:
+  Tool: Suno AI (free tier, license allows open‑source use)
+  Prompt: "atmospheric cave ambient, soft piano, 60 BPM"
+  Human edits: Remixed in Audacity – shortened to 45s, added reverb, normalised.
+  ```
+* **License verification** – You must confirm that the AI tool’s terms **allow** the output to be used under the project’s open license. Attach a screenshot or link to the relevant license clause in the PR.
+
+### Writing & Narrative (dialogue, descriptions, documentation)
+
+* **AI assistance** – Using LLMs to overcome writer’s block or rephrase is fine, but **substantial AI‑generated text** must be disclosed in the PR.
+* **Final human polish** – Every text contribution must be read and edited by a human for tone, accuracy, and “cuteness”.
+* **Disclosure example** – “Dialogue for NPC X was drafted using Claude 3 (prompt: ‘write three shy greeting lines for a bunny baker’) and then rewritten by me.”
+
+---
+
+## 🤖 AI Usage & Transparency Policy
+
+### ✅ Permitted Use
+
+* **Ideation & Drafts:** Using AI to generate initial concepts, boilerplate code, or creative outlines.
+* **Code Refactoring:** Utilizing AI to optimize, clean, or document existing code.
+* **Foundational Assets:** Creating background art, music, or sketches to serve as a **starting point** for further manual work.
+* **Accessibility:** Leveraging AI tools for speech-to-text, automated captions, or accessibility-focused improvements.
+
+### ❌ Prohibited Actions
+
+* **Raw Submissions:** Submitting unmodified AI-generated outputs as a final contribution.
+* **Unethical Models:** Using AI models trained on copyrighted material without explicit permission. When in doubt, consult project maintainers via an Issue or Pull Request before proceeding.
+* **Restrictive Licenses:** Using tools that claim ownership or restrictive rights over the generated output (always review the Terms of Service).
+* **Non-Disclosure:** Failing to report AI usage. This violates our **Transparency Policy** and will lead to PR rejection or a potential ban for repeat offenses.
+
+---
+
+### 📋 How to Disclose AI Use
+
+* [ ] **In-File Attribution:** Add a comment within the code, a sidecar file, or relevant metadata acknowledging the tool used.
+* [ ] **PR Description:** Provide a summary in your Pull Request detailing which AI tools were used and which specific components they influenced.
+
+* [ ] **Licensing Verification:** For third-party assets (e.g., AI-generated audio), confirm the license permits open-source distribution and note any specific requirements, such as attribution or non-commercial clauses.
+
+## 5. Review Process & Human Oversight
+
+    Every contribution goes through a**human maintainer**. They will:
+
+1. Check for AI disclosure and compliance with this guide.
+2. Evaluate the **human effort** – Is there meaningful human creativity or problem‑solving? (We reject purely generated content.)
+3. Verify licensing – If you used an AI tool that restricts commercial use, and the project is commercially usable (e.g., MIT license), the contribution will be rejected unless the restriction is compatible.
+4. Request changes if disclosure is missing or if the AI tool’s terms are violated.
+
+**If a copyright issue is discovered after merging** – We will remove or replace the contribution, credit the original creator (if known), and document the takedown in the project’s `ATTRIBUTION.md` or README.md.
+
+---
+
+## 6. Code of Conduct (Short Version)
+
+* Be respectful, inclusive, and kind.
+* No harassment, hate speech, or trolling.
+* Disclose AI use honestly – hiding it is considered deceptive.
+* If you see a problem, report it to cutesensestudios@protonmail.com.
+
+Full Code of Conduct available at [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+---
+
+## 7. Getting Help & Contact
+
+* **Technical questions** – Open a GitHub Discussion.
+* **AI policy questions** – Contact us in our email
+* **Copyright or legal concerns** – Contact us through the email.
+
+---
+
+## 8. Acknowledgment
+
+By contributing, you agree that:
+
+* Your contribution is **original** or properly attributed (including AI assistance).
+* You have the right to license your contribution under the project’s open license.
+* You understand that CuteSense Studios may remove your contribution if it violates copyright or our AI policy.
+
+**Thank you for helping us build open, ethical, and cute creations – with humans and AI working together, transparently.**
+
+— CuteSense Studios Team
+
