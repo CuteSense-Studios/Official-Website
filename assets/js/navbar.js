@@ -12,12 +12,10 @@ class CuteSenseNavbar extends HTMLElement {
         requestAnimationFrame(() => this._init());
     }
 
-    // Improved path detection – works reliably on any nested page
     _getPath() {
         try {
             const path = window.location.pathname;
             const depth = (path.match(/\//g) || []).length - 1;
-            // If we are in a subdirectory (like /pages/ or /docs/), go up one level
             if (path.includes('/pages/') || path.includes('/docs/') || depth > 1) {
                 return '../';
             }
@@ -51,12 +49,12 @@ class CuteSenseNavbar extends HTMLElement {
         const isHome = active === 'index';
         const isMission = active === 'mission';
         const isMotto = active === 'motto';
+        const isBusiness = active === 'buisness-model';
 
         this.innerHTML = `
         <style>
             cs-navbar { display: block; height: 80px; z-index: 1000; position: relative; }
             
-            /* Theme toggle styling (unchanged) */
             #theme-toggle-btn {
                 width: 44px;
                 height: 24px;
@@ -86,42 +84,23 @@ class CuteSenseNavbar extends HTMLElement {
                 transform: translateX(${this._isDark ? '20px' : '0px'});
             }
 
-            /* Active link styling */
             .nav-link { position: relative; transition: color 0.3s; }
             .nav-link-active { color: #F08DA1 !important; }
-            .nav-link-active::after {
-                content: '';
-                position: absolute;
-                bottom: -6px;
-                left: 0;
-                width: 100%;
-                height: 2.5px;
-                background: linear-gradient(90deg, #F08DA1, #4169E1);
-                border-radius: 99px;
-            }
-
+            
             #mobile-menu.active { display: flex !important; opacity: 1; transform: translateY(0); }
             .nav-hidden { transform: translateY(-110%); }
             .nav-visible { transform: translateY(0); }
-
-            /* No brand-container styles needed anymore */
         </style>
 
         <nav class="fixed top-0 left-0 w-full z-[1000] px-2 sm:px-4 pt-4 transition-transform duration-500 ease-out nav-visible" data-navbar>
             <div class="max-w-7xl mx-auto flex items-center justify-between relative bg-white/90 dark:bg-slate-900/95 backdrop-blur-md border-b-4 border-cs-lilac/20 rounded-[2rem] px-4 h-16 shadow-xl">
                 
                 <div class="flex items-center gap-4 z-10">
-                    <button id="hamburger-btn" class="md:hidden p-2 text-cs-lilac hover:bg-cs-lilac/10 rounded-full transition-colors" aria-label="Menu">
+                    <button id="hamburger-btn" class="p-2 text-cs-lilac hover:bg-cs-lilac/10 rounded-full transition-colors" aria-label="Menu">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
-                    <div class="flex gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                        <a href="${path}index.html" class="nav-link ${isHome ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Home</a>
-                        <a href="${path}pages/mission.html" class="nav-link ${isMission ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Philosophy</a>
-                        <a href="${path}pages/motto.html" class="nav-link ${isMotto ? 'nav-link-active' : 'hover:text-cs-lilac transition-colors'}">Motto</a>
-                    </div>
                 </div>
 
-                <!-- Brand text removed; left empty to maintain spacing -->
                 <div class="flex-1"></div>
                 
                 <div class="flex items-center gap-3 z-10">
@@ -136,7 +115,6 @@ class CuteSenseNavbar extends HTMLElement {
 
         <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 hidden flex-col p-6 transition-all duration-300 opacity-0 translate-y-[-10px]">
             <div class="flex justify-between items-center mb-10">
-                <!-- Removed CuteSense text, just close button -->
                 <div></div>
                 <button id="mobile-close-btn" class="p-2 bg-cs-lilac/10 hover:bg-cs-lilac/20 rounded-full transition-colors">
                     <i data-lucide="x" class="w-6 h-6 text-slate-700 dark:text-slate-200"></i>
@@ -146,6 +124,7 @@ class CuteSenseNavbar extends HTMLElement {
                 <a href="${path}index.html" class="mobile-nav-link ${isHome ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Home</a>
                 <a href="${path}pages/mission.html" class="mobile-nav-link ${isMission ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Philosophy</a>
                 <a href="${path}pages/motto.html" class="mobile-nav-link ${isMotto ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Motto</a>
+                <a href="${path}pages/buisness-model.html" class="mobile-nav-link ${isBusiness ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Business Model</a>
             </div>
         </div>
         `;
@@ -203,12 +182,8 @@ class CuteSenseNavbar extends HTMLElement {
 
         themeBtn?.addEventListener('click', () => {
             this._isDark = !this._isDark;
-            
-            if (this._isDark) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            if (this._isDark) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
             
             localStorage.setItem('theme', this._isDark ? 'dark' : 'light');
             this._updateToggleButton();
@@ -218,9 +193,7 @@ class CuteSenseNavbar extends HTMLElement {
         closeBtn?.addEventListener('click', () => this._toggleMenu(false));
         
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this._isMenuOpen) {
-                this._toggleMenu(false);
-            }
+            if (e.key === 'Escape' && this._isMenuOpen) this._toggleMenu(false);
         });
     }
 
