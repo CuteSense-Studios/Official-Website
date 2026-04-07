@@ -105,7 +105,7 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 
 ## 5. Review Process & Human Oversight
 
-    Every contribution goes through a**human maintainer**. They will:
+    Every contribution goes through a **human maintainer**. They will:
 
 1. Check for AI disclosure and compliance with this guide.
 2. Evaluate the **human effort** – Is there meaningful human creativity or problem‑solving? (We reject purely generated content.)
