@@ -61,7 +61,7 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 ### Music & Sound Effects
 
 * **Formats** – OGG, WAV, or FLAC (lossless preferred for source).
-* **AI disclosure** – Include a `.txt` with or credit the source inside the README.md file: 
+* **AI disclosure** – Include a `.txt` with or credit the source inside the README.md file:
 
   ```text
   bgm_cave_loop.txt:
