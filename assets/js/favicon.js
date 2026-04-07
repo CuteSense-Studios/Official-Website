@@ -3,7 +3,7 @@
  * Managed centrally to ensure brand consistency.
  */
 (function() {
-    const FAVICON_PATH = '/assets/icons/companylogo.webp'; //
+    const FAVICON_PATH = 'assets/icons/companylogo.webp';
     
     const iconConfigs = [
         { rel: 'icon', type: 'image/webp', href: FAVICON_PATH },
