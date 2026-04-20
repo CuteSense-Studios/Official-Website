@@ -15,11 +15,8 @@ class CuteSenseNavbar extends HTMLElement {
     _getPath() {
         try {
             const path = window.location.pathname;
-            // Handle the deeper nesting for the Creative Hub
-            if (path.includes('/pages/chub/')) {
-                return '../../';
-            }
             const depth = (path.match(/\//g) || []).length - 1;
+            // Removed specific Creative Hub nesting logic
             if (path.includes('/pages/') || path.includes('/docs/') || depth > 1) {
                 return '../';
             }
@@ -54,7 +51,6 @@ class CuteSenseNavbar extends HTMLElement {
         const isMission = active === 'mission';
         const isMotto = active === 'motto';
         const isBusiness = active === 'buisness-model';
-        const isHub = active === 'cutesensehub'; // Detect if Hub is active
 
         this.innerHTML = `
         <style>
@@ -130,7 +126,6 @@ class CuteSenseNavbar extends HTMLElement {
                 <a href="${path}pages/mission.html" class="mobile-nav-link ${isMission ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Philosophy</a>
                 <a href="${path}pages/motto.html" class="mobile-nav-link ${isMotto ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Motto</a>
                 <a href="${path}pages/buisness-model.html" class="mobile-nav-link ${isBusiness ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Business Model</a>
-                <a href="${path}pages/chub/cutesensehub.html" class="mobile-nav-link ${isHub ? 'text-cs-lilac' : 'text-slate-700 dark:text-slate-200 hover:text-cs-lilac'} transition-colors">Creative Hub</a>
             </div>
         </div>
         `;
