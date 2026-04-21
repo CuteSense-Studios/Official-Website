@@ -2,10 +2,8 @@ class CuteSenseFooter extends HTMLElement {
     constructor() {
         super();
         this._observer = null;
-        this._resizeObserver = null;
-        this._isVisible = false;
         this._iconRetryCount = 0;
-        this._maxIconRetries = 10; // Increased retries
+        this._maxIconRetries = 15;
     }
 
     connectedCallback() {
@@ -14,78 +12,65 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     disconnectedCallback() {
-        if (this._observer) {
-            this._observer.disconnect();
-            this._observer = null;
-        }
-        if (this._resizeObserver) {
-            this._resizeObserver.disconnect();
-            this._resizeObserver = null;
-        }
+        if (this._observer) this._observer.disconnect();
     }
 
     _getPath() {
         try {
             const path = window.location.pathname;
-            const depth = (path.match(/\//g) || []).length - 1;
-            if (path.includes('/pages/') || path.includes('/docs/') || depth > 1) {
-                return '../';
-            }
-            return './';
-        } catch (e) {
-            console.warn('CuteSenseFooter: Path detection failed, using default', e);
-            return './';
-        }
-    }
-
-    _getCurrentYear() {
-        try {
-            return new Date().getFullYear();
-        } catch (e) {
-            return '2026';
-        }
+            // Checks if we are in a subdirectory like /pages/ or /docs/
+            const isSubdir = path.includes('/pages/') || path.includes('/docs/');
+            return isSubdir ? '../' : './';
+        } catch (e) { return './'; }
     }
 
     _render() {
         const path = this._getPath();
-        const year = this.getAttribute('static-year') || this._getCurrentYear();
+        const year = new Date().getFullYear();
         
         this.innerHTML = `
-        <footer class="py-10 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-500 opacity-0" data-footer-root>
-            <div class="max-w-6xl mx-auto" data-footer-content>
+        <footer class="py-10 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-700 opacity-0" data-footer-root>
+            <div class="max-w-6xl mx-auto">
                 
                 <div class="flex flex-col md:flex-row items-center justify-between gap-10 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
                     
                     <div class="flex items-center gap-4 text-left">
-                        <img src="${path}assets/icons/companylogo.webp" alt="Logo" 
-                             class="h-16 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
-                             loading="lazy"
-                             decoding="async"
-                             data-footer-logo
-                             onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0';">
+                        <div class="relative h-16 w-auto shrink-0 flex items-center justify-center">
+                            <img src="${path}assets/icons/companylogo.webp" alt="CuteSense Logo" 
+                                 class="h-16 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
+                                 onerror="this.src='https://raw.githubusercontent.com/CuteSense-Studios/brand/main/logo.webp';">
+                        </div>
                         
                         <div class="flex flex-col">
                             <span class="text-xl sm:text-2xl gradient-text borel-font leading-tight py-1">
                                 CuteSense Studios
                             </span>
-                            <p class="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-cs-lilac/80">
-                                Art with Heart • © ${year} • Built with Gemini, Human Verified
-                            </p>
+                            <div class="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-cs-lilac/80">
+                                <span>Art with Heart • © ${year}</span>
+                                <span class="hidden sm:inline">•</span>
+                                <div id="location-container" class="flex items-center gap-1">
+                                    <i data-lucide="map-pin" class="w-3 h-3"></i>
+                                    <span id="gh-location">India</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex gap-8 items-center" data-social-links>
+                    <div class="flex gap-8 items-center">
                         <a href="mailto:cutesensestudios@protonmail.com" 
-                           class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
-                           aria-label="Send us an email">
+                           class="text-cs-lilac hover:scale-110 transition-transform"
+                           aria-label="Email Us">
                             <i data-lucide="mail" class="w-5 h-5"></i>
                         </a>
 
                         <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
-                        class="text-cs-lilac hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-cs-lilac/50 rounded"
-                        aria-label="Visit our GitHub">
-    <img src="${path}assets/icons/github.svg" alt="GitHub" class="w-5 h-5 opacity-90">
-                    </a>
+                           class="text-cs-lilac hover:scale-110 transition-transform"
+                           aria-label="GitHub Organization">
+                            <img src="${path}assets/icons/github.svg" 
+                                 alt="GitHub" 
+                                 class="w-5 h-5 opacity-90 dark:invert-[0.1]"
+                                 onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
+                        </a>
                     </div>
                 </div>
 
@@ -93,11 +78,10 @@ class CuteSenseFooter extends HTMLElement {
                     <div class="w-12 h-[1px] bg-cs-lilac/20 rounded-full"></div>
                 </div>
 
-                <div class="flex justify-center items-center gap-2 opacity-30 hover:opacity-70 transition-opacity cursor-default focus-within:opacity-70"
-                     tabindex="0" role="contentinfo" aria-label="License information">
+                <div class="flex justify-center items-center gap-2 opacity-30 hover:opacity-70 transition-opacity cursor-default">
                     <i data-lucide="scale" class="w-3 h-3 text-cs-lilac"></i>
                     <span class="text-[8px] uppercase tracking-[0.5em] font-bold text-cs-lilac">
-                        GNU AGPL v3
+                        GNU AGPL v3 • Built with Gemini • Human Verified
                     </span>
                 </div>
             </div>
@@ -106,143 +90,74 @@ class CuteSenseFooter extends HTMLElement {
     }
 
     _initializeSmartFeatures() {
-        this._initIconsWithFallback();
+        this._initIcons();
         this._initScrollAnimations();
-        this._respectMotionPreferences();
-        this._initLinkPrefetch();
+        this._fetchLocation();
     }
 
-    _initIconsWithFallback() {
-    const attemptIcons = () => {
-        // Check for Lucide
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            try {
-                // BUG FIX: Explicitly target 'this' as the root
-                window.lucide.createIcons({
-                    root: this, 
-                    attrs: { 
-                        'stroke-width': '2',
-                        'class': 'shrink-0' // Prevents the icon from squishing to 0px
-                    }
-                });
-                this._isVisible = true;
-            } catch (e) {
-                console.error('CuteSenseFooter: Icon rendering failed', e);
-                this._fallbackToTextIcons();
-            }
-        } else if (this._iconRetryCount < this._maxIconRetries) {
-            this._iconRetryCount++;
-            setTimeout(attemptIcons, 100);
-        } else {
-            this._fallbackToTextIcons();
-        }
-    };
-    
-    attemptIcons();
-}
+    async _fetchLocation() {
+        const textEl = this.querySelector('#gh-location');
+        if (!textEl) return;
 
-    _fallbackToTextIcons() {
-        const iconElements = this.querySelectorAll('[data-lucide]');
-        iconElements.forEach(el => {
-            const iconName = el.getAttribute('data-lucide');
-            const colorClass = "text-cs-lilac";
-            
-            if (iconName === 'github') {
-                el.outerHTML = `<span class="inline-block w-5 h-5 ${colorClass}" aria-hidden="true">GitHub</span>`;
-            } else if (iconName === 'mail') {
-                el.outerHTML = `<span class="inline-block w-5 h-5 ${colorClass}" aria-hidden="true">Email</span>`;
-            } else if (iconName === 'scale') {
-                el.outerHTML = `<span class="inline-block w-3 h-3 ${colorClass}" aria-hidden="true">⚖️</span>`;
+        try {
+            const response = await fetch('https://api.github.com/orgs/CuteSense-Studios');
+            if (response.ok) {
+                const data = await response.json();
+                // Set to GitHub location, or fallback to India if location field is empty
+                textEl.textContent = data.location || "India";
+            } else {
+                textEl.textContent = "India";
             }
-        });
+        } catch (e) {
+            textEl.textContent = "India";
+        }
+    }
+
+    _initIcons() {
+        const attemptIcons = () => {
+            if (window.lucide) {
+                window.lucide.createIcons({
+                    root: this,
+                    attrs: { 'stroke-width': '2', 'class': 'shrink-0' }
+                });
+            } else if (this._iconRetryCount < this._maxIconRetries) {
+                this._iconRetryCount++;
+                setTimeout(attemptIcons, 150);
+            }
+        };
+        attemptIcons();
     }
 
     _initScrollAnimations() {
-        if (!('IntersectionObserver' in window)) {
-            this._revealFooter();
-            return;
-        }
+        const footer = this.querySelector('[data-footer-root]');
+        if (!footer) return;
 
         this._observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    this._revealFooter();
+                    this._reveal();
                     this._observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '50px'
-        });
+        }, { threshold: 0.1 });
 
-        const footer = this.querySelector('[data-footer-root]');
-        if (footer) this._observer.observe(footer);
+        this._observer.observe(footer);
+        
+        // Safety timeout to ensure footer appears even if observer fails
+        setTimeout(() => this._reveal(), 1000);
     }
 
-    _revealFooter() {
+    _reveal() {
         const root = this.querySelector('[data-footer-root]');
         const content = this.querySelector('[data-animate="true"]');
         const divider = this.querySelector('[data-animate-divider]');
         
-        if (root) {
-            root.classList.remove('opacity-0');
-            root.classList.add('opacity-100');
-        }
-        if (content) {
-            content.classList.remove('translate-y-4');
-            content.classList.add('translate-y-0');
-        }
-        if (divider) {
-            setTimeout(() => {
-                divider.classList.remove('opacity-0');
-                divider.classList.add('opacity-100');
-            }, 300);
-        }
-    }
-
-    _respectMotionPreferences() {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) {
-            const animatedElements = this.querySelectorAll('[data-animate], [data-animate-divider], [data-footer-root]');
-            animatedElements.forEach(el => {
-                el.style.transition = 'none';
-                el.classList.remove('opacity-0', 'translate-y-4');
-                el.classList.add('opacity-100', 'translate-y-0');
-            });
-        }
-    }
-
-    _initLinkPrefetch() {
-        const githubLinks = this.querySelectorAll('a[href*="github.com"]');
-        githubLinks.forEach(link => {
-            if (link && 'IntersectionObserver' in window) {
-                link.addEventListener('mouseenter', () => {
-                    const prefetch = document.createElement('link');
-                    prefetch.rel = 'prefetch';
-                    prefetch.href = 'https://github.com/CuteSense-Studios';
-                    document.head.appendChild(prefetch);
-                }, { once: true });
-            }
-        });
-    }
-
-    refresh() {
-        this._render();
-        this._initializeSmartFeatures();
-    }
-
-    setYear(year) {
-        const yearSpan = this.querySelector('p[class*="text-cs-lilac"]');
-        if (yearSpan && year) {
-            yearSpan.innerHTML = `Art with Heart • © ${year} • Built with Gemini`;
-        }
+        if (root) root.classList.replace('opacity-0', 'opacity-100');
+        if (content) content.classList.replace('translate-y-4', 'translate-y-0');
+        if (divider) divider.classList.replace('opacity-0', 'opacity-100');
     }
 }
 
 if (!customElements.get('cs-footer')) {
-    try {
-        customElements.define('cs-footer', CuteSenseFooter);
-    } catch (e) {
-        console.error('CuteSenseFooter: Failed to define custom element', e);
-    }
+    customElements.define('cs-footer', CuteSenseFooter);
 }
