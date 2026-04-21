@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code of Conduct | CuteSense Studios</title>
+    
+    <link rel="stylesheet" href="../assets/css/cursor.css">
+    <link rel="stylesheet" href="../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    
+    <script src="../assets/js/favicon.js"></script>
+    <script src="../assets/js/lucide.min.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
+    
+    <script src="../assets/js/marked.min.js"></script>
+
+    <style>
+        /* Scoped styles using standard CSS to avoid @apply and vendor prefix errors */
+        #coc-render h1 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            /* Matches favorite bubblegum pink and royal blue palette */
+            background: linear-gradient(to right, #FF9EBB, #599AB5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        @media (min-width: 768px) {
+            #coc-render h1 { font-size: 4.5rem; line-height: 1; }
+        }
+
+        #coc-render h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            color: #A178AF; /* cs-lilac */
+            border-bottom: 4px dotted rgba(161, 120, 175, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        #coc-render h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #599AB5; /* cs-blue */
+        }
+
+        #coc-render p {
+            font-size: 1.125rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            line-height: 1.625;
+        }
+
+        #coc-render ul {
+            padding-left: 0.5rem;
+            margin-bottom: 2rem;
+            list-style: none;
+        }
+
+        #coc-render li {
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        #coc-render li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            color: #FF9EBB; /* cs-pink */
+            font-weight: 700;
+        }
+
+        #coc-render hr {
+            border: none;
+            border-top: 4px dotted rgba(161, 120, 175, 0.2);
+            margin: 4rem 0;
+        }
+
+        #coc-render strong {
+            color: #FF9EBB; /* cs-pink */
+            font-weight: 700;
+        }
+
+        #coc-render a {
+            color: #A178AF;
+            text-decoration: underline;
+            text-decoration-color: rgba(161, 120, 175, 0.4);
+            transition: all 0.2s;
+            font-weight: 700;
+            word-break: break-all; /* Aggressively wraps long links */
+        }
+
+        #coc-render a:hover {
+            color: #FF9EBB;
+        }
+
+        /* Forces the last Markdown element to respect the card's bottom padding */
+        #coc-render > :last-child {
+            margin-bottom: 0 !important;
+        }
+
+        .loading-spinner { color: #FF9EBB; }
+    </style>
+</head>
+<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden flex flex-col min-h-screen">
+
+    <cs-navbar></cs-navbar>
+    <script src="../assets/js/navbar.js"></script>
+
+    <main class="flex-grow pt-32 pb-24 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none -z-10">
+            <div class="blob-parallax absolute top-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[120px] opacity-30"></div>
+            <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[120px] opacity-30"></div>
+        </div>
+
+        <div class="max-w-3xl mx-auto px-4 md:px-6 mb-16">
+            
+            <div class="glass-card bg-white dark:bg-slate-800/60 p-6 md:p-8 border-2 border-cs-lilac rounded-3xl shadow-[0_8px_0_#A178AF33] dark:shadow-none animate-in fade-in slide-in-from-bottom-6 duration-700 w-full">
+                
+                <article id="coc-render" class="w-full break-words">
+                    <div class="flex flex-col items-center justify-center py-20">
+                        <i data-lucide="sparkles" class="animate-bounce w-10 h-10 loading-spinner mb-4"></i>
+                        <p class="text-cs-lilac font-bold animate-pulse text-sm md:text-base">Polishing the rules...~</p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <cs-footer></cs-footer>
+    <script src="../assets/js/footer.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('coc-render');
+            
+            try {
+                // Fetch CODE_OF_CONDUCT.md from the root directory
+                const response = await fetch('../CODE_OF_CONDUCT.md');
+                if (!response.ok) throw new Error('MD file missing');
+                const rawMarkdown = await response.text();
+
+                // Render with local marked.js script
+                container.innerHTML = marked.parse(rawMarkdown);
+
+                // Initialize Lucide Icons for rendered content
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+
+                // Parallax logic for brand blobs
+                const blobs = document.querySelectorAll('.blob-parallax');
+                document.addEventListener('mousemove', (e) => {
+                    const x = (e.clientX / window.innerWidth) - 0.5;
+                    const y = (e.clientY / window.innerHeight) - 0.5;
+                    blobs.forEach((blob, i) => {
+                        const speed = (i + 1) * 30;
+                        blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                    });
+                });
+                
+            } catch (err) {
+                console.error('Render Error:', err);
+                container.innerHTML = `
+                    <div class="text-center py-20">
+                        <i data-lucide="alert-circle" class="w-16 h-16 text-cs-pink mx-auto mb-4"></i>
+                        <h2 class="text-2xl font-bold">Something went wrong!</h2>
+                        <p class="opacity-70">Check if <b>CODE_OF_CONDUCT.md</b> is in the root directory.</p>
+                    </div>
+                `;
+                if (window.lucide) lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
