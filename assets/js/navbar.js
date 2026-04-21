@@ -5,7 +5,6 @@ class CuteSenseNavbar extends HTMLElement {
         this._iconRetryCount = 0;
         this._maxIconRetries = 10;
         
-        // Theme logic
         if (window.CuteSenseTheme) {
             this._isDark = window.CuteSenseTheme.get().isDark;
         } else {
@@ -66,24 +65,39 @@ class CuteSenseNavbar extends HTMLElement {
             cs-navbar { display: block; height: 80px; z-index: 1000; position: relative; }
             .borel-font { font-family: 'Borel', cursive; }
 
-            /* iOS & Desktop Visibility Logic */
-            #hamburger-btn { 
-                display: none !important; 
+            /* Fix: Ensure icons don't steal clicks from buttons */
+            i[data-lucide] { pointer-events: none !important; }
+
+            #hamburger-btn, #mobile-close-btn, #theme-toggle-btn {
                 cursor: pointer !important;
-                touch-action: manipulation;
                 -webkit-tap-highlight-color: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
+
+            /* Responsive Visibility - Strict */
+            #hamburger-btn { display: none !important; }
+            .links-section { display: flex !important; gap: 4px; position: absolute; left: 50%; transform: translateX(-50%); }
 
             @media (max-width: 1150px) {
                 #hamburger-btn { display: flex !important; }
                 .links-section { display: none !important; }
             }
 
-            /* Desktop Links Styling */
-            .links-section { 
-                display: flex; gap: 4px; position: absolute; 
-                left: 50%; transform: translateX(-50%); 
+            #theme-toggle-btn {
+                width: 48px; height: 26px; border-radius: 999px;
+                position: relative; border: none; background: #f1f5f9;
+                transition: all 0.3s ease;
             }
+            .dark #theme-toggle-btn { background: #334155; }
+            
+            #theme-toggle-btn .toggle-knob {
+                width: 20px; height: 20px; border-radius: 50%;
+                position: absolute; left: 3px; background: #ffffff;
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .dark #theme-toggle-btn .toggle-knob { transform: translateX(22px); background: #c084fc; }
 
             .desktop-link {
                 font-size: 0.85rem; font-weight: 600; padding: 0.45rem 0.8rem;
@@ -93,43 +107,29 @@ class CuteSenseNavbar extends HTMLElement {
             .dark .desktop-link { color: #94a3b8; }
             .nav-link-active { color: #F08DA1 !important; background: rgba(240, 141, 161, 0.1); }
             
-            /* Navbar Transitions */
             .nav-hidden { transform: translateY(-120%); }
             .nav-visible { transform: translateY(0); }
 
-            /* Mobile Menu iOS Fixes */
+            /* Mobile Menu Layering */
             #mobile-menu {
                 height: 100vh;
-                height: 100dvh; /* Modern iOS height */
-                pointer-events: none; /* Ignore clicks when hidden */
+                height: 100dvh;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
             }
-            #mobile-menu.flex { pointer-events: auto; }
-
-            #mobile-close-btn { cursor: pointer !important; }
-
-            #theme-toggle-btn {
-                width: 48px; height: 26px; border-radius: 999px;
-                position: relative; border: none; cursor: pointer !important;
-                display: flex; align-items: center; background: #f1f5f9;
-                transition: all 0.3s ease;
+            #mobile-menu.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
             }
-            .dark #theme-toggle-btn { background: #334155; }
-            
-            #theme-toggle-btn .toggle-knob {
-                width: 20px; height: 20px; border-radius: 50%;
-                position: absolute; left: 3px; display: flex;
-                align-items: center; justify-content: center;
-                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
-                background: #ffffff;
-            }
-            .dark #theme-toggle-btn .toggle-knob { transform: translateX(22px); background: #c084fc; }
         </style>
 
-        <nav class="fixed top-0 left-0 w-full z-[1000] px-4 pt-4 transition-transform duration-500 ease-out nav-visible" data-navbar>
-            <div class="max-w-7xl mx-auto flex items-center justify-between relative bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
+        <nav class="fixed top-0 left-0 w-full z-[1000] px-4 pt-4 transition-transform duration-500 nav-visible" data-navbar>
+            <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
                 
                 <div class="flex items-center">
-                    <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                    <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
@@ -146,7 +146,7 @@ class CuteSenseNavbar extends HTMLElement {
             </div>
         </nav>
 
-        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 hidden flex-col p-8 transition-all duration-300 opacity-0 translate-y-[-20px]">
+        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 flex flex-col p-8">
             <div class="flex justify-between items-center mb-10">
                 <span class="text-2xl text-[#F08DA1] borel-font">Navigation</span>
                 <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
@@ -208,21 +208,20 @@ class CuteSenseNavbar extends HTMLElement {
     }
 
     _attachListeners() {
+        // Use a single click listener on the component
         this.addEventListener('click', this._handleClick);
     }
 
     _handleClick(e) {
-        // Robust check for ID or parent ID to catch iOS taps on the icon itself
         const target = e.target;
-        
+
         if (target.closest('#hamburger-btn')) {
-            e.preventDefault();
+            console.log('Hamburger Clicked'); // Debugging
             this._toggleMenu(true);
             return;
         }
 
         if (target.closest('#mobile-close-btn')) {
-            e.preventDefault();
             this._toggleMenu(false);
             return;
         }
@@ -271,21 +270,11 @@ class CuteSenseNavbar extends HTMLElement {
         this._isMenuOpen = open;
 
         if (open) {
-            menu.classList.remove('hidden');
-            menu.classList.add('flex');
-            // Force reflow for animation
-            void menu.offsetWidth; 
-            menu.classList.add('opacity-100', 'translate-y-0');
+            menu.classList.add('active');
             document.body.style.overflow = 'hidden';
         } else {
-            menu.classList.remove('opacity-100', 'translate-y-0');
+            menu.classList.remove('active');
             document.body.style.overflow = '';
-            setTimeout(() => {
-                if (!this._isMenuOpen) {
-                    menu.classList.add('hidden');
-                    menu.classList.remove('flex');
-                }
-            }, 300);
         }
     }
 }
