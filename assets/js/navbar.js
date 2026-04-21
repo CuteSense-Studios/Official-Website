@@ -52,16 +52,14 @@ class CuteSenseNavbar extends HTMLElement {
         const root = this._getPath();
         const active = this._getActivePage();
         
-        // Centralized list of items - Updated to include Projects
+        // Updated list of items with Projects and Reports removed
         const navItems = [
             { id: 'index', label: 'Home', path: 'index.html' },
             { id: 'mission', label: 'Philosophy', path: 'pages/mission.html' },
-            { id: 'projects', label: 'Projects', path: 'pages/projects.html' },
             { id: 'motto', label: 'Motto', path: 'pages/motto.html' },
             { id: 'code-of-conduct', label: 'Conduct', path: 'pages/code-of-conduct.html' },
             { id: 'contributing', label: 'Contributing', path: 'pages/contributing.html' },
-            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html' },
-            { id: 'financial-reports', label: 'Reports', path: 'pages/financial-reports.html' }
+            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html' }
         ];
 
         this.innerHTML = `
