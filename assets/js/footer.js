@@ -47,8 +47,8 @@ class CuteSenseFooter extends HTMLElement {
                             </span>
                             <div class="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-cs-lilac/80">
                                 <span>Art with Heart • © ${year}</span>
-                                <span class="hidden sm:inline">•</span>
                                 <div id="location-container" class="flex items-center gap-1">
+                                    <span>•</span>
                                     <i data-lucide="map-pin" class="w-3 h-3"></i>
                                     <span id="gh-location">India</span>
                                 </div>
