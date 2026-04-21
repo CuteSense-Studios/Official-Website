@@ -6,7 +6,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 
 > 💡 **Our core belief** – AI is a collaborator, not a replacement.
 > Human creativity and final responsibility always come first.
-
 ---
 
 ## 1. Quick Start – What You Need to Know
@@ -15,7 +14,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 * **If you use AI** to generate any part of your contribution (code, art, music, text), you **must disclose it** – see section 4.
 * **You are responsible** for your contribution’s legality (copyright, training data, terms of service of AI tools you use).
 * **Human review** is mandatory – every pull request or asset submission will be reviewed by a human maintainer.
-
 ---
 
 ## 2. How to Contribute (General Workflow)
@@ -27,7 +25,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 5. **Test locally** – Ensure your changes work and don’t break existing functionality.
 6. **Open a pull request (PR)** – Fill out the PR template (including AI disclosure if applicable).
 7. **Wait for review** – A maintainer will review, request changes, or merge.
-
 ---
 
 ## 3. Contribution Types & Specific Rules
@@ -76,7 +73,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 * **AI Assistance:** While using LLMs to overcome writer’s block or to rephrase content is permitted, any **substantial AI-generated text** must be disclosed. Please note this in your Pull Request (PR) or a `.txt` file, and ensure the source is credited within the `README.md` or `ATTRIBUTION.md` file.
 * **Final human polish** – Every text contribution must be read and edited by a human for tone, accuracy, and “cuteness”.
 * **Disclosure example** – “Dialogue for NPC X was drafted using Claude 3 (prompt: ‘write three shy greeting lines for a bunny baker’) and then rewritten by me.”
-
 ---
 
 ## 4. AI Usage & Transparency Policy
@@ -94,7 +90,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 * **Unethical Models:** Using AI models trained on copyrighted material without explicit permission. When in doubt, consult project maintainers via an Issue or Pull Request before proceeding.
 * **Restrictive Licenses:** Using tools that claim ownership or restrictive rights over the generated output (always review the Terms of Service).
 * **Non-Disclosure:** Failing to report AI usage. This violates our **Transparency Policy** and will lead to PR rejection or a potential ban for repeat offenses.
-
 ---
 
 ### 📋 How to Disclose AI Use
@@ -113,7 +108,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 4. Request changes if disclosure is missing or if the AI tool’s terms are violated.
 
 **If a copyright issue is discovered after merging** – We will remove or replace the contribution, credit the original creator (if known), and document the takedown in the project’s `ATTRIBUTION.md` or README.md.
-
 ---
 
 ## 6. Code of Conduct (Short Version)
@@ -124,7 +118,6 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 * If you see a problem, report it to cutesensestudios@protonmail.com.
 
 Full Code of Conduct available at [CODE_OF_CONDUCT.md](./pages/code-of-conduct.html).
-
 ---
 
 ## 7. Getting Help & Contact
@@ -132,7 +125,6 @@ Full Code of Conduct available at [CODE_OF_CONDUCT.md](./pages/code-of-conduct.h
 * **Technical questions** – Open a GitHub Discussion.
 * **AI policy questions** – Contact us in our email
 * **Copyright or legal concerns** – Contact us through the email.
-
 ---
 
 ## 8. Acknowledgment
@@ -146,3 +138,4 @@ By contributing, you agree that:
 **Thank you for helping us build open, ethical, and cute creations – with humans and AI working together, transparently.**
 
 — CuteSense Studios Team
+---
