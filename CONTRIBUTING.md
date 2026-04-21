@@ -1,4 +1,4 @@
-# Contributing to CuteSense Studios Projects
+# The Contributor’s Handbook
 
 **Thank you for your interest in contributing!** We welcome contributions of all kinds – code, art, music, writing, testing, documentation, and translations.
 
@@ -123,7 +123,7 @@ This guide applies to **all CuteSense Studios projects** (tools, games, librarie
 * Disclose AI use honestly – hiding it is considered deceptive.
 * If you see a problem, report it to cutesensestudios@protonmail.com.
 
-Full Code of Conduct available at [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Full Code of Conduct available at [CODE_OF_CONDUCT.md](./pages/code-of-conduct.html).
 
 ---
 

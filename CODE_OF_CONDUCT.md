@@ -1,4 +1,4 @@
-# CuteSense Studios Code of Conduct
+# Our Commitment to Excellence
 
 ## 1. Our Pledge
 
@@ -26,7 +26,7 @@ Examples of unacceptable behavior by participants include:
 * **Harassment:** The use of sexualized language or imagery and unwelcome sexual attention or advances.
 * **Trolling:** Trolling, insulting/derogatory comments, and personal or political attacks.
 * **Doxing:** Publishing others' private information, such as a physical or electronic address, without explicit permission.
-* **Dishonesty:** Intentionally hiding the use of AI tools to bypass our [Contribution Guidelines](CONTRIBUTING.md).
+* **Dishonesty:** Intentionally hiding the use of AI tools to bypass our [Contribution Guidelines](./pages/contributing.html).
 * **Unprofessional Conduct:** Other conduct which could reasonably be considered inappropriate in a professional or community setting.
 
 ---
