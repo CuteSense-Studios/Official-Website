@@ -18,20 +18,6 @@
     <style>
         .modal-open { overflow: hidden; }
         
-        /* HERO TYPOGRAPHY - Matching motto.html hierarchy */
-        .hero-title { 
-            font-size: clamp(3rem, 8vw, 7.5rem); 
-            line-height: 0.9; 
-            letter-spacing: -0.05em; 
-            font-weight: 800;
-        }
-        .hero-subtitle { 
-            font-size: clamp(1rem, 2.5vw, 1.35rem); 
-            line-height: 1.6; 
-            max-width: 700px; 
-            margin: 0 auto;
-        }
-
         /* FIX: Search Icon Vertical Centering */
         .search-wrapper { position: relative; width: 100%; display: flex; align-items: center; max-width: 600px; margin: 0 auto; }
         .search-icon-pos { 
@@ -77,8 +63,10 @@
                 <div class="inline-block px-5 py-1.5 rounded-full bg-cs-lilac/10 text-cs-lilac text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-cs-lilac/20">
                     Fiscal Accountability
                 </div>
-                <h1 class="hero-title mb-8">The Sense <br><span class="gradient-text pb-4">Behind the Art</span></h1>
-                <p class="hero-subtitle opacity-80 font-medium">
+                <h1 class="text-5xl md:text-8xl font-bold mb-8 leading-tight floating-delayed">
+                    The Sense<br> <span class="gradient-text">Behind the Art</span>
+                </h1>
+                <p class="text-xl md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed font-medium reveal">
                     Quality art, openly created. Radical transparency ensures our mission stays grounded in integrity.
                 </p>
             </header>
@@ -252,7 +240,7 @@
             if (total <= 1) return container.innerHTML = '';
             let btns = `<button onclick="changePage(${currentPage-1},'${query}')" class="w-12 h-12 rounded-full border-2 border-cs-lilac/20 flex items-center justify-center ${currentPage===1?'opacity-20 pointer-events-none':''}"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>`;
             for(let i=1; i<=total; i++) btns += `<button onclick="changePage(${i},'${query}')" class="w-12 h-12 rounded-full font-bold transition-all ${i===currentPage?'bg-cs-pink text-white shadow-lg scale-110':'border-2 border-cs-lilac/20 hover:border-cs-pink'}">${i}</button>`;
-            html += `<button onclick="changePage(${currentPage+1},'${query}')" class="w-12 h-12 rounded-full border-2 border-cs-lilac/20 flex items-center justify-center ${currentPage===total?'opacity-20 pointer-events-none':''}"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>`;
+            btns += `<button onclick="changePage(${currentPage+1},'${query}')" class="w-12 h-12 rounded-full border-2 border-cs-lilac/20 flex items-center justify-center ${currentPage===total?'opacity-20 pointer-events-none':''}"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>`;
             container.innerHTML = btns;
             refreshIcons();
         }
