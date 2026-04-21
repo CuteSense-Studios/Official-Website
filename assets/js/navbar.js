@@ -3,7 +3,7 @@ class CuteSenseNavbar extends HTMLElement {
         super();
         this._isMenuOpen = false;
         this._iconRetryCount = 0;
-        this._maxIconRetries = 10;
+        this._maxIconRetries = 12;
         
         if (window.CuteSenseTheme) {
             this._isDark = window.CuteSenseTheme.get().isDark;
@@ -38,7 +38,9 @@ class CuteSenseNavbar extends HTMLElement {
     _getPath() {
         try {
             const path = window.location.pathname;
-            return (path.includes('/pages/') || path.includes('/docs/')) ? '../' : './';
+            const depth = (path.match(/\//g) || []).length - 1;
+            // Matches footer logic: if in a subfolder or deep path, go up one level
+            return (path.includes('/pages/') || path.includes('/docs/') || depth > 1) ? '../' : './';
         } catch (e) { return './'; }
     }
 
@@ -48,16 +50,17 @@ class CuteSenseNavbar extends HTMLElement {
     }
 
     _render() {
-        const rootPath = this._getPath();
+        const root = this._getPath();
         const active = this._getActivePage();
         
+        // Define items relative to root for cleaner management
         const navItems = [
-            { id: 'index', label: 'Home', href: `${rootPath}index.html` },
-            { id: 'mission', label: 'Philosophy', href: rootPath.includes('..') ? 'mission.html' : 'pages/mission.html' },
-            { id: 'motto', label: 'Motto', href: rootPath.includes('..') ? 'motto.html' : 'pages/motto.html' },
-            { id: 'code-of-conduct', label: 'Conduct', href: rootPath.includes('..') ? 'code-of-conduct.html' : 'pages/code-of-conduct.html' },
-            { id: 'contributing', label: 'Contributing', href: rootPath.includes('..') ? 'contributing.html' : 'pages/contributing.html' },
-            { id: 'buisness-model', label: 'Business Model', href: rootPath.includes('..') ? 'buisness-model.html' : 'pages/buisness-model.html' }
+            { id: 'index', label: 'Home', path: 'index.html' },
+            { id: 'mission', label: 'Philosophy', path: 'pages/mission.html' },
+            { id: 'motto', label: 'Motto', path: 'pages/motto.html' },
+            { id: 'code-of-conduct', label: 'Conduct', path: 'pages/code-of-conduct.html' },
+            { id: 'contributing', label: 'Contributing', path: 'pages/contributing.html' },
+            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html' }
         ];
 
         this.innerHTML = `
@@ -65,20 +68,20 @@ class CuteSenseNavbar extends HTMLElement {
             cs-navbar { display: block; height: 80px; z-index: 1000; position: relative; }
             .borel-font { font-family: 'Borel', cursive; }
 
-            /* Fix: Ensure icons don't steal clicks from buttons */
             i[data-lucide] { pointer-events: none !important; }
 
             #hamburger-btn, #mobile-close-btn, #theme-toggle-btn {
                 cursor: pointer !important;
-                -webkit-tap-highlight-color: transparent;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                display: flex; align-items: center; justify-content: center;
+                transition: all 0.2s ease;
             }
 
-            /* Responsive Visibility - Strict */
             #hamburger-btn { display: none !important; }
-            .links-section { display: flex !important; gap: 4px; position: absolute; left: 50%; transform: translateX(-50%); }
+            .links-section { 
+                display: flex !important; gap: 4px; 
+                position: absolute; left: 50%; transform: translateX(-50%);
+                width: max-content;
+            }
 
             @media (max-width: 1150px) {
                 #hamburger-btn { display: flex !important; }
@@ -88,7 +91,6 @@ class CuteSenseNavbar extends HTMLElement {
             #theme-toggle-btn {
                 width: 48px; height: 26px; border-radius: 999px;
                 position: relative; border: none; background: #f1f5f9;
-                transition: all 0.3s ease;
             }
             .dark #theme-toggle-btn { background: #334155; }
             
@@ -96,6 +98,7 @@ class CuteSenseNavbar extends HTMLElement {
                 width: 20px; height: 20px; border-radius: 50%;
                 position: absolute; left: 3px; background: #ffffff;
                 transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                display: flex; align-items: center; justify-content: center;
             }
             .dark #theme-toggle-btn .toggle-knob { transform: translateX(22px); background: #c084fc; }
 
@@ -110,19 +113,11 @@ class CuteSenseNavbar extends HTMLElement {
             .nav-hidden { transform: translateY(-120%); }
             .nav-visible { transform: translateY(0); }
 
-            /* Mobile Menu Layering */
             #mobile-menu {
-                height: 100vh;
-                height: 100dvh;
-                opacity: 0;
-                visibility: hidden;
+                height: 100dvh; opacity: 0; visibility: hidden;
                 transition: all 0.3s ease-in-out;
             }
-            #mobile-menu.active {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
+            #mobile-menu.active { opacity: 1; visibility: visible; }
         </style>
 
         <nav class="fixed top-0 left-0 w-full z-[1000] px-4 pt-4 transition-transform duration-500 nav-visible" data-navbar>
@@ -130,12 +125,12 @@ class CuteSenseNavbar extends HTMLElement {
                 
                 <div class="flex items-center">
                     <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
+                        <i data-lucide="menu" class="w-6 h-6 shrink-0"></i>
                     </button>
                 </div>
 
                 <div class="links-section">
-                    ${navItems.map(item => `<a href="${item.href}" class="desktop-link ${active === item.id ? 'nav-link-active' : ''}">${item.label}</a>`).join('')}
+                    ${navItems.map(item => `<a href="${root}${item.path}" class="desktop-link ${active === item.id ? 'nav-link-active' : ''}">${item.label}</a>`).join('')}
                 </div>
                 
                 <div class="flex items-center">
@@ -150,11 +145,11 @@ class CuteSenseNavbar extends HTMLElement {
             <div class="flex justify-between items-center mb-10">
                 <span class="text-2xl text-[#F08DA1] borel-font">Navigation</span>
                 <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <i data-lucide="x" class="w-6 h-6 shrink-0"></i>
                 </button>
             </div>
             <div class="flex flex-col gap-6 text-2xl font-bold">
-                ${navItems.map(item => `<a href="${item.href}" class="${active === item.id ? 'text-[#F08DA1]' : 'text-slate-600 dark:text-slate-400'}">${item.label}</a>`).join('')}
+                ${navItems.map(item => `<a href="${root}${item.path}" class="${active === item.id ? 'text-[#F08DA1]' : 'text-slate-600 dark:text-slate-400'}">${item.label}</a>`).join('')}
             </div>
         </div>
         `;
@@ -181,34 +176,33 @@ class CuteSenseNavbar extends HTMLElement {
         const knob = this.querySelector('#knob-icon-container');
         if (knob && window.lucide) {
             knob.innerHTML = this._isDark 
-                ? `<i data-lucide="moon" class="w-3.5 h-3.5 text-white"></i>`
-                : `<i data-lucide="sun" class="w-3.5 h-3.5 text-orange-500"></i>`;
+                ? `<i data-lucide="moon" class="w-3.5 h-3.5 text-white shrink-0"></i>`
+                : `<i data-lucide="sun" class="w-3.5 h-3.5 text-orange-500 shrink-0"></i>`;
             
             window.lucide.createIcons({
                 root: knob,
-                attrs: { 'stroke-width': '2' }
+                attrs: { 'stroke-width': '2.5' }
             });
         }
     }
 
     _initIcons() {
         const attemptIcons = () => {
-            if (window.lucide) {
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
                 this._updateThemeIcon();
                 window.lucide.createIcons({
                     root: this,
-                    attrs: { 'stroke-width': '2' }
+                    attrs: { 'stroke-width': '2', 'class': 'shrink-0' }
                 });
             } else if (this._iconRetryCount < this._maxIconRetries) {
                 this._iconRetryCount++;
-                setTimeout(attemptIcons, 150);
+                setTimeout(attemptIcons, 100);
             }
         };
         attemptIcons();
     }
 
     _attachListeners() {
-        // Use a single click listener on the component
         this.addEventListener('click', this._handleClick);
     }
 
@@ -216,7 +210,6 @@ class CuteSenseNavbar extends HTMLElement {
         const target = e.target;
 
         if (target.closest('#hamburger-btn')) {
-            console.log('Hamburger Clicked'); // Debugging
             this._toggleMenu(true);
             return;
         }
@@ -234,6 +227,8 @@ class CuteSenseNavbar extends HTMLElement {
                 document.documentElement.classList.toggle('dark', this._isDark);
                 localStorage.setItem('theme', this._isDark ? 'dark' : 'light');
                 this._updateThemeIcon();
+                // Dispatch event for other components like footer
+                window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: this._isDark } }));
             }
             return;
         }
@@ -268,7 +263,6 @@ class CuteSenseNavbar extends HTMLElement {
         if (!menu) return;
 
         this._isMenuOpen = open;
-
         if (open) {
             menu.classList.add('active');
             document.body.style.overflow = 'hidden';
