@@ -36,9 +36,12 @@ const SEO_CONFIG = {
         "code-of-conduct.html": {
             title: "Code of Conduct | CuteSense Studios",
             description: "Our pledge to fostering an open, welcoming, and 'cute' environment for all creators.",
-        }
-    }
-};
+        },
+        "financial-reports.html": {
+            title: "Financial Transparency | CuteSense Studios", 
+            description: "Quality art, openly created. Radical transparency ensures our mission stays grounded in integrity."
+    }, 
+}, 
 
 function applySEO() {
     const path = window.location.pathname;

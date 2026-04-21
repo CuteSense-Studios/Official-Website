@@ -39,7 +39,6 @@ class CuteSenseNavbar extends HTMLElement {
         try {
             const path = window.location.pathname;
             const depth = (path.match(/\//g) || []).length - 1;
-            // Matches footer logic: if in a subfolder or deep path, go up one level
             return (path.includes('/pages/') || path.includes('/docs/') || depth > 1) ? '../' : './';
         } catch (e) { return './'; }
     }
@@ -53,14 +52,15 @@ class CuteSenseNavbar extends HTMLElement {
         const root = this._getPath();
         const active = this._getActivePage();
         
-        // Define items relative to root for cleaner management
+        // Centralized list of items
         const navItems = [
             { id: 'index', label: 'Home', path: 'index.html' },
             { id: 'mission', label: 'Philosophy', path: 'pages/mission.html' },
             { id: 'motto', label: 'Motto', path: 'pages/motto.html' },
             { id: 'code-of-conduct', label: 'Conduct', path: 'pages/code-of-conduct.html' },
             { id: 'contributing', label: 'Contributing', path: 'pages/contributing.html' },
-            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html' }
+            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html' },
+            { id: 'financial-reports', label: 'Reports', path: 'pages/financial-reports.html' }
         ];
 
         this.innerHTML = `
@@ -141,14 +141,14 @@ class CuteSenseNavbar extends HTMLElement {
             </div>
         </nav>
 
-        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 flex flex-col p-8">
-            <div class="flex justify-between items-center mb-10">
+        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 flex flex-col p-8 overflow-y-auto pb-20">
+            <div class="flex justify-between items-center mb-8 shrink-0">
                 <span class="text-2xl text-[#F08DA1] borel-font">Navigation</span>
                 <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
                     <i data-lucide="x" class="w-6 h-6 shrink-0"></i>
                 </button>
             </div>
-            <div class="flex flex-col gap-6 text-2xl font-bold">
+            <div class="flex flex-col gap-4 text-xl sm:text-2xl font-bold pb-4">
                 ${navItems.map(item => `<a href="${root}${item.path}" class="${active === item.id ? 'text-[#F08DA1]' : 'text-slate-600 dark:text-slate-400'}">${item.label}</a>`).join('')}
             </div>
         </div>
@@ -227,7 +227,6 @@ class CuteSenseNavbar extends HTMLElement {
                 document.documentElement.classList.toggle('dark', this._isDark);
                 localStorage.setItem('theme', this._isDark ? 'dark' : 'light');
                 this._updateThemeIcon();
-                // Dispatch event for other components like footer
                 window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: this._isDark } }));
             }
             return;
