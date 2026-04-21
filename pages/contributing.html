@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="../assets/js/seo-manager.js" defer></script>
+
     <title>Contributing | CuteSense Studios</title>
+    <meta name="description" content="Thank you for your interest in contributing! We welcome code, art, music, and more to all CuteSense Studios projects.">
+    <link rel="canonical" href="https://cutesense-studios.com/pages/contributing.html">
     
     <link rel="stylesheet" href="../assets/css/cursor.css">
     <link rel="stylesheet" href="../assets/css/tailwind.css">
@@ -16,14 +21,13 @@
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
-        /* Standard CSS to prevent 'unknownAtRules' or 'vendorPrefix' errors */
+        /* Markdown Render Styles */
         #contributing-render h1 {
             font-size: 2.25rem;
             line-height: 2.5rem;
             font-weight: 700;
             margin-bottom: 2rem;
             text-align: center;
-            /* Using brand favorites: bubblegum pink and royal blue */
             background: linear-gradient(to right, #FF9EBB, #599AB5);
             background-clip: text;
             -webkit-background-clip: text;
@@ -40,7 +44,7 @@
             font-weight: 700;
             margin-top: 3rem;
             margin-bottom: 1.25rem;
-            color: #A178AF; /* cs-lilac */
+            color: #A178AF;
             border-bottom: 4px dotted rgba(161, 120, 175, 0.2);
             padding-bottom: 0.5rem;
         }
@@ -50,7 +54,7 @@
             font-weight: 700;
             margin-top: 2rem;
             margin-bottom: 1rem;
-            color: #599AB5; /* cs-blue */
+            color: #599AB5;
         }
 
         #contributing-render p {
@@ -61,7 +65,6 @@
             line-height: 1.6;
         }
 
-        /* Blockquote style for AI Collaboration callouts */
         #contributing-render blockquote {
             background-color: rgba(161, 120, 175, 0.08);
             border-left: 6px solid #A178AF;
@@ -90,7 +93,7 @@
             content: '✨';
             position: absolute;
             left: 0;
-            color: #FF9EBB; /* cs-pink */
+            color: #FF9EBB;
             font-weight: 700;
         }
 
@@ -121,14 +124,13 @@
             text-decoration-color: rgba(161, 120, 175, 0.3);
             transition: all 0.2s;
             font-weight: 700;
-            word-break: break-all; /* Aggressively wraps long links */
+            word-break: break-all;
         }
 
         #contributing-render a:hover {
             color: #FF9EBB;
         }
 
-        /* Forces the last Markdown element to respect the card's bottom padding */
         #contributing-render > :last-child {
             margin-bottom: 0 !important;
         }

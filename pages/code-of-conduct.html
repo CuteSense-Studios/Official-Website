@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="../assets/js/seo-manager.js" defer></script>
+
     <title>Code of Conduct | CuteSense Studios</title>
+    <meta name="description" content="Our pledge to fostering an open, welcoming, and 'cute' environment for all contributors, regardless of background or experience.">
+    <link rel="canonical" href="https://cutesense-studios.com/pages/code-of-conduct.html">
     
     <link rel="stylesheet" href="../assets/css/cursor.css">
     <link rel="stylesheet" href="../assets/css/tailwind.css">
@@ -16,14 +21,13 @@
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
-        /* Scoped styles using standard CSS to avoid @apply and vendor prefix errors */
+        /* Markdown Rendering Styles for Code of Conduct */
         #coc-render h1 {
             font-size: 2.25rem;
             line-height: 2.5rem;
             font-weight: 700;
             margin-bottom: 2.5rem;
             text-align: center;
-            /* Matches favorite bubblegum pink and royal blue palette */
             background: linear-gradient(to right, #FF9EBB, #599AB5);
             background-clip: text;
             -webkit-background-clip: text;
@@ -40,7 +44,7 @@
             font-weight: 700;
             margin-top: 4rem;
             margin-bottom: 1.5rem;
-            color: #A178AF; /* cs-lilac */
+            color: #A178AF;
             border-bottom: 4px dotted rgba(161, 120, 175, 0.3);
             padding-bottom: 0.5rem;
         }
@@ -50,7 +54,7 @@
             font-weight: 700;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
-            color: #599AB5; /* cs-blue */
+            color: #599AB5;
         }
 
         #coc-render p {
@@ -80,7 +84,7 @@
             content: '✨';
             position: absolute;
             left: 0;
-            color: #FF9EBB; /* cs-pink */
+            color: #FF9EBB;
             font-weight: 700;
         }
 
@@ -91,7 +95,7 @@
         }
 
         #coc-render strong {
-            color: #FF9EBB; /* cs-pink */
+            color: #FF9EBB;
             font-weight: 700;
         }
 
@@ -101,14 +105,13 @@
             text-decoration-color: rgba(161, 120, 175, 0.4);
             transition: all 0.2s;
             font-weight: 700;
-            word-break: break-all; /* Aggressively wraps long links */
+            word-break: break-all;
         }
 
         #coc-render a:hover {
             color: #FF9EBB;
         }
 
-        /* Forces the last Markdown element to respect the card's bottom padding */
         #coc-render > :last-child {
             margin-bottom: 0 !important;
         }
