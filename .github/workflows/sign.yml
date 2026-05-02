@@ -1,13 +1,12 @@
 name: Auto-Sign Wall
 on:
   issues:
-    types: [opened]
+    types: [opened, labeled, edited]
 
 jobs:
   update-db:
     if: contains(github.event.issue.labels.*.name, 'signature')
     runs-on: ubuntu-latest
-    # THIS BLOCK GIVES THE BOT PERMISSION EVEN IF THE UI IS DISABLED
     permissions:
       contents: write
       issues: write
@@ -20,11 +19,19 @@ jobs:
         run: |
           python -c "
           import sqlite3
-          name = '${{ github.event.issue.title }}'
-          conn = sqlite3.connect('./database/signatures.db')
-          conn.cursor().execute('INSERT INTO signatures (name) VALUES (?)', (name,))
-          conn.commit()
-          conn.close()
+          import sys
+          # Get title from GitHub Event
+          name = \"${{ github.event.issue.title }}\"
+          try:
+              conn = sqlite3.connect('./database/signatures.db')
+              c = conn.cursor()
+              c.execute('INSERT INTO signatures (name) VALUES (?)', (name,))
+              conn.commit()
+              conn.close()
+              print('Successfully added to DB')
+          except Exception as e:
+              print(e)
+              sys.exit(1)
           "
 
       - name: Save to Repo
@@ -32,7 +39,7 @@ jobs:
           git config --global user.name "Bot"
           git config --global user.email "bot@github.com"
           git add database/signatures.db
-          git commit -m "Added signature via Issue"
+          git commit -m "Added signature: ${{ github.event.issue.title }}" || echo "No changes"
           git push
           
       - name: Close Issue
