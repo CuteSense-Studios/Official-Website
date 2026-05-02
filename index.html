@@ -19,37 +19,48 @@
     <script src="./assets/js/theme.js" defer></script>
     <script src="./assets/js/sql-wasm.js"></script>
 
+    
     <script type="module">
     let db = null;
     const SIGN_LIMIT = 3;
     const STORAGE_KEY = 'cutesense_local_signatures';
-    const REFRESH_INTERVAL = 30000; // 30 Seconds
+    const REFRESH_INTERVAL = 60000; // 1 Minute
 
-    // 1. Initialize SQLite Database
+    /**
+     * 1. Initialize SQLite Database
+     * Loads the .db file and renders the wall.
+     */
     async function initDatabase() {
         try {
-            const sqlPromise = initSqlJs({
+            // Initialize SQL.js
+            const SQL = await initSqlJs({
                 locateFile: file => `./assets/js/${file}`
             });
 
-            // Fetch DB with cache-buster
-            const dataPromise = fetch(`./database/signatures.db?v=${Date.now()}`)
-                .then(res => {
-                    if (!res.ok) throw new Error("Database file not found.");
-                    return res.arrayBuffer();
-                });
+            // Fetch the database file
+            const response = await fetch(`./database/signatures.db?v=${Date.now()}`);
+            if (!response.ok) {
+                console.warn("Database file not found on server. Using local storage only.");
+                renderWall();
+                return;
+            }
 
-            const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
+            const buf = await response.arrayBuffer();
             db = new SQL.Database(new Uint8Array(buf));
+            console.log("Database loaded successfully! ✨");
             
             renderWall();
         } catch (err) {
-            console.error("SQLite Sync Error:", err);
+            console.error("SQLite Load Error:", err);
+            // Fallback to rendering whatever is in local storage
             renderWall(); 
         }
     }
 
-    // 2. Render the Signature Wall
+    /**
+     * 2. Render the Signature Wall
+     * Merges DB data with local browser storage.
+     */
     function renderWall() {
         const list = document.getElementById('signature-list');
         const countEl = document.getElementById('signature-count');
@@ -58,12 +69,13 @@
         let globalSigns = [];
         let totalCount = 0;
 
+        // Try to get data from the SQL database
         if (db) {
             try {
                 const countRes = db.exec("SELECT COUNT(*) FROM signatures");
-                totalCount = parseInt(countRes[0].values[0][0]);
+                if (countRes.length > 0) totalCount = parseInt(countRes[0].values[0][0]);
 
-                const signRes = db.exec("SELECT name FROM signatures ORDER BY id DESC LIMIT 24");
+                const signRes = db.exec("SELECT name FROM signatures ORDER BY id DESC LIMIT 30");
                 if (signRes.length > 0) {
                     globalSigns = signRes[0].values.map(row => row[0]);
                 }
@@ -72,8 +84,11 @@
             }
         }
 
+        // Get local signatures (ones user just signed but aren't in DB yet)
         const localSigns = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-        const allSigns = [...localSigns, ...globalSigns].slice(0, 30);
+        
+        // Merge them: Local first (newest), then Global
+        const allSigns = [...localSigns, ...globalSigns].slice(0, 40);
         
         countEl.innerText = (totalCount + localSigns.length).toLocaleString();
 
@@ -83,13 +98,21 @@
             'border-cs-lilac bg-cs-lilac/10 text-cs-lilac dark:text-[#E2CBEB]'
         ];
 
-        list.innerHTML = allSigns.map(name => {
-            const theme = brandThemes[Math.floor(Math.random() * brandThemes.length)];
+        if (allSigns.length === 0) {
+            list.innerHTML = '<p class="text-slate-400 italic">No signatures yet. Be the first!</p>';
+            return;
+        }
+
+        list.innerHTML = allSigns.map((name, index) => {
+            const theme = brandThemes[index % brandThemes.length];
             return `<div class="px-5 py-2.5 rounded-full text-sm border-2 font-bold animate-in fade-in zoom-in duration-500 shadow-sm ${theme}">✨ ${escapeHtml(name)}</div>`;
-        }).join('') || '<p class="text-slate-400 italic">No signatures yet.</p>';
+        }).join('');
     }
 
-    // 3. Handle Signing (The Bot Trigger)
+    /**
+     * 3. Handle Signing
+     * Saves to LocalStorage for instant feedback and opens GitHub for permanent storage.
+     */
     window.signWall = function(e) {
         e.preventDefault();
         const input = document.getElementById('signer-name');
@@ -97,6 +120,11 @@
         const name = input.value.trim();
 
         let localSigns = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+        if (localSigns.includes(name)) {
+            status.innerText = "You already signed with this name! ✨";
+            return;
+        }
 
         if (localSigns.length >= SIGN_LIMIT) {
             status.innerText = "Signature limit reached (Max 3)! ✨";
@@ -109,25 +137,24 @@
             return;
         }
 
-        // Save Locally for instant feedback
+        // Save locally so the user sees it IMMEDIATELY
         localSigns.unshift(name);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(localSigns));
         renderWall();
 
         // --- GITHUB ACTION TRIGGER ---
-        // Change these to your actual username and repo name!
         const GITHUB_USER = "CuteSense-Studios"; 
         const GITHUB_REPO = "Official-Website"; 
 
         const issueTitle = encodeURIComponent(name);
-        const issueBody = encodeURIComponent("Automated signature request. Click 'Submit new issue' to finalize! ✨");
+        const issueBody = encodeURIComponent("Automated signature request. Please click 'Submit new issue' to finalize your mark on the wall! ✨");
         const githubUrl = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/issues/new?title=${issueTitle}&labels=signature&body=${issueBody}`;
 
         // Open the GitHub window
         window.open(githubUrl, '_blank');
 
         input.value = '';
-        status.innerText = "Finalize your sign in the new tab! ✨";
+        status.innerText = "Check the new tab to finalize your sign! ✨";
         status.style.color = "#A178AF";
     };
 
@@ -137,8 +164,10 @@
         return div.innerHTML;
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
         initDatabase();
+        // Sync with server every minute
         setInterval(initDatabase, REFRESH_INTERVAL);
         if(window.lucide) lucide.createIcons();
     });
