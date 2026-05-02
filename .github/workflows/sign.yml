@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: write
       issues: write
+      workflows: write # <--- IMPORTANT: Needed to start other workflows
       
     steps:
       - name: Checkout
@@ -20,7 +21,6 @@ jobs:
           python -c "
           import sqlite3
           import sys
-          # Get title from GitHub Event
           name = \"${{ github.event.issue.title }}\"
           try:
               conn = sqlite3.connect('./database/signatures.db')
@@ -28,7 +28,6 @@ jobs:
               c.execute('INSERT INTO signatures (name) VALUES (?)', (name,))
               conn.commit()
               conn.close()
-              print('Successfully added to DB')
           except Exception as e:
               print(e)
               sys.exit(1)
@@ -43,6 +42,12 @@ jobs:
           git push
           
       - name: Close Issue
-        run: gh issue close ${{ github.event.issue.number }} --comment "Signature added! ✨"
+        run: gh issue close ${{ github.event.issue.number }} --comment "Signature added! Build started. ✨"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # --- NEW STEP TO START THE BUILD ---
+      - name: Trigger Website Build
+        run: gh workflow run build_site.yml # <--- Ensure this filename matches exactly
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
