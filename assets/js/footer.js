@@ -38,7 +38,7 @@ class CuteSenseFooter extends HTMLElement {
                         <div class="relative h-16 w-auto shrink-0 flex items-center justify-center">
                             <img src="${path}assets/icons/companylogo.webp" alt="CuteSense Logo" 
                                  class="h-16 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
-                                 onerror="this.src='https://raw.githubusercontent.com/CuteSense-Studios/brand/main/logo.webp';">
+                                 onerror="this.src='${path}assets/icons/companylogo.webp';">
                         </div>
                         
                         <div class="flex flex-col">

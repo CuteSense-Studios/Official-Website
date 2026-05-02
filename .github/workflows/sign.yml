@@ -1,0 +1,41 @@
+name: Auto-Sign Wall
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  update-db:
+    if: contains(github.event.issue.labels.*.name, 'signature')
+    runs-on: ubuntu-latest
+    # THIS BLOCK GIVES THE BOT PERMISSION EVEN IF THE UI IS DISABLED
+    permissions:
+      contents: write
+      issues: write
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Update DB
+        run: |
+          python -c "
+          import sqlite3
+          name = '${{ github.event.issue.title }}'
+          conn = sqlite3.connect('./database/signatures.db')
+          conn.cursor().execute('INSERT INTO signatures (name) VALUES (?)', (name,))
+          conn.commit()
+          conn.close()
+          "
+
+      - name: Save to Repo
+        run: |
+          git config --global user.name "Bot"
+          git config --global user.email "bot@github.com"
+          git add database/signatures.db
+          git commit -m "Added signature via Issue"
+          git push
+          
+      - name: Close Issue
+        run: gh issue close ${{ github.event.issue.number }} --comment "Signature added! ✨"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

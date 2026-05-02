@@ -17,134 +17,132 @@
     <script src="./assets/js/favicon.js"></script>
     <script src="./assets/js/lucide.min.js" defer></script>
     <script src="./assets/js/theme.js" defer></script>
+    <script src="./assets/js/sql-wasm.js"></script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+    let db = null;
+    const SIGN_LIMIT = 3;
+    const STORAGE_KEY = 'cutesense_local_signatures';
+    const REFRESH_INTERVAL = 30000; // 30 Seconds
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhJiNnmHxmLmRzRrjfeu5mhSfmAjMFHH0",
-            authDomain: "cutesense-studios.firebaseapp.com",
-            databaseURL: "https://cutesense-studios-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "cutesense-studios",
-            storageBucket: "cutesense-studios.firebasestorage.app",
-            messagingSenderId: "847619766993",
-            appId: "1:847619766993:web:bde44be73b3732fe24e3f0",
-            measurementId: "G-64LY73VLMW"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = 'cutesense-studios';
-
-        let unsubscribeSignatures = null;
-
-        const initAuth = async () => {
-            try {
-                await signInAnonymously(auth);
-            } catch (err) {
-                console.error("Auth failed:", err);
-            }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loadSignatures();
-            } else if (unsubscribeSignatures) {
-                unsubscribeSignatures();
-                unsubscribeSignatures = null;
-            }
-        });
-
-        initAuth();
-
-        async function signWall(e) {
-            e.preventDefault();
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            const nameInput = document.getElementById('signer-name');
-            const rawName = nameInput.value.trim();
-            if (rawName.length < 2) {
-                const status = document.getElementById('form-status');
-                status.innerText = "Please enter at least 2 characters ✨";
-                setTimeout(() => status.innerText = '', 3000);
-                return;
-            }
-            const name = rawName || "Anonymous Friend";
-            const submitBtn = e.target.querySelector('button');
-            const originalBtnText = submitBtn.innerHTML;
-            const status = document.getElementById('form-status');
-            
-            try {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i data-lucide="loader" class="animate-spin w-5 h-5 inline"></i> Signing...';
-                if (window.lucide) lucide.createIcons();
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'signatures'), {
-                    name: name,
-                    timestamp: serverTimestamp(),
-                    uid: user.uid
-                });
-                nameInput.value = '';
-                status.innerText = "Signed successfully! ✨";
-                setTimeout(() => status.innerText = '', 3000);
-            } catch (err) {
-                console.error(err);
-                status.innerText = "Error signing. Try again!";
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-                if (window.lucide) lucide.createIcons();
-            }
-        }
-
-        function loadSignatures() {
-            if (!auth.currentUser) return;
-            if (unsubscribeSignatures) unsubscribeSignatures();
-
-            const signaturesRef = collection(db, 'artifacts', appId, 'public', 'data', 'signatures');
-            unsubscribeSignatures = onSnapshot(signaturesRef, (snapshot) => {
-                const signatures = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    if (data.name) signatures.push(data);
-                });
-                
-                signatures.sort((a, b) => {
-                    const timeA = a.timestamp?.toMillis() || Date.now();
-                    const timeB = b.timestamp?.toMillis() || Date.now();
-                    return timeB - timeA;
-                });
-                
-                const countEl = document.getElementById('signature-count');
-                if (countEl) countEl.innerText = signatures.length;
-                
-                const list = document.getElementById('signature-list');
-                if (list) {
-                    const brandThemes = [
-                        'border-cs-pink bg-cs-pink/10 text-[#D87D85] dark:text-cs-pink dark:border-cs-pink',
-                        'border-cs-blue bg-cs-blue/10 text-[#599AB5] dark:text-cs-blue dark:border-cs-blue',
-                        'border-cs-lilac bg-cs-lilac/10 text-cs-lilac dark:text-[#E2CBEB] dark:border-cs-lilac'
-                    ];
-
-                    list.innerHTML = signatures.slice(0, 24).map(s => {
-                        const theme = brandThemes[Math.floor(Math.random() * brandThemes.length)];
-                        return `<div class="px-5 py-2.5 rounded-full text-sm border-2 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500 font-bold whitespace-nowrap transition-all ${theme}">✨ ${escapeHtml(s.name)}</div>`;
-                    }).join('') || '<p class="text-slate-400 italic">Be the first to leave a mark!</p>';
-                }
+    // 1. Initialize SQLite Database
+    async function initDatabase() {
+        try {
+            const sqlPromise = initSqlJs({
+                locateFile: file => `./assets/js/${file}`
             });
+
+            // Fetch DB with cache-buster
+            const dataPromise = fetch(`./database/signatures.db?v=${Date.now()}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Database file not found.");
+                    return res.arrayBuffer();
+                });
+
+            const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
+            db = new SQL.Database(new Uint8Array(buf));
+            
+            renderWall();
+        } catch (err) {
+            console.error("SQLite Sync Error:", err);
+            renderWall(); 
+        }
+    }
+
+    // 2. Render the Signature Wall
+    function renderWall() {
+        const list = document.getElementById('signature-list');
+        const countEl = document.getElementById('signature-count');
+        if (!list) return;
+
+        let globalSigns = [];
+        let totalCount = 0;
+
+        if (db) {
+            try {
+                const countRes = db.exec("SELECT COUNT(*) FROM signatures");
+                totalCount = parseInt(countRes[0].values[0][0]);
+
+                const signRes = db.exec("SELECT name FROM signatures ORDER BY id DESC LIMIT 24");
+                if (signRes.length > 0) {
+                    globalSigns = signRes[0].values.map(row => row[0]);
+                }
+            } catch (e) {
+                console.error("Database Query Error:", e);
+            }
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        const localSigns = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        const allSigns = [...localSigns, ...globalSigns].slice(0, 30);
+        
+        countEl.innerText = (totalCount + localSigns.length).toLocaleString();
+
+        const brandThemes = [
+            'border-cs-pink bg-cs-pink/10 text-[#D87D85] dark:text-cs-pink',
+            'border-cs-blue bg-cs-blue/10 text-[#599AB5] dark:text-cs-blue',
+            'border-cs-lilac bg-cs-lilac/10 text-cs-lilac dark:text-[#E2CBEB]'
+        ];
+
+        list.innerHTML = allSigns.map(name => {
+            const theme = brandThemes[Math.floor(Math.random() * brandThemes.length)];
+            return `<div class="px-5 py-2.5 rounded-full text-sm border-2 font-bold animate-in fade-in zoom-in duration-500 shadow-sm ${theme}">✨ ${escapeHtml(name)}</div>`;
+        }).join('') || '<p class="text-slate-400 italic">No signatures yet.</p>';
+    }
+
+    // 3. Handle Signing (The Bot Trigger)
+    window.signWall = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('signer-name');
+        const status = document.getElementById('form-status');
+        const name = input.value.trim();
+
+        let localSigns = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+        if (localSigns.length >= SIGN_LIMIT) {
+            status.innerText = "Signature limit reached (Max 3)! ✨";
+            status.style.color = "#D87D85";
+            return;
         }
 
-        window.signWall = signWall;
-    </script>
+        if (name.length < 2) {
+            status.innerText = "Please enter a longer nickname! ✨";
+            return;
+        }
+
+        // Save Locally for instant feedback
+        localSigns.unshift(name);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(localSigns));
+        renderWall();
+
+        // --- GITHUB ACTION TRIGGER ---
+        // Change these to your actual username and repo name!
+        const GITHUB_USER = "CuteSense-Studios"; 
+        const GITHUB_REPO = "Official-Website"; 
+
+        const issueTitle = encodeURIComponent(name);
+        const issueBody = encodeURIComponent("Automated signature request. Click 'Submit new issue' to finalize! ✨");
+        const githubUrl = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/issues/new?title=${issueTitle}&labels=signature&body=${issueBody}`;
+
+        // Open the GitHub window
+        window.open(githubUrl, '_blank');
+
+        input.value = '';
+        status.innerText = "Finalize your sign in the new tab! ✨";
+        status.style.color = "#A178AF";
+    };
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        initDatabase();
+        setInterval(initDatabase, REFRESH_INTERVAL);
+        if(window.lucide) lucide.createIcons();
+    });
+</script>
 </head>
 <body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden flex flex-col min-h-screen">
 
