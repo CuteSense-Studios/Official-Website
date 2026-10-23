@@ -171,13 +171,55 @@ html.dark ::selection,
     transition: all 0.5s ease-in-out; 
 }
 
+/* =========================================================
+   Mobile Navigation Drawer & Desktop Navbar Rules
+========================================================= */
 #mobile-menu { 
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-    transform: translateX(100%);
-    will-change: transform;
+    display: none !important;
 }
+
 #mobile-menu.active { 
-    transform: translateX(0); 
+    display: flex !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    z-index: 9999 !important;
+    box-sizing: border-box !important;
+    background-color: #ffffff !important;
+    color: #1A161D !important;
+    flex-direction: column !important;
+    padding: 1.5rem !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+html.dark #mobile-menu.active { 
+    background-color: #1A161D !important;
+    color: #F1F5F9 !important;
+}
+
+@media (min-width: 768px) {
+    #mobile-menu, #mobile-menu.active {
+        display: none !important;
+    }
+}
+
+.navbar-pill {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+}
+
+html.dark .navbar-pill {
+    background-color: rgba(26, 22, 29, 0.94) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
 }
 
 /* Glass/Mission Cards Interactive Hover */
@@ -482,7 +524,6 @@ html.dark #contributing-render a {
     .mission-card,
     .project-card,
     .icon-container,
-    #mobile-menu,
     #motto-container,
     body {
         animation: none !important;

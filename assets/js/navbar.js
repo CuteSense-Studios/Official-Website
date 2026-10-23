@@ -16,6 +16,13 @@ class CuteSenseNavbar extends HTMLElement {
         this._handleThemeChange = this._handleThemeChange.bind(this);
         this._handleClick = this._handleClick.bind(this);
         this._handleResize = this._handleResize.bind(this);
+        this._handleKeyDown = this._handleKeyDown.bind(this);
+    }
+
+    _handleKeyDown(e) {
+        if (e.key === 'Escape' && this._isMenuOpen) {
+            this._toggleMenu(false);
+        }
     }
 
     connectedCallback() {
@@ -26,12 +33,14 @@ class CuteSenseNavbar extends HTMLElement {
         this._init();
         window.addEventListener('themechange', this._handleThemeChange);
         window.addEventListener('resize', this._handleResize);
+        window.addEventListener('keydown', this._handleKeyDown);
     }
 
     disconnectedCallback() {
         window.removeEventListener('scroll', this._handleScroll);
         window.removeEventListener('themechange', this._handleThemeChange);
         window.removeEventListener('resize', this._handleResize);
+        window.removeEventListener('keydown', this._handleKeyDown);
         this.removeEventListener('click', this._handleClick);
     }
 
@@ -76,8 +85,8 @@ class CuteSenseNavbar extends HTMLElement {
                 transition: all 0.2s ease;
             }
 
-            /* Responsive rules: Logo appears ONLY on mobile! */
-            @media (min-width: 1151px) {
+            /* Responsive rules: Logo appears ONLY on mobile (<768px)! */
+            @media (min-width: 768px) {
                 .mobile-only-brand { display: none !important; }
                 .desktop-nav-container { 
                     display: flex !important; 
@@ -85,8 +94,9 @@ class CuteSenseNavbar extends HTMLElement {
                     gap: 6px; 
                     margin: 0 auto; 
                 }
+                #mobile-menu { display: none !important; }
             }
-            @media (max-width: 1150px) {
+            @media (max-width: 767px) {
                 .mobile-only-brand { display: flex !important; }
                 .desktop-nav-container { display: none !important; }
             }
@@ -119,24 +129,41 @@ class CuteSenseNavbar extends HTMLElement {
             .nav-visible { transform: translateY(0); }
 
             #mobile-menu {
-                height: 100dvh; opacity: 0; visibility: hidden;
-                transform: translateX(100%);
-                transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                width: 100%;
+                max-width: 100%;
+                height: 100vh;
+                height: 100dvh;
+                z-index: 9999;
+                box-sizing: border-box;
+                background-color: #ffffff;
+                color: #1a161d;
+                flex-direction: column;
+                padding: 1.5rem;
+                overflow-y: auto;
+            }
+            .dark #mobile-menu {
+                background-color: #1a161d;
+                color: #f1f5f9;
             }
             #mobile-menu.active { 
-                opacity: 1; 
-                visibility: visible; 
-                transform: translateX(0);
+                display: flex !important;
             }
         </style>
 
         <nav class="fixed top-0 left-0 w-full z-[1000] px-4 pt-4 transition-transform duration-500 nav-visible" data-navbar>
-            <div class="max-w-5xl mx-auto flex items-center justify-between bg-white/85 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
+            <div class="navbar-pill max-w-5xl mx-auto flex items-center justify-between border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
                 
                 <!-- Mobile-Only Brand Header (Logo ONLY on mobile!) -->
                 <div class="mobile-only-brand items-center gap-2.5">
-                    <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-                        <i data-lucide="menu" class="w-6 h-6 shrink-0"></i>
+                    <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 shrink-0">
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
                     </button>
                     <a href="${root}index.html" class="flex items-center gap-2 group" aria-label="CuteSense Studios Home">
                         <img src="${root}assets/icons/companylogo.webp" alt="CuteSense Logo" class="h-8 w-auto pixel-crisp drop-shadow-sm">
@@ -168,9 +195,9 @@ class CuteSenseNavbar extends HTMLElement {
         </nav>
 
         <!-- Improved Mobile Navigation Drawer -->
-        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl flex flex-col p-6 sm:p-8 overflow-y-auto">
+        <div id="mobile-menu" class="w-full">
             <!-- Mobile Drawer Header with Logo -->
-            <div class="flex justify-between items-center pb-6 border-b border-slate-100 dark:border-slate-800/80 mb-6 shrink-0">
+            <div class="flex justify-between items-center pb-6 border-b border-slate-100 dark:border-slate-800/80 mb-6 shrink-0 w-full">
                 <a href="${root}index.html" class="flex items-center gap-3">
                     <img src="${root}assets/icons/companylogo.webp" alt="CuteSense Logo" class="h-10 w-auto pixel-crisp">
                     <div class="flex flex-col">
@@ -178,13 +205,16 @@ class CuteSenseNavbar extends HTMLElement {
                         <span class="text-[9px] uppercase tracking-[0.25em] font-bold text-cs-lilac mt-1">Studios</span>
                     </div>
                 </a>
-                <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors">
-                    <i data-lucide="x" class="w-5 h-5 shrink-0"></i>
+                <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-full transition-colors cursor-pointer flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 shrink-0">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
 
             <!-- Mobile Nav Items -->
-            <div class="flex flex-col gap-2 font-bold pb-6">
+            <div class="flex flex-col gap-2 font-bold pb-6 w-full">
                 ${navItems.map(item => `
                     <a href="${root}${item.path}" class="${active === item.id ? 'text-[#F08DA1] bg-cs-pink/15 font-black border-l-4 border-[#F08DA1]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'} px-4 py-3 rounded-2xl flex items-center justify-between transition-colors">
                         <div class="flex items-center gap-3">
@@ -197,7 +227,7 @@ class CuteSenseNavbar extends HTMLElement {
             </div>
 
             <!-- Mobile Drawer Footer / Quick External Links -->
-            <div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col gap-4 text-xs font-semibold text-slate-400">
+            <div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col gap-4 text-xs font-semibold text-slate-400 w-full">
                 <div class="flex items-center justify-center gap-6">
                     <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-cs-lilac hover:text-[#F08DA1] transition-colors">
                         <img src="${root}assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
@@ -228,7 +258,7 @@ class CuteSenseNavbar extends HTMLElement {
     }
 
     _handleResize() {
-        if (window.innerWidth > 1150 && this._isMenuOpen) {
+        if (window.innerWidth >= 768 && this._isMenuOpen) {
             this._toggleMenu(false);
         }
     }
