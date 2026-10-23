@@ -156,7 +156,8 @@
                 // Fetch CODE_OF_CONDUCT.md from the root directory
                 const response = await fetch('../CODE_OF_CONDUCT.md');
                 if (!response.ok) throw new Error('MD file missing');
-                const rawMarkdown = await response.text();
+                let rawMarkdown = await response.text();
+                rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
 
                 // Render with local marked.js script
                 container.innerHTML = marked.parse(rawMarkdown);

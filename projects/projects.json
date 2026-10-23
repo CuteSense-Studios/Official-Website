@@ -1,0 +1,72 @@
+[
+  {
+    "id": "cutesense-weather",
+    "title": "CuteSense Weather",
+    "tagline": "Atmospheric React weather dashboard with dynamic anime skies & ambient lo-fi sounds.",
+    "category": "Tools",
+    "icon": "cloud-sun",
+    "color": "blue",
+    "file": "cutesense-weather.md",
+    "github": "https://github.com/CuteSense-Studios/Cutesense-Weather",
+    "demo": "https://cutesense-studios.github.io/Cutesense-Weather/",
+    "status": "Active",
+    "featured": true,
+    "tags": ["React", "JavaScript", "Weather API", "PWA"]
+  },
+  {
+    "id": "as-you-are-w",
+    "title": "As You Are (Website)",
+    "tagline": "Official interactive landing experience and OST sampler for the visual novel.",
+    "category": "Games",
+    "icon": "heart-handshake",
+    "color": "lilac",
+    "file": "as-you-are-w.md",
+    "github": "https://github.com/CuteSense-Studios/As-You-Are-W",
+    "demo": "https://cutesense-studios.github.io/As-You-Are-W/",
+    "status": "Featured",
+    "featured": true,
+    "tags": ["Visual Novel", "HTML5", "Audio Player", "Story"]
+  },
+  {
+    "id": "as-you-are-t",
+    "title": "As You Are (Ren'Py Template)",
+    "tagline": "Open-source starter framework & dialogue engine template for emotional visual novels.",
+    "category": "Games",
+    "icon": "gamepad-2",
+    "color": "pink",
+    "file": "as-you-are-t.md",
+    "github": "https://github.com/CuteSense-Studios/As-You-Are-T",
+    "demo": null,
+    "status": "Active",
+    "featured": true,
+    "tags": ["Ren'Py", "Python", "Game Engine", "Open Source"]
+  },
+  {
+    "id": "binary-break-india",
+    "title": "Binary Break India",
+    "tagline": "Advocacy research archive & data visualizations supporting diversity in tech across India.",
+    "category": "Advocacy",
+    "icon": "sparkles",
+    "color": "lilac",
+    "file": "binary-break-india.md",
+    "github": "https://github.com/CuteSense-Studios/Binary-Break-India",
+    "demo": "https://cutesense-studios.github.io/Binary-Break-India/",
+    "status": "Research",
+    "featured": true,
+    "tags": ["Advocacy", "Research", "Data Viz", "Diversity"]
+  },
+  {
+    "id": "official-website",
+    "title": "Official Website",
+    "tagline": "The studio's open-source web hub featuring SQLite guestbook & live Markdown reader.",
+    "category": "Web",
+    "icon": "globe",
+    "color": "pink",
+    "file": "official-website.md",
+    "github": "https://github.com/CuteSense-Studios/Official-Website",
+    "demo": "https://cutesense-studios.github.io/Official-Website/",
+    "status": "Core",
+    "featured": false,
+    "tags": ["HTML5", "Web Components", "Tailwind", "SQLite"]
+  }
+]

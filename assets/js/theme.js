@@ -73,7 +73,8 @@
             meta.name = 'theme-color';
             document.head.appendChild(meta);
         }
-        meta.content = isDark ? '#0f172a' : '#ffffff';
+        // CuteSense Brand Theme Colors: Dark #1A161D, Light #FFF9F4
+        meta.content = isDark ? '#1A161D' : '#FFF9F4';
     }
     
     function syncWithSystem() {

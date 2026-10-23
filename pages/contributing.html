@@ -175,7 +175,8 @@
                 // Fetch CONTRIBUTING.md from the root directory
                 const response = await fetch('../CONTRIBUTING.md');
                 if (!response.ok) throw new Error('Contributing file missing');
-                const rawMarkdown = await response.text();
+                let rawMarkdown = await response.text();
+                rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
 
                 // Render with local marked.js
                 container.innerHTML = marked.parse(rawMarkdown);

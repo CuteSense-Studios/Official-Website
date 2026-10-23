@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="../assets/js/seo-manager.js" defer></script>
+
+    <title>Projects & Creations | CuteSense Studios</title>
+    <meta name="description" content="Explore our open-source tools, visual novels, creative software, and advocacy research rendered directly from live Markdown source.">
+    <link rel="canonical" href="https://cutesense-studios.com/pages/projects.html">
+
+    <link rel="stylesheet" href="../assets/css/cursor.css">
+    <link rel="stylesheet" href="../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    
+    <script src="../assets/js/favicon.js"></script>
+    <script src="../assets/js/lucide.min.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
+    <script src="../assets/js/marked.min.js"></script>
+
+    <style>
+        /* Scoped Markdown Rendering Styles */
+        #markdown-content h1 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #F08DA1, #7CB9D4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #F08DA1;
+        }
+
+        @media (min-width: 768px) {
+            #markdown-content h1 { font-size: 3.5rem; line-height: 1.1; }
+        }
+
+        #markdown-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 1.25rem;
+            color: #A178AF;
+            border-bottom: 3px dotted rgba(161, 120, 175, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        #markdown-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #599AB5;
+        }
+
+        .dark #markdown-content h3 {
+            color: #B9E1F1;
+        }
+
+        #markdown-content p {
+            font-size: 1.075rem;
+            opacity: 0.88;
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        #markdown-content blockquote {
+            background-color: rgba(161, 120, 175, 0.08);
+            border-left: 5px solid #A178AF;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 1.25rem;
+            font-style: italic;
+        }
+
+        #markdown-content ul {
+            padding-left: 0.5rem;
+            margin-bottom: 1.75rem;
+            list-style: none;
+        }
+
+        #markdown-content ul li {
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        #markdown-content ul li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            color: #F08DA1;
+            font-weight: 700;
+        }
+
+        #markdown-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.75rem;
+            list-style: decimal;
+        }
+
+        #markdown-content ol li {
+            font-size: 1.05rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        #markdown-content hr {
+            border: none;
+            border-top: 3px dotted rgba(161, 120, 175, 0.25);
+            margin: 3.5rem 0;
+        }
+
+        #markdown-content strong {
+            color: #D87D85;
+            font-weight: 700;
+        }
+        .dark #markdown-content strong {
+            color: #F4C6C9;
+        }
+
+        #markdown-content a {
+            color: #A178AF;
+            text-decoration: underline;
+            text-decoration-color: rgba(161, 120, 175, 0.4);
+            transition: all 0.2s;
+            font-weight: 700;
+        }
+
+        #markdown-content a:hover {
+            color: #F08DA1;
+        }
+
+        #markdown-content pre {
+            background-color: #17141d;
+            color: #e2e8f0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 1.25rem;
+            overflow-x: auto;
+            margin: 1.75rem 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid rgba(161, 120, 175, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #markdown-content code:not(pre code) {
+            background: rgba(240, 141, 161, 0.15);
+            color: #D87D85;
+            padding: 0.2rem 0.45rem;
+            border-radius: 0.5rem;
+            font-size: 0.9em;
+            font-weight: 600;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        .dark #markdown-content code:not(pre code) {
+            color: #F4C6C9;
+            background: rgba(240, 141, 161, 0.12);
+        }
+
+        #markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            display: block;
+            overflow-x: auto;
+        }
+
+        #markdown-content th {
+            background-color: rgba(244, 198, 201, 0.2);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-weight: 700;
+            border: 1px solid rgba(161, 120, 175, 0.15);
+        }
+
+        .dark #markdown-content th {
+            background-color: rgba(161, 120, 175, 0.2);
+            color: #E2CBEB;
+        }
+
+        #markdown-content td {
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(161, 120, 175, 0.15);
+            font-size: 0.95rem;
+        }
+
+        .category-tab.active {
+            background-color: #A178AF !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(161, 120, 175, 0.35);
+        }
+
+        .project-card.selected {
+            border-color: #A178AF !important;
+            box-shadow: 0 0 0 3px rgba(161, 120, 175, 0.35), 0 15px 30px rgba(161, 120, 175, 0.2) !important;
+        }
+    </style>
+</head>
+<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden min-h-screen flex flex-col">
+
+    <cs-navbar></cs-navbar>
+    <script src="../assets/js/navbar.js"></script>
+
+    <main class="flex-grow pt-32 pb-24 relative overflow-hidden">
+        <!-- Parallax Background Blobs -->
+        <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+            <div class="blob-parallax absolute top-[15%] right-[10%] w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-25"></div>
+            <div class="blob-parallax absolute top-[40%] left-[5%] w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-25"></div>
+            <div class="blob-parallax absolute bottom-[10%] right-[20%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-lilac rounded-full blur-[140px] opacity-20"></div>
+        </div>
+
+        <!-- Decorative Sparkles -->
+        <div class="absolute top-[20%] left-[12%] sparkle-slow text-cs-pink z-0" aria-hidden="true"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
+        <div class="absolute top-[35%] right-[12%] sparkle-slow text-cs-blue z-0" aria-hidden="true"><i data-lucide="sparkle" class="w-12 h-12"></i></div>
+
+        <!-- Hero Section -->
+        <section class="max-w-6xl mx-auto px-6 text-center mb-16 relative z-10">
+            <div class="floating inline-block px-4 py-1.5 bg-cs-lilac/15 text-cs-lilac dark:bg-cs-lilac/20 dark:text-[#E2CBEB] rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-cs-lilac/30 backdrop-blur-sm">
+                Official Repositories
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                CuteSense <span class="gradient-text">Projects</span>
+            </h1>
+
+            <p class="text-lg md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed font-medium mb-10">
+                Official open-source repositories from <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="text-cs-lilac underline font-bold hover:text-cs-pink">github.com/CuteSense-Studios</a>. Each project is documented with a dedicated Markdown (<code class="text-sm">.md</code>) specification rendered live below.
+            </p>
+
+            <!-- Quick Stats Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm font-bold">
+                <div class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-cs-pink/40 shadow-sm">
+                    <i data-lucide="folder-git-2" class="w-4 h-4 text-cs-pink"></i>
+                    <span>5 Studio Repositories</span>
+                </div>
+                <div class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-cs-blue/40 shadow-sm">
+                    <i data-lucide="scale" class="w-4 h-4 text-cs-blue"></i>
+                    <span>GNU AGPL / MIT</span>
+                </div>
+                <div class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-cs-lilac/40 shadow-sm">
+                    <i data-lucide="heart" class="w-4 h-4 text-cs-lilac"></i>
+                    <span>Emotive Open Source Art</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters & Search Toolbar -->
+        <section class="max-w-6xl mx-auto px-6 mb-12 relative z-10">
+            <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-4 sm:p-6 rounded-3xl border border-cs-lilac/20 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                
+                <!-- Category Tabs -->
+                <div class="flex flex-wrap items-center gap-2" id="category-tabs" role="tablist" aria-label="Project categories">
+                    <button type="button" data-category="all" class="category-tab active px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                        All Repos
+                    </button>
+                    <button type="button" data-category="Tools" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                        Weather &amp; Apps
+                    </button>
+                    <button type="button" data-category="Games" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                        Visual Novel ("As You Are")
+                    </button>
+                    <button type="button" data-category="Advocacy" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                        Advocacy Research
+                    </button>
+                    <button type="button" data-category="Web" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                        Studio Hub
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative min-w-[240px] sm:min-w-[300px]">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="project-search" placeholder="Search by name, tag, or tech..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-cs-lilac text-sm transition-all" aria-label="Search projects">
+                </div>
+            </div>
+
+            <!-- Results Count Bar -->
+            <div class="flex items-center justify-between px-2 pt-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span id="results-count">Showing 5 projects</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cs-pink"></i> Click any card to read its full Markdown docs</span>
+            </div>
+        </section>
+
+        <!-- Projects Cards Grid -->
+        <section class="max-w-6xl mx-auto px-6 mb-20 relative z-10">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Dynamically rendered by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Markdown Project Reader Section -->
+        <section id="project-reader-section" class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 scroll-mt-28">
+            <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-2 border-cs-lilac rounded-3xl sm:rounded-[2.5rem] shadow-2xl p-6 sm:p-10 md:p-14 transition-all duration-500">
+                
+                <!-- Reader Top Bar -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-cs-lilac/20 mb-8">
+                    <div class="flex items-center gap-3">
+                        <div id="reader-icon-wrapper" class="w-12 h-12 rounded-2xl bg-cs-blue/20 dark:bg-cs-blue/10 flex items-center justify-center text-cs-blue shrink-0">
+                            <i data-lucide="file-text" id="reader-icon" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span id="reader-category" class="text-xs uppercase tracking-widest font-bold text-cs-lilac">Project Documentation</span>
+                            <h2 id="reader-title" class="text-2xl sm:text-3xl font-bold">Select a Project</h2>
+                        </div>
+                    </div>
+
+                    <!-- Reader Action Controls -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a id="reader-github-link" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-[#F08DA1] font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700">
+                            <img src="../assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
+                            <span>GitHub</span>
+                        </a>
+
+                        <a id="reader-demo-link" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-cs-pink/15 text-cs-pink hover:bg-cs-pink/25 font-bold text-xs flex items-center gap-1.5 transition-colors border border-cs-pink/30">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            <span>Live Site</span>
+                        </a>
+
+                        <button type="button" id="copy-markdown-btn" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-cs-lilac/20 font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700" title="Copy raw markdown to clipboard">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span id="copy-btn-text">Copy .md</span>
+                        </button>
+
+                        <button type="button" id="close-reader-btn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors ml-auto sm:ml-0" title="Back to grid">
+                            <i data-lucide="arrow-up" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Markdown Content Render Container -->
+                <article id="markdown-content" class="w-full break-words">
+                    <div class="flex flex-col items-center justify-center py-20 text-center">
+                        <i data-lucide="sparkles" class="animate-bounce w-12 h-12 text-cs-pink mb-4"></i>
+                        <h3 class="text-xl font-bold text-cs-lilac mb-2">Rendering Project Markdown...~</h3>
+                        <p class="text-sm opacity-70">Fetching live project specification directly from source.</p>
+                    </div>
+                </article>
+
+                <!-- Reader Footer -->
+                <div class="mt-12 pt-8 border-t border-cs-lilac/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-500">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="file-code" class="w-4 h-4 text-cs-lilac"></i>
+                        <span id="markdown-filepath">projects/cutesense-weather.md</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-cs-lilac flex items-center gap-1 transition-colors">
+                            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i> Back to top
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <cs-footer></cs-footer>
+    <script src="../assets/js/footer.js"></script>
+
+    <!-- Embedded Projects Data & Client Logic -->
+    <script>
+        // Official CuteSense-Studios Repositories
+        const PROJECTS_DATA = [
+            {
+                id: "cutesense-weather",
+                title: "CuteSense Weather",
+                tagline: "Atmospheric React weather dashboard with dynamic anime skies & ambient lo-fi sounds.",
+                category: "Tools",
+                icon: "cloud-sun",
+                color: "blue",
+                file: "cutesense-weather.md",
+                github: "https://github.com/CuteSense-Studios/Cutesense-Weather",
+                demo: "https://cutesense-studios.github.io/Cutesense-Weather/",
+                status: "Active",
+                featured: true,
+                tags: ["React", "JavaScript", "Weather API", "PWA"]
+            },
+            {
+                id: "as-you-are-w",
+                title: "As You Are (Website)",
+                tagline: "Official interactive landing experience and OST sampler for the visual novel.",
+                category: "Games",
+                icon: "heart-handshake",
+                color: "lilac",
+                file: "as-you-are-w.md",
+                github: "https://github.com/CuteSense-Studios/As-You-Are-W",
+                demo: "https://cutesense-studios.github.io/As-You-Are-W/",
+                status: "Featured",
+                featured: true,
+                tags: ["Visual Novel", "HTML5", "Audio Player", "Story"]
+            },
+            {
+                id: "as-you-are-t",
+                title: "As You Are (Ren'Py Template)",
+                tagline: "Open-source starter framework & dialogue engine template for emotional visual novels.",
+                category: "Games",
+                icon: "gamepad-2",
+                color: "pink",
+                file: "as-you-are-t.md",
+                github: "https://github.com/CuteSense-Studios/As-You-Are-T",
+                demo: null,
+                status: "Active",
+                featured: true,
+                tags: ["Ren'Py", "Python", "Game Engine", "Open Source"]
+            },
+            {
+                id: "binary-break-india",
+                title: "Binary Break India",
+                tagline: "Advocacy research archive & data visualizations supporting diversity in tech across India.",
+                category: "Advocacy",
+                icon: "sparkles",
+                color: "lilac",
+                file: "binary-break-india.md",
+                github: "https://github.com/CuteSense-Studios/Binary-Break-India",
+                demo: "https://cutesense-studios.github.io/Binary-Break-India/",
+                status: "Research",
+                featured: true,
+                tags: ["Advocacy", "Research", "Data Viz", "Diversity"]
+            },
+            {
+                id: "official-website",
+                title: "Official Website",
+                tagline: "The studio's open-source web hub featuring SQLite guestbook & live Markdown reader.",
+                category: "Web",
+                icon: "globe",
+                color: "pink",
+                file: "official-website.md",
+                github: "https://github.com/CuteSense-Studios/Official-Website",
+                demo: "https://cutesense-studios.github.io/Official-Website/",
+                status: "Core",
+                featured: false,
+                tags: ["HTML5", "Web Components", "Tailwind", "SQLite"]
+            }
+        ];
+
+        let currentActiveCategory = 'all';
+        let currentSearchQuery = '';
+        let currentLoadedProject = null;
+        let currentRawMarkdown = '';
+
+        const COLOR_STYLES = {
+            pink: {
+                border: 'border-cs-pink',
+                bg: 'bg-cs-pink/15 text-[#D87D85] dark:text-cs-pink',
+                badge: 'bg-cs-pink text-white',
+                shadow: 'shadow-[0_8px_0_#F4C6C9] dark:shadow-none'
+            },
+            blue: {
+                border: 'border-cs-blue',
+                bg: 'bg-cs-blue/15 text-[#599AB5] dark:text-cs-blue',
+                badge: 'bg-cs-blue text-slate-800',
+                shadow: 'shadow-[0_8px_0_#B9E1F1] dark:shadow-none'
+            },
+            lilac: {
+                border: 'border-cs-lilac',
+                bg: 'bg-cs-lilac/15 text-cs-lilac dark:text-[#E2CBEB]',
+                badge: 'bg-cs-lilac text-white',
+                shadow: 'shadow-[0_8px_0_#A178AF] dark:shadow-none'
+            }
+        };
+
+        function renderCards() {
+            const grid = document.getElementById('projects-grid');
+            const countEl = document.getElementById('results-count');
+            if (!grid) return;
+
+            const filtered = PROJECTS_DATA.filter(project => {
+                const matchesCategory = currentActiveCategory === 'all' || 
+                    currentActiveCategory.split(',').includes(project.category);
+                
+                const q = currentSearchQuery.toLowerCase();
+                const matchesSearch = !q || 
+                    project.title.toLowerCase().includes(q) ||
+                    project.tagline.toLowerCase().includes(q) ||
+                    project.category.toLowerCase().includes(q) ||
+                    project.tags.some(tag => tag.toLowerCase().includes(q));
+
+                return matchesCategory && matchesSearch;
+            });
+
+            countEl.textContent = `Showing ${filtered.length} of ${PROJECTS_DATA.length} projects`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center">
+                        <i data-lucide="search-x" class="w-12 h-12 text-cs-pink mx-auto mb-3 opacity-60"></i>
+                        <h3 class="text-xl font-bold mb-1">No repositories found</h3>
+                        <p class="text-sm opacity-70">Try adjusting your search terms or selecting another category.</p>
+                    </div>
+                `;
+                if (window.lucide) lucide.createIcons();
+                return;
+            }
+
+            grid.innerHTML = filtered.map(project => {
+                const style = COLOR_STYLES[project.color] || COLOR_STYLES.pink;
+                const isSelected = currentLoadedProject && currentLoadedProject.id === project.id;
+                
+                return `
+                <div class="project-card glass-card bg-white dark:bg-slate-800/80 p-6 sm:p-8 rounded-[2rem] border-2 ${style.border} ${style.shadow} flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] cursor-pointer ${isSelected ? 'selected' : ''}" 
+                     data-project-id="${project.id}" 
+                     onclick="selectProject('${project.id}', true)">
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-12 h-12 rounded-2xl ${style.bg} flex items-center justify-center shrink-0">
+                                <i data-lucide="${project.icon}" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${style.badge}">
+                                ${project.status}
+                            </span>
+                        </div>
+
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-cs-lilac transition-colors">${project.title}</h3>
+                        <p class="text-sm opacity-80 leading-relaxed font-medium mb-6">${project.tagline}</p>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 mb-6">
+                            ${project.tags.map(t => `<span class="text-[10px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">#${t}</span>`).join('')}
+                        </div>
+
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                            <button type="button" class="text-xs font-bold text-cs-lilac hover:text-[#F08DA1] flex items-center gap-1.5 transition-colors">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                                <span>Read .md</span>
+                            </button>
+
+                            <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+                                ${project.github ? `
+                                    <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="View Repository on GitHub">
+                                        <img src="../assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
+                                    </a>
+                                ` : ''}
+                                ${project.demo ? `
+                                    <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="p-2 text-cs-pink hover:text-[#D87D85] rounded-full hover:bg-cs-pink/10 transition-colors" title="Launch Demo or Site">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                `;
+            }).join('');
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        async function loadProjectMarkdown(project, shouldScroll = false) {
+            currentLoadedProject = project;
+            renderCards();
+
+            const container = document.getElementById('markdown-content');
+            const titleEl = document.getElementById('reader-title');
+            const categoryEl = document.getElementById('reader-category');
+            const iconWrapper = document.getElementById('reader-icon-wrapper');
+            const iconEl = document.getElementById('reader-icon');
+            const githubLink = document.getElementById('reader-github-link');
+            const demoLink = document.getElementById('reader-demo-link');
+            const filepathEl = document.getElementById('markdown-filepath');
+
+            titleEl.textContent = project.title;
+            categoryEl.textContent = `${project.category} • ${project.status}`;
+            filepathEl.textContent = `projects/${project.file}`;
+
+            if (iconWrapper && project.color) {
+                const s = COLOR_STYLES[project.color] || COLOR_STYLES.pink;
+                iconWrapper.className = `w-12 h-12 rounded-2xl ${s.bg} flex items-center justify-center shrink-0`;
+            }
+            if (iconEl) {
+                iconEl.setAttribute('data-lucide', project.icon);
+            }
+
+            if (githubLink) {
+                if (project.github) {
+                    githubLink.href = project.github;
+                    githubLink.style.display = 'flex';
+                } else {
+                    githubLink.style.display = 'none';
+                }
+            }
+
+            if (demoLink) {
+                if (project.demo) {
+                    demoLink.href = project.demo;
+                    demoLink.style.display = 'flex';
+                } else {
+                    demoLink.style.display = 'none';
+                }
+            }
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-20 text-center">
+                    <i data-lucide="sparkles" class="animate-bounce w-12 h-12 text-cs-pink mb-4"></i>
+                    <h3 class="text-xl font-bold text-cs-lilac mb-2">Rendering ${project.title} Markdown...~</h3>
+                    <p class="text-sm opacity-70">Fetching live project specification from <code>projects/${project.file}</code></p>
+                </div>
+            `;
+            if (window.lucide) lucide.createIcons();
+
+            try {
+                const response = await fetch(`../projects/${project.file}?v=${Date.now()}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to load ${project.file}`);
+                
+                const rawMarkdown = await response.text();
+                currentRawMarkdown = rawMarkdown;
+
+                if (window.marked && typeof window.marked.parse === 'function') {
+                    container.innerHTML = marked.parse(rawMarkdown);
+                } else {
+                    container.innerHTML = `<pre class="whitespace-pre-wrap">${rawMarkdown}</pre>`;
+                }
+
+                if (window.lucide) lucide.createIcons();
+
+                if (shouldScroll) {
+                    const readerSection = document.getElementById('project-reader-section');
+                    if (readerSection) {
+                        readerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+
+            } catch (err) {
+                console.error("Markdown Load Error:", err);
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <i data-lucide="alert-circle" class="w-14 h-14 text-cs-pink mx-auto mb-3"></i>
+                        <h3 class="text-2xl font-bold mb-2">Could not load markdown</h3>
+                        <p class="opacity-70 mb-6">Failed to retrieve <b>projects/${project.file}</b>.</p>
+                        <button onclick="loadProjectMarkdown(currentLoadedProject)" class="px-6 py-2.5 bg-cs-lilac text-white rounded-2xl font-bold text-sm shadow hover:scale-105 transition-transform">
+                            Retry Loading ✨
+                        </button>
+                    </div>
+                `;
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+
+        window.selectProject = function(projectId, shouldScroll = true) {
+            const project = PROJECTS_DATA.find(p => p.id === projectId);
+            if (!project) return;
+
+            window.location.hash = projectId;
+            loadProjectMarkdown(project, shouldScroll);
+        };
+
+        function initCategoryTabs() {
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentActiveCategory = tab.dataset.category;
+                    renderCards();
+                });
+            });
+        }
+
+        function initSearch() {
+            const input = document.getElementById('project-search');
+            if (!input) return;
+
+            input.addEventListener('input', (e) => {
+                currentSearchQuery = e.target.value.trim();
+                renderCards();
+            });
+        }
+
+        function initCopyButton() {
+            const btn = document.getElementById('copy-markdown-btn');
+            const textEl = document.getElementById('copy-btn-text');
+            if (!btn || !textEl) return;
+
+            btn.addEventListener('click', async () => {
+                if (!currentRawMarkdown) return;
+                try {
+                    await navigator.clipboard.writeText(currentRawMarkdown);
+                    textEl.textContent = 'Copied! ✨';
+                    setTimeout(() => { textEl.textContent = 'Copy .md'; }, 2000);
+                } catch (e) {
+                    textEl.textContent = 'Failed';
+                    setTimeout(() => { textEl.textContent = 'Copy .md'; }, 2000);
+                }
+            });
+        }
+
+        function initCloseReader() {
+            const btn = document.getElementById('close-reader-btn');
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                const gridSection = document.getElementById('projects-grid');
+                if (gridSection) {
+                    gridSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        function handleHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                const match = PROJECTS_DATA.find(p => p.id === hash);
+                if (match) {
+                    loadProjectMarkdown(match, true);
+                    return;
+                }
+            }
+            // Default to first project (CuteSense Weather)
+            loadProjectMarkdown(PROJECTS_DATA[0], false);
+        }
+
+        function initParallax() {
+            const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (motionMedia.matches) return;
+
+            const blobs = document.querySelectorAll('.blob-parallax');
+            let ticking = false;
+
+            document.addEventListener('mousemove', (e) => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const x = (e.clientX / window.innerWidth) - 0.5;
+                    const y = (e.clientY / window.innerHeight) - 0.5;
+                    blobs.forEach((blob, i) => {
+                        const speed = (i + 1) * 35;
+                        blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                    });
+                    ticking = false;
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCards();
+            initCategoryTabs();
+            initSearch();
+            initCopyButton();
+            initCloseReader();
+            initParallax();
+            handleHash();
+
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash.replace('#', '');
+                if (hash) {
+                    const match = PROJECTS_DATA.find(p => p.id === hash);
+                    if (match && (!currentLoadedProject || currentLoadedProject.id !== match.id)) {
+                        loadProjectMarkdown(match, true);
+                    }
+                }
+            });
+
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -34,12 +34,34 @@
     src: url('../fonts/borel-v10-latin/borel-v10-latin-regular.woff2') format('woff2'); 
     font-weight: 400; 
     font-style: normal; 
-    font-display: swap; /* FIXED: Ensures branding font loads reliably */
+    font-display: swap; /* Ensures branding font loads reliably */
+}
+
+/* =========================================
+   Root Design Tokens & Theme Colors
+========================================= */
+:root {
+    --color-cs-pink: #F4C6C9;
+    --color-cs-blue: #B9E1F1;
+    --color-cs-lilac: #A178AF;
+    --color-cs-cream: #FFF9F4;
+    --color-cs-dark: #1A161D;
+    --color-cs-dark-surface: #241E28;
+    --color-cs-dark-card: #2B2430;
+    --color-cs-dark-border: rgba(161, 120, 175, 0.3);
 }
 
 body { 
     font-family: 'Quicksand', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    background-color: var(--color-cs-cream);
+    color: var(--color-cs-dark);
     transition: background-color 0.4s ease, color 0.4s ease; 
+}
+
+html.dark body,
+.dark body {
+    background-color: var(--color-cs-dark) !important;
+    color: #f1f5f9 !important;
 }
 
 h1, h2, h3, .cute-font { 
@@ -52,13 +74,20 @@ h1, h2, h3, .cute-font {
 }
 
 ::selection {
-    background-color: rgba(240, 141, 161, 0.4);
-    color: #D87D85;
+    background-color: #F4C6C9 !important;
+    color: #1A161D !important;
+    text-shadow: none;
+}
+
+html.dark ::selection,
+.dark ::selection {
+    background-color: #A178AF !important;
+    color: #ffffff !important;
     text-shadow: none;
 }
 
 /* =========================================
-   Holographic Gradient Effects (Improved + Fallback)
+   Holographic Gradient Effects (Fixed: No text-shadow smudge)
 ========================================= */
 .gradient-text {
     background: linear-gradient(90deg, #F08DA1 0%, #7CB9D4 25%, #F08DA1 50%, #7CB9D4 75%, #F08DA1 100%);
@@ -69,7 +98,7 @@ h1, h2, h3, .cute-font {
     -webkit-text-fill-color: transparent;
     color: #F08DA1; 
     filter: drop-shadow(0 0 1px rgba(30, 41, 59, 0.15));
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+    text-shadow: none !important;
     transform: translateZ(0);
     backface-visibility: hidden;
     will-change: background-position;
@@ -130,7 +159,7 @@ h1, h2, h3, .cute-font {
 }
 
 /* =========================================
-   Components & Layout Elements (Smoother Interactions)
+   Components & Layout Elements
 ========================================= */
 .motto-wrapper { 
     min-height: 180px; 
@@ -152,31 +181,292 @@ h1, h2, h3, .cute-font {
 }
 
 /* Glass/Mission Cards Interactive Hover */
-.glass-card, .mission-card { 
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+.glass-card, .mission-card, .project-card { 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
     will-change: transform, box-shadow;
 }
 
 .glass-card:hover, .mission-card:hover {
-    transform: translateY(-8px) scale(1.02) rotate(0.5deg);
-    box-shadow: 0 25px 50px -12px rgba(124, 185, 212, 0.3);
+    transform: translateY(-6px) scale(1.01) rotate(0.3deg);
+    box-shadow: 0 20px 40px -10px rgba(124, 185, 212, 0.25);
 }
 
 .mission-card:hover .icon-container { 
-    transform: scale(1.1) rotate(5deg); 
+    transform: scale(1.08) rotate(4deg); 
 }
 .icon-container { 
     transition: transform 0.3s ease;
     will-change: transform;
 }
 
-/* FIXED: Removed active toggle-inner style to resolve "ghost circle" bug in navbar */
-/* .dark .toggle-inner { transform: translateX(1.5rem); } */
-
 .pixel-crisp {
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
+}
+
+/* =========================================================
+   Universal Fallback & Utility Rules (Compensates for Tailwind gaps)
+========================================================= */
+
+/* Background opacities */
+.bg-white\/40 { background-color: rgba(255, 255, 255, 0.4); }
+.bg-white\/60 { background-color: rgba(255, 255, 255, 0.6); }
+.bg-white\/70 { background-color: rgba(255, 255, 255, 0.7); }
+.bg-white\/80 { background-color: rgba(255, 255, 255, 0.8); }
+.bg-white\/85 { background-color: rgba(255, 255, 255, 0.85); }
+.bg-white\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+.bg-cs-pink\/10 { background-color: rgba(244, 198, 201, 0.1); }
+.bg-cs-pink\/15 { background-color: rgba(244, 198, 201, 0.15); }
+.bg-cs-pink\/20 { background-color: rgba(244, 198, 201, 0.2); }
+
+.bg-cs-blue\/5  { background-color: rgba(185, 225, 241, 0.05); }
+.bg-cs-blue\/10 { background-color: rgba(185, 225, 241, 0.1); }
+.bg-cs-blue\/15 { background-color: rgba(185, 225, 241, 0.15); }
+.bg-cs-blue\/20 { background-color: rgba(185, 225, 241, 0.2); }
+
+.bg-cs-lilac\/5  { background-color: rgba(161, 120, 175, 0.05); }
+.bg-cs-lilac\/10 { background-color: rgba(161, 120, 175, 0.1); }
+.bg-cs-lilac\/15 { background-color: rgba(161, 120, 175, 0.15); }
+.bg-cs-lilac\/20 { background-color: rgba(161, 120, 175, 0.2); }
+.bg-cs-cream\/30 { background-color: rgba(255, 249, 244, 0.3); }
+.bg-cs-cream\/50 { background-color: rgba(255, 249, 244, 0.5); }
+
+/* Borders & Dividers */
+.border-y { border-top-width: 1px; border-bottom-width: 1px; }
+.border-slate-100 { border-color: #f1f5f9; }
+.border-slate-200\/60 { border-color: rgba(226, 232, 240, 0.6); }
+.border-white\/50 { border-color: rgba(255, 255, 255, 0.5); }
+
+.border-cs-pink\/20 { border-color: rgba(244, 198, 201, 0.2); }
+.border-cs-pink\/30 { border-color: rgba(244, 198, 201, 0.3); }
+.border-cs-pink\/40 { border-color: rgba(244, 198, 201, 0.4); }
+
+.border-cs-blue\/20 { border-color: rgba(185, 225, 241, 0.2); }
+.border-cs-blue\/40 { border-color: rgba(185, 225, 241, 0.4); }
+
+.border-cs-lilac\/15 { border-color: rgba(161, 120, 175, 0.15); }
+.border-cs-lilac\/20 { border-color: rgba(161, 120, 175, 0.2); }
+.border-cs-lilac\/30 { border-color: rgba(161, 120, 175, 0.3); }
+.border-cs-lilac\/40 { border-color: rgba(161, 120, 175, 0.4); }
+.border-\[\#D87D85\]\/20 { border-color: rgba(216, 125, 133, 0.2); }
+
+/* Border Radius */
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-\[2rem\] { border-radius: 2rem; }
+.rounded-\[2\.5rem\] { border-radius: 2.5rem; }
+.rounded-\[3rem\] { border-radius: 3rem; }
+
+/* Box Shadows */
+.shadow-\[0_8px_0_\#F4C6C9\] { box-shadow: 0 8px 0 #F4C6C9; }
+.shadow-\[0_8px_0_\#B9E1F1\] { box-shadow: 0 8px 0 #B9E1F1; }
+.shadow-\[0_8px_0_\#A178AF\] { box-shadow: 0 8px 0 #A178AF; }
+.shadow-\[0_8px_0_\#A178AF33\] { box-shadow: 0 8px 0 rgba(161, 120, 175, 0.2); }
+.shadow-cs-lilac\/10 { box-shadow: 0 20px 25px -5px rgba(161, 120, 175, 0.1); }
+.shadow-cs-lilac\/30 { box-shadow: 0 20px 25px -5px rgba(161, 120, 175, 0.3); }
+
+/* Typography Colors */
+.text-\[\#D87D85\] { color: #D87D85; }
+.text-\[\#599AB5\] { color: #599AB5; }
+.text-\[\#F08DA1\] { color: #F08DA1; }
+.text-\[\#FF9EBB\] { color: #FF9EBB; }
+.text-slate-800 { color: #1e293b; }
+
+.text-\[9px\] { font-size: 9px; line-height: 12px; }
+.text-\[10px\] { font-size: 10px; line-height: 14px; }
+.text-\[11px\] { font-size: 11px; line-height: 15px; }
+
+.font-semibold { font-weight: 600; }
+.underline { text-decoration: underline; }
+.whitespace-pre-wrap { white-space: pre-wrap; }
+.col-span-full { grid-column: 1 / -1; }
+
+/* Spacing & Layout */
+.gap-1\.5 { gap: 0.375rem; }
+.gap-2\.5 { gap: 0.625rem; }
+.p-2\.5 { padding: 0.625rem; }
+.px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+.py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+.py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+.py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+.pl-10 { padding-left: 2.5rem; }
+.pr-4 { padding-right: 1rem; }
+.w-3\.5 { width: 0.875rem; }
+.h-3\.5 { height: 0.875rem; }
+.min-w-\[240px\] { min-width: 240px; }
+.min-w-\[300px\] { min-width: 300px; }
+.scroll-mt-28 { scroll-margin-top: 7rem; }
+.z-\[1000\] { z-index: 1000; }
+.z-\[1100\] { z-index: 1100; }
+
+/* Interactive Hover & Focus */
+.hover\:scale-105:hover { transform: scale(1.05); }
+.hover\:scale-\[1\.02\]:hover { transform: scale(1.02); }
+.active\:scale-95:active { transform: scale(0.95); }
+
+.hover\:text-\[\#F08DA1\]:hover { color: #F08DA1 !important; }
+.hover\:text-\[\#D87D85\]:hover { color: #D87D85 !important; }
+.hover\:text-cs-lilac:hover { color: #A178AF !important; }
+.hover\:text-cs-pink:hover { color: #F4C6C9 !important; }
+.hover\:text-slate-900:hover { color: #0f172a !important; }
+
+.hover\:bg-slate-100:hover { background-color: #f1f5f9 !important; }
+.hover\:bg-slate-200:hover { background-color: #e2e8f0 !important; }
+.hover\:bg-cs-lilac\/20:hover { background-color: rgba(161, 120, 175, 0.2) !important; }
+.hover\:bg-cs-pink\/10:hover { background-color: rgba(244, 198, 201, 0.1) !important; }
+.hover\:bg-cs-pink\/25:hover { background-color: rgba(244, 198, 201, 0.25) !important; }
+
+.focus\:outline-none:focus { outline: none !important; }
+.focus\:ring-2:focus { box-shadow: 0 0 0 2px rgba(161, 120, 175, 0.4) !important; }
+.focus\:ring-4:focus { box-shadow: 0 0 0 4px rgba(161, 120, 175, 0.4) !important; }
+.focus\:ring-cs-lilac\/30:focus { box-shadow: 0 0 0 4px rgba(161, 120, 175, 0.3) !important; }
+.focus\:ring-cs-lilac\/50:focus { box-shadow: 0 0 0 4px rgba(161, 120, 175, 0.5) !important; }
+.focus\:border-cs-lilac:focus { border-color: #A178AF !important; }
+
+/* =========================================================
+   Dark Mode Universal Overrides (Works across all browsers)
+========================================================= */
+
+/* Dark Mode Text Colors */
+html.dark .dark\:text-slate-100, .dark .dark\:text-slate-100, :is(.dark *) .dark\:text-slate-100 { color: #f1f5f9 !important; }
+html.dark .dark\:text-slate-200, .dark .dark\:text-slate-200, :is(.dark *) .dark\:text-slate-200 { color: #e2e8f0 !important; }
+html.dark .dark\:text-slate-300, .dark .dark\:text-slate-300, :is(.dark *) .dark\:text-slate-300 { color: #cbd5e1 !important; }
+html.dark .dark\:text-slate-400, .dark .dark\:text-slate-400, :is(.dark *) .dark\:text-slate-400 { color: #94a3b8 !important; }
+html.dark .dark\:text-white,     .dark .dark\:text-white,     :is(.dark *) .dark\:text-white     { color: #ffffff !important; }
+html.dark .dark\:text-cs-pink,   .dark .dark\:text-cs-pink,   :is(.dark *) .dark\:text-cs-pink   { color: #F4C6C9 !important; }
+html.dark .dark\:text-cs-blue,   .dark .dark\:text-cs-blue,   :is(.dark *) .dark\:text-cs-blue   { color: #B9E1F1 !important; }
+html.dark .dark\:text-\[\#E2CBEB\], .dark .dark\:text-\[\#E2CBEB\], :is(.dark *) .dark\:text-\[\#E2CBEB\] { color: #E2CBEB !important; }
+
+/* Dark Mode Backgrounds */
+html.dark .dark\:bg-cs-dark,        .dark .dark\:bg-cs-dark,        :is(.dark *) .dark\:bg-cs-dark        { background-color: #1A161D !important; }
+html.dark .dark\:bg-cs-dark\/50,     .dark .dark\:bg-cs-dark\/50,     :is(.dark *) .dark\:bg-cs-dark\/50     { background-color: rgba(26, 22, 29, 0.5) !important; }
+html.dark .dark\:bg-slate-700\/60,   .dark .dark\:bg-slate-700\/60,   :is(.dark *) .dark\:bg-slate-700\/60   { background-color: rgba(51, 65, 85, 0.6) !important; }
+html.dark .dark\:bg-slate-800,      .dark .dark\:bg-slate-800,      :is(.dark *) .dark\:bg-slate-800      { background-color: #1e293b !important; }
+html.dark .dark\:bg-slate-800\/60,   .dark .dark\:bg-slate-800\/60,   :is(.dark *) .dark\:bg-slate-800\/60   { background-color: rgba(30, 41, 59, 0.6) !important; }
+html.dark .dark\:bg-slate-800\/70,   .dark .dark\:bg-slate-800\/70,   :is(.dark *) .dark\:bg-slate-800\/70   { background-color: rgba(30, 41, 59, 0.7) !important; }
+html.dark .dark\:bg-slate-800\/80,   .dark .dark\:bg-slate-800\/80,   :is(.dark *) .dark\:bg-slate-800\/80   { background-color: rgba(30, 41, 59, 0.8) !important; }
+html.dark .dark\:bg-slate-900,      .dark .dark\:bg-slate-900,      :is(.dark *) .dark\:bg-slate-900      { background-color: #0f172a !important; }
+html.dark .dark\:bg-slate-900\/30,   .dark .dark\:bg-slate-900\/30,   :is(.dark *) .dark\:bg-slate-900\/30   { background-color: rgba(15, 23, 42, 0.3) !important; }
+html.dark .dark\:bg-slate-900\/40,   .dark .dark\:bg-slate-900\/40,   :is(.dark *) .dark\:bg-slate-900\/40   { background-color: rgba(15, 23, 42, 0.4) !important; }
+html.dark .dark\:bg-slate-900\/80,   .dark .dark\:bg-slate-900\/80,   :is(.dark *) .dark\:bg-slate-900\/80   { background-color: rgba(15, 23, 42, 0.8) !important; }
+html.dark .dark\:bg-slate-900\/90,   .dark .dark\:bg-slate-900\/90,   :is(.dark *) .dark\:bg-slate-900\/90   { background-color: rgba(15, 23, 42, 0.9) !important; }
+html.dark .dark\:bg-slate-900\/95,   .dark .dark\:bg-slate-900\/95,   :is(.dark *) .dark\:bg-slate-900\/95   { background-color: rgba(15, 23, 42, 0.95) !important; }
+html.dark .dark\:bg-slate-950,      .dark .dark\:bg-slate-950,      :is(.dark *) .dark\:bg-slate-950      { background-color: #020617 !important; }
+html.dark .dark\:bg-slate-950\/95,   .dark .dark\:bg-slate-950\/95,   :is(.dark *) .dark\:bg-slate-950\/95   { background-color: rgba(2, 6, 23, 0.95) !important; }
+
+html.dark .dark\:bg-cs-pink\/10,    .dark .dark\:bg-cs-pink\/10,    :is(.dark *) .dark\:bg-cs-pink\/10    { background-color: rgba(244, 198, 201, 0.1) !important; }
+html.dark .dark\:bg-cs-pink\/20,    .dark .dark\:bg-cs-pink\/20,    :is(.dark *) .dark\:bg-cs-pink\/20    { background-color: rgba(244, 198, 201, 0.2) !important; }
+html.dark .dark\:bg-cs-blue\/10,    .dark .dark\:bg-cs-blue\/10,    :is(.dark *) .dark\:bg-cs-blue\/10    { background-color: rgba(185, 225, 241, 0.1) !important; }
+html.dark .dark\:bg-cs-lilac\/10,   .dark .dark\:bg-cs-lilac\/10,   :is(.dark *) .dark\:bg-cs-lilac\/10   { background-color: rgba(161, 120, 175, 0.1) !important; }
+html.dark .dark\:bg-cs-lilac\/20,   .dark .dark\:bg-cs-lilac\/20,   :is(.dark *) .dark\:bg-cs-lilac\/20   { background-color: rgba(161, 120, 175, 0.2) !important; }
+
+/* Dark Mode Borders */
+html.dark .dark\:border-slate-700,    .dark .dark\:border-slate-700,    :is(.dark *) .dark\:border-slate-700    { border-color: #334155 !important; }
+html.dark .dark\:border-slate-700\/50, .dark .dark\:border-slate-700\/50, :is(.dark *) .dark\:border-slate-700\/50 { border-color: rgba(51, 65, 85, 0.5) !important; }
+html.dark .dark\:border-slate-700\/60, .dark .dark\:border-slate-700\/60, :is(.dark *) .dark\:border-slate-700\/60 { border-color: rgba(51, 65, 85, 0.6) !important; }
+html.dark .dark\:border-slate-800\/60, .dark .dark\:border-slate-800\/60, :is(.dark *) .dark\:border-slate-800\/60 { border-color: rgba(30, 41, 59, 0.6) !important; }
+html.dark .dark\:border-slate-800\/80, .dark .dark\:border-slate-800\/80, :is(.dark *) .dark\:border-slate-800\/80 { border-color: rgba(30, 41, 59, 0.8) !important; }
+
+html.dark .dark\:border-cs-pink\/20,  .dark .dark\:border-cs-pink\/20,  :is(.dark *) .dark\:border-cs-pink\/20  { border-color: rgba(244, 198, 201, 0.2) !important; }
+html.dark .dark\:border-cs-pink\/30,  .dark .dark\:border-cs-pink\/30,  :is(.dark *) .dark\:border-cs-pink\/30  { border-color: rgba(244, 198, 201, 0.3) !important; }
+html.dark .dark\:border-cs-blue\/20,  .dark .dark\:border-cs-blue\/20,  :is(.dark *) .dark\:border-cs-blue\/20  { border-color: rgba(185, 225, 241, 0.2) !important; }
+html.dark .dark\:border-cs-blue\/30,  .dark .dark\:border-cs-blue\/30,  :is(.dark *) .dark\:border-cs-blue\/30  { border-color: rgba(185, 225, 241, 0.3) !important; }
+html.dark .dark\:border-cs-lilac\/30, .dark .dark\:border-cs-lilac\/30, :is(.dark *) .dark\:border-cs-lilac\/30 { border-color: rgba(161, 120, 175, 0.3) !important; }
+
+/* Dark Mode Hover States */
+html.dark .dark\:hover\:bg-slate-700:hover, .dark .dark\:hover\:bg-slate-700:hover { background-color: #334155 !important; }
+html.dark .dark\:hover\:bg-slate-800:hover, .dark .dark\:hover\:bg-slate-800:hover { background-color: #1e293b !important; }
+html.dark .dark\:hover\:text-white:hover,   .dark .dark\:hover\:text-white:hover   { color: #ffffff !important; }
+
+/* Dark Mode Shadow & Opacity */
+html.dark .dark\:shadow-none, .dark .dark\:shadow-none, :is(.dark *) .dark\:shadow-none { box-shadow: none !important; }
+html.dark .dark\:opacity-20,  .dark .dark\:opacity-20,  :is(.dark *) .dark\:opacity-20  { opacity: 0.2 !important; }
+
+/* Card Enhancements in Dark Mode */
+html.dark .glass-card,
+html.dark .mission-card,
+html.dark .project-card {
+    background-color: rgba(30, 25, 35, 0.82) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* =========================================
+   Universal Markdown Document Styling
+   (#markdown-content, #coc-render, #contributing-render)
+========================================= */
+#markdown-content, #coc-render, #contributing-render {
+    color: var(--color-cs-dark);
+}
+
+html.dark #markdown-content,
+html.dark #coc-render,
+html.dark #contributing-render {
+    color: #f1f5f9;
+}
+
+/* Paragraphs & Lists in Dark Mode */
+html.dark #markdown-content p,
+html.dark #coc-render p,
+html.dark #contributing-render p {
+    color: #e2e8f0;
+}
+
+html.dark #markdown-content li,
+html.dark #coc-render li,
+html.dark #contributing-render li {
+    color: #e2e8f0;
+}
+
+/* Pre & Code blocks in Dark Mode */
+html.dark #markdown-content pre,
+html.dark #coc-render pre,
+html.dark #contributing-render pre {
+    background-color: #141019 !important;
+    border: 1px solid rgba(161, 120, 175, 0.3) !important;
+    color: #e2e8f0 !important;
+}
+
+/* Blockquotes in Dark Mode */
+html.dark #markdown-content blockquote,
+html.dark #coc-render blockquote,
+html.dark #contributing-render blockquote {
+    background-color: rgba(161, 120, 175, 0.12) !important;
+    border-left-color: #A178AF !important;
+    color: #f1f5f9 !important;
+}
+
+/* Tables in Dark Mode */
+html.dark #markdown-content th {
+    background-color: rgba(161, 120, 175, 0.25) !important;
+    color: #E2CBEB !important;
+    border-color: rgba(161, 120, 175, 0.3) !important;
+}
+
+html.dark #markdown-content td {
+    border-color: rgba(161, 120, 175, 0.2) !important;
+    color: #cbd5e1 !important;
+}
+
+/* Links in Markdown */
+#markdown-content a,
+#coc-render a,
+#contributing-render a {
+    color: #A178AF;
+    transition: color 0.2s ease;
+}
+
+html.dark #markdown-content a,
+html.dark #coc-render a,
+html.dark #contributing-render a {
+    color: #E2CBEB;
+}
+
+#markdown-content a:hover,
+#coc-render a:hover,
+#contributing-render a:hover {
+    color: #F08DA1 !important;
 }
 
 /* =========================================
@@ -190,6 +480,7 @@ h1, h2, h3, .cute-font {
     .gradient-text,
     .glass-card,
     .mission-card,
+    .project-card,
     .icon-container,
     #mobile-menu,
     #motto-container,
@@ -209,8 +500,7 @@ h1, h2, h3, .cute-font {
         transform: translateY(0);
     }
     
-    .glass-card:hover, .mission-card:hover {
+    .glass-card:hover, .mission-card:hover, .project-card:hover {
         transform: translateY(-2px) scale(1.01);
     }
 }
-

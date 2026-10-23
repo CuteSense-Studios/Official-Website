@@ -1,0 +1,19 @@
+{
+  "name": "cutesense-studios-website",
+  "version": "1.0.0",
+  "description": "CuteSense Studios official website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": [
+    "cutesense",
+    "open-source",
+    "art",
+    "website"
+  ],
+  "author": "CuteSense Studios",
+  "license": "AGPL-3.0"
+}

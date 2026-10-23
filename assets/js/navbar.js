@@ -38,8 +38,8 @@ class CuteSenseNavbar extends HTMLElement {
     _getPath() {
         try {
             const path = window.location.pathname;
-            const depth = (path.match(/\//g) || []).length - 1;
-            return (path.includes('/pages/') || path.includes('/docs/') || depth > 1) ? '../' : './';
+            const isSubdir = path.includes('/pages/') || path.includes('/docs/');
+            return isSubdir ? '../' : './';
         } catch (e) { return './'; }
     }
 
@@ -158,7 +158,7 @@ class CuteSenseNavbar extends HTMLElement {
                     <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
                        class="p-2 text-slate-500 hover:text-[#F08DA1] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors hidden sm:flex items-center justify-center"
                        aria-label="CuteSense GitHub">
-                        <i data-lucide="github" class="w-4 h-4 shrink-0"></i>
+                        <img src="${root}assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
                     </a>
                     <button type="button" id="theme-toggle-btn" aria-label="Toggle theme">
                         <div class="toggle-knob" id="knob-icon-container"></div>
@@ -200,7 +200,7 @@ class CuteSenseNavbar extends HTMLElement {
             <div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col gap-4 text-xs font-semibold text-slate-400">
                 <div class="flex items-center justify-center gap-6">
                     <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-cs-lilac hover:text-[#F08DA1] transition-colors">
-                        <i data-lucide="github" class="w-4 h-4"></i>
+                        <img src="${root}assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
                         <span>GitHub Org</span>
                     </a>
                     <a href="mailto:cutesensestudios@protonmail.com" class="flex items-center gap-1.5 text-cs-lilac hover:text-[#F08DA1] transition-colors">
