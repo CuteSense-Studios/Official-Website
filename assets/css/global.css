@@ -504,3 +504,322 @@ html.dark #contributing-render a {
         transform: translateY(-2px) scale(1.01);
     }
 }
+
+
+/* =========================================================
+   Responsive & Layout Utility Fallbacks
+   (Missing from compiled tailwind.css – fixes layout bugs)
+========================================================= */
+
+/* ---- Base Utilities ---- */
+.inline-flex { display: inline-flex; }
+.self-start { align-self: flex-start; }
+.items-stretch { align-items: stretch; }
+.leading-none { line-height: 1; }
+.text-base { font-size: 1rem; line-height: 1.5rem; }
+.ml-auto { margin-left: auto; }
+.shrink-0 { flex-shrink: 0; }
+
+/* ---- Gap Utilities ---- */
+.gap-x-6 { column-gap: 1.5rem; }
+.gap-y-2 { row-gap: 0.5rem; }
+.gap-1 { gap: 0.25rem; }
+
+/* ---- Sizing (Arbitrary) ---- */
+.w-\[300px\] { width: 300px; }
+.w-\[350px\] { width: 350px; }
+.w-\[400px\] { width: 400px; }
+.h-\[300px\] { height: 300px; }
+.h-\[350px\] { height: 350px; }
+.h-\[400px\] { height: 400px; }
+.min-h-\[92vh\] { min-height: 92vh; }
+
+/* ---- Blur (Arbitrary) ---- */
+.blur-\[100px\] { filter: blur(100px); }
+.blur-\[120px\] { filter: blur(120px); }
+.blur-\[140px\] { filter: blur(140px); }
+.backdrop-blur-2xl { backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); }
+
+/* ---- Positioning (Arbitrary) ---- */
+.top-\[15\%\] { top: 15%; }
+.top-\[20\%\] { top: 20%; }
+.top-\[35\%\] { top: 35%; }
+.top-\[40\%\] { top: 40%; }
+.top-1\/2 { top: 50%; }
+.top-1\/3 { top: 33.333333%; }
+.top-1\/4 { top: 25%; }
+.bottom-\[10\%\] { bottom: 10%; }
+.bottom-1\/4 { bottom: 25%; }
+.left-\[5\%\] { left: 5%; }
+.left-\[12\%\] { left: 12%; }
+.left-1\/4 { left: 25%; }
+.left-4 { left: 1rem; }
+.right-\[10\%\] { right: 10%; }
+.right-\[12\%\] { right: 12%; }
+.right-\[20\%\] { right: 20%; }
+.right-1\/4 { right: 25%; }
+.-translate-y-1\/2 { transform: translateY(-50%); }
+
+/* ---- Selection Colors ---- */
+.selection\:bg-cs-pink ::selection, .selection\:bg-cs-pink::selection { background-color: #F4C6C9 !important; }
+.selection\:text-white ::selection, .selection\:text-white::selection { color: #ffffff !important; }
+
+/* ---- Group Hover ---- */
+.group:hover .group-hover\:text-cs-lilac { color: #A178AF !important; }
+.group:hover .group-hover\:border-cs-pink { border-color: #F4C6C9 !important; }
+
+/* =========================================================
+   SM Breakpoint (≥640px)
+========================================================= */
+@media (min-width: 640px) {
+    .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sm\:flex { display: flex; }
+    .sm\:flex-row { flex-direction: row; }
+    .sm\:items-center { align-items: center; }
+    .sm\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .sm\:p-6 { padding: 1.5rem; }
+    .sm\:p-8 { padding: 2rem; }
+    .sm\:p-10 { padding: 2.5rem; }
+    .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .sm\:gap-4 { gap: 1rem; }
+    .sm\:gap-8 { gap: 2rem; }
+    .sm\:ml-0 { margin-left: 0; }
+    .sm\:min-w-\[300px\] { min-width: 300px; }
+    .sm\:rounded-\[2\.5rem\] { border-radius: 2.5rem; }
+    .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+}
+
+/* =========================================================
+   MD Breakpoint (≥768px)
+========================================================= */
+@media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .md\:flex-row { flex-direction: row; }
+    .md\:flex-row-reverse { flex-direction: row-reverse; }
+    .md\:items-center { align-items: center; }
+    .md\:items-end { align-items: flex-end; }
+    .md\:hidden { display: none; }
+    .md\:inline { display: inline; }
+    .md\:self-auto { align-self: auto; }
+    .md\:w-1\/3 { width: 33.333333%; }
+    .md\:w-2\/3 { width: 66.666667%; }
+    .md\:h-56 { height: 14rem; }
+    .md\:h-\[600px\] { height: 600px; }
+    .md\:h-\[700px\] { height: 700px; }
+    .md\:w-\[600px\] { width: 600px; }
+    .md\:w-\[700px\] { width: 700px; }
+    .md\:text-base { font-size: 1rem; line-height: 1.5rem; }
+    .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .md\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .md\:text-5xl { font-size: 3rem; line-height: 1; }
+    .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+    .md\:text-7xl { font-size: 4.5rem; line-height: 1; }
+    .md\:text-8xl { font-size: 6rem; line-height: 1; }
+    .md\:text-left { text-align: left; }
+    .md\:p-8 { padding: 2rem; }
+    .md\:p-12 { padding: 3rem; }
+    .md\:p-14 { padding: 3.5rem; }
+    .md\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .md\:blur-\[150px\] { filter: blur(150px); }
+}
+
+/* =========================================================
+   LG Breakpoint (≥1024px)
+========================================================= */
+@media (min-width: 1024px) {
+    .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lg\:p-8 { padding: 2rem; }
+    .lg\:p-14 { padding: 3.5rem; }
+}
+
+/* =========================================================
+   XL Breakpoint (≥1280px)
+========================================================= */
+@media (min-width: 1280px) {
+    .xl\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+/* =========================================================
+   Modal Overlay Styles (Project Markdown Viewer Popup)
+========================================================= */
+#project-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2000 !important;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem !important;
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    pointer-events: none;
+}
+
+#project-modal.modal-visible,
+#project-modal.modal-open {
+    display: flex !important;
+    pointer-events: auto !important;
+}
+
+#project-modal .modal-card {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 56rem !important;
+    height: 88vh !important;
+    max-height: 88vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: #ffffff !important;
+    color: #1A161D !important;
+    border: 2px solid #A178AF !important;
+    border-radius: 1.75rem !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6) !important;
+    overflow: hidden !important;
+}
+
+html.dark #project-modal .modal-card {
+    background-color: #1D1722 !important;
+    color: #F1F5F9 !important;
+    border-color: #A178AF !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9) !important;
+}
+
+#project-modal .modal-header {
+    flex-shrink: 0 !important;
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-bottom: 1px solid rgba(161, 120, 175, 0.25) !important;
+}
+
+html.dark #project-modal .modal-header {
+    background-color: rgba(29, 23, 34, 0.98) !important;
+    border-bottom: 1px solid rgba(161, 120, 175, 0.25) !important;
+}
+
+#project-modal .modal-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    background-color: #ffffff !important;
+    padding: 1.5rem 2.5rem !important;
+}
+
+html.dark #project-modal .modal-body {
+    background-color: #1D1722 !important;
+}
+
+#project-modal .modal-footer {
+    flex-shrink: 0 !important;
+    background-color: #F8FAFC !important;
+    border-top: 1px solid rgba(161, 120, 175, 0.2) !important;
+}
+
+html.dark #project-modal .modal-footer {
+    background-color: #16121B !important;
+    border-top: 1px solid rgba(161, 120, 175, 0.2) !important;
+}
+
+.modal-close-btn {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    transform: scale(1.1);
+}
+
+
+/* =========================================================
+   Footer Link Spacing Fix
+========================================================= */
+.footer-links-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem 1.75rem !important;
+}
+
+.footer-link {
+    padding: 0.25rem 0.5rem !important;
+    transition: color 0.2s ease !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+}
+
+.footer-link:hover {
+    color: #F08DA1 !important;
+}
+
+.gap-x-6 { column-gap: 1.5rem !important; }
+.gap-y-2 { row-gap: 0.5rem !important; }
+.gap-6   { gap: 1.5rem !important; }
+.gap-8   { gap: 2rem !important; }
+
+/* =========================================================
+   Project Status Badges (High-Contrast Legibility)
+========================================================= */
+.badge-active {
+    background-color: #B9E1F1 !important;
+    color: #163654 !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+}
+
+.badge-featured {
+    background-color: #A178AF !important;
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+}
+
+.badge-research {
+    background-color: #F4C6C9 !important;
+    color: #63222B !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+}
+
+.badge-core {
+    background-color: #E2CBEB !important;
+    color: #3F1D4B !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* =========================================================
+   Featured Projects Grid Layout
+========================================================= */
+.featured-projects-grid {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 2rem !important;
+    align-items: stretch !important;
+}
+
+@media (min-width: 768px) {
+    .featured-projects-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* =========================================================
+   Custom Modal Scrollbar
+========================================================= */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(161, 120, 175, 0.3);
+    border-radius: 999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(161, 120, 175, 0.6);
+}

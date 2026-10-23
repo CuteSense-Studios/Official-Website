@@ -20,12 +20,12 @@
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
-        /* Scoped Markdown Rendering Styles */
+        /* Scoped Markdown Rendering Styles for Modal */
         #markdown-content h1 {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
+            font-size: 2rem;
+            line-height: 2.25rem;
             font-weight: 700;
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem;
             background: linear-gradient(to right, #F08DA1, #7CB9D4);
             -webkit-background-clip: text;
             background-clip: text;
@@ -34,24 +34,29 @@
         }
 
         @media (min-width: 768px) {
-            #markdown-content h1 { font-size: 3.5rem; line-height: 1.1; }
+            #markdown-content h1 { font-size: 2.75rem; line-height: 1.15; }
         }
 
         #markdown-content h2 {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            margin-top: 3rem;
-            margin-bottom: 1.25rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
             color: #A178AF;
-            border-bottom: 3px dotted rgba(161, 120, 175, 0.3);
-            padding-bottom: 0.5rem;
+            border-bottom: 2px dotted rgba(161, 120, 175, 0.35);
+            padding-bottom: 0.4rem;
+        }
+
+        .dark #markdown-content h2 {
+            color: #E2CBEB;
+            border-bottom-color: rgba(226, 203, 235, 0.3);
         }
 
         #markdown-content h3 {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            margin-top: 1.75rem;
+            margin-bottom: 0.75rem;
             color: #599AB5;
         }
 
@@ -60,36 +65,51 @@
         }
 
         #markdown-content p {
-            font-size: 1.075rem;
-            opacity: 0.88;
+            font-size: 1.025rem;
+            opacity: 0.9;
             margin-bottom: 1.25rem;
             font-weight: 500;
             line-height: 1.7;
+        }
+
+        .dark #markdown-content p {
+            color: #e2e8f0;
+            opacity: 0.95;
         }
 
         #markdown-content blockquote {
             background-color: rgba(161, 120, 175, 0.08);
             border-left: 5px solid #A178AF;
             padding: 1.25rem 1.5rem;
-            margin: 2rem 0;
+            margin: 1.75rem 0;
             border-radius: 1.25rem;
             font-style: italic;
         }
 
+        .dark #markdown-content blockquote {
+            background-color: rgba(161, 120, 175, 0.15);
+            border-left-color: #c084fc;
+            color: #f1f5f9;
+        }
+
         #markdown-content ul {
             padding-left: 0.5rem;
-            margin-bottom: 1.75rem;
+            margin-bottom: 1.5rem;
             list-style: none;
         }
 
         #markdown-content ul li {
             position: relative;
-            padding-left: 2rem;
-            font-size: 1.05rem;
+            padding-left: 1.75rem;
+            font-size: 1rem;
             font-weight: 500;
-            opacity: 0.9;
-            margin-bottom: 0.75rem;
+            opacity: 0.95;
+            margin-bottom: 0.65rem;
             line-height: 1.6;
+        }
+
+        .dark #markdown-content ul li {
+            color: #e2e8f0;
         }
 
         #markdown-content ul li::before {
@@ -102,22 +122,26 @@
 
         #markdown-content ol {
             padding-left: 1.5rem;
-            margin-bottom: 1.75rem;
+            margin-bottom: 1.5rem;
             list-style: decimal;
         }
 
         #markdown-content ol li {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 500;
-            opacity: 0.9;
+            opacity: 0.95;
             margin-bottom: 0.5rem;
             line-height: 1.6;
         }
 
+        .dark #markdown-content ol li {
+            color: #e2e8f0;
+        }
+
         #markdown-content hr {
             border: none;
-            border-top: 3px dotted rgba(161, 120, 175, 0.25);
-            margin: 3.5rem 0;
+            border-top: 2px dotted rgba(161, 120, 175, 0.3);
+            margin: 2.5rem 0;
         }
 
         #markdown-content strong {
@@ -140,17 +164,21 @@
             color: #F08DA1;
         }
 
+        .dark #markdown-content a {
+            color: #E2CBEB;
+        }
+
         #markdown-content pre {
-            background-color: #17141d;
+            background-color: #151119;
             color: #e2e8f0;
             padding: 1.25rem 1.5rem;
             border-radius: 1.25rem;
             overflow-x: auto;
-            margin: 1.75rem 0;
-            font-size: 0.9rem;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
             line-height: 1.5;
-            border: 1px solid rgba(161, 120, 175, 0.25);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(161, 120, 175, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
         }
 
         #markdown-content code:not(pre code) {
@@ -158,20 +186,20 @@
             color: #D87D85;
             padding: 0.2rem 0.45rem;
             border-radius: 0.5rem;
-            font-size: 0.9em;
+            font-size: 0.875em;
             font-weight: 600;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
         .dark #markdown-content code:not(pre code) {
             color: #F4C6C9;
-            background: rgba(240, 141, 161, 0.12);
+            background: rgba(240, 141, 161, 0.15);
         }
 
         #markdown-content table {
             width: 100%;
             border-collapse: collapse;
-            margin: 2rem 0;
+            margin: 1.75rem 0;
             border-radius: 1rem;
             overflow: hidden;
             display: block;
@@ -179,34 +207,57 @@
         }
 
         #markdown-content th {
-            background-color: rgba(244, 198, 201, 0.2);
-            padding: 0.85rem 1rem;
+            background-color: rgba(244, 198, 201, 0.25);
+            padding: 0.75rem 1rem;
             text-align: left;
             font-weight: 700;
-            border: 1px solid rgba(161, 120, 175, 0.15);
+            border: 1px solid rgba(161, 120, 175, 0.2);
+            color: #1A161D;
         }
 
         .dark #markdown-content th {
-            background-color: rgba(161, 120, 175, 0.2);
+            background-color: rgba(161, 120, 175, 0.25);
             color: #E2CBEB;
+            border-color: rgba(161, 120, 175, 0.3);
         }
 
         #markdown-content td {
             padding: 0.75rem 1rem;
             border: 1px solid rgba(161, 120, 175, 0.15);
-            font-size: 0.95rem;
+            font-size: 0.925rem;
+        }
+
+        .dark #markdown-content td {
+            border-color: rgba(161, 120, 175, 0.2);
+            color: #cbd5e1;
+        }
+
+        /* Category Filter Tabs */
+        .category-tab {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid rgba(161, 120, 175, 0.2);
+            cursor: pointer;
+        }
+
+        .dark .category-tab {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .category-tab:hover {
+            background-color: rgba(161, 120, 175, 0.2);
+            color: #A178AF;
         }
 
         .category-tab.active {
             background-color: #A178AF !important;
             color: #ffffff !important;
+            border-color: #A178AF !important;
             box-shadow: 0 4px 15px rgba(161, 120, 175, 0.35);
         }
 
-        .project-card.selected {
-            border-color: #A178AF !important;
-            box-shadow: 0 0 0 3px rgba(161, 120, 175, 0.35), 0 15px 30px rgba(161, 120, 175, 0.2) !important;
-        }
     </style>
 </head>
 <body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden min-h-screen flex flex-col">
@@ -215,11 +266,11 @@
     <script src="../assets/js/navbar.js"></script>
 
     <main class="flex-grow pt-32 pb-24 relative overflow-hidden">
-        <!-- Parallax Background Blobs -->
+        <!-- Parallax Background Blobs (Softened in dark mode) -->
         <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-            <div class="blob-parallax absolute top-[15%] right-[10%] w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-25"></div>
-            <div class="blob-parallax absolute top-[40%] left-[5%] w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-25"></div>
-            <div class="blob-parallax absolute bottom-[10%] right-[20%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-lilac rounded-full blur-[140px] opacity-20"></div>
+            <div class="blob-parallax absolute top-[15%] right-[10%] w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
+            <div class="blob-parallax absolute top-[40%] left-[5%] w-[350px] md:w-[700px] h-[350px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
+            <div class="blob-parallax absolute bottom-[10%] right-[20%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-lilac rounded-full blur-[140px] opacity-20 dark:opacity-10"></div>
         </div>
 
         <!-- Decorative Sparkles -->
@@ -227,7 +278,7 @@
         <div class="absolute top-[35%] right-[12%] sparkle-slow text-cs-blue z-0" aria-hidden="true"><i data-lucide="sparkle" class="w-12 h-12"></i></div>
 
         <!-- Hero Section -->
-        <section class="max-w-6xl mx-auto px-6 text-center mb-16 relative z-10">
+        <section class="max-w-6xl mx-auto px-6 text-center mb-14 relative z-10">
             <div class="floating inline-block px-4 py-1.5 bg-cs-lilac/15 text-cs-lilac dark:bg-cs-lilac/20 dark:text-[#E2CBEB] rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-cs-lilac/30 backdrop-blur-sm">
                 Official Repositories
             </div>
@@ -237,7 +288,7 @@
             </h1>
 
             <p class="text-lg md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed font-medium mb-10">
-                Official open-source repositories from <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="text-cs-lilac underline font-bold hover:text-cs-pink">github.com/CuteSense-Studios</a>. Each project is documented with a dedicated Markdown (<code class="text-sm">.md</code>) specification rendered live below.
+                Official open-source repositories from <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="text-cs-lilac underline font-bold hover:text-cs-pink">github.com/CuteSense-Studios</a>. Click any project card below to open its dedicated Markdown (<code class="text-sm">.md</code>) specification in an interactive popup window.
             </p>
 
             <!-- Quick Stats Pills -->
@@ -258,24 +309,24 @@
         </section>
 
         <!-- Filters & Search Toolbar -->
-        <section class="max-w-6xl mx-auto px-6 mb-12 relative z-10">
+        <section class="max-w-6xl mx-auto px-6 mb-8 relative z-10">
             <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-4 sm:p-6 rounded-3xl border border-cs-lilac/20 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
                 
                 <!-- Category Tabs -->
                 <div class="flex flex-wrap items-center gap-2" id="category-tabs" role="tablist" aria-label="Project categories">
-                    <button type="button" data-category="all" class="category-tab active px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                    <button type="button" data-category="all" class="category-tab active px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
                         All Repos
                     </button>
-                    <button type="button" data-category="Tools" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                    <button type="button" data-category="Tools" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
                         Weather &amp; Apps
                     </button>
-                    <button type="button" data-category="Games" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                    <button type="button" data-category="Games" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
                         Visual Novel ("As You Are")
                     </button>
-                    <button type="button" data-category="Advocacy" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                    <button type="button" data-category="Advocacy" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
                         Advocacy Research
                     </button>
-                    <button type="button" data-category="Web" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 hover:bg-cs-lilac/20">
+                    <button type="button" data-category="Web" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
                         Studio Hub
                     </button>
                 </div>
@@ -283,64 +334,69 @@
                 <!-- Search Input -->
                 <div class="relative min-w-[240px] sm:min-w-[300px]">
                     <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="project-search" placeholder="Search by name, tag, or tech..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-cs-lilac text-sm transition-all" aria-label="Search projects">
+                    <input type="text" id="project-search" placeholder="Search by name, tag, or tech..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-cs-lilac text-sm transition-all" aria-label="Search projects">
                 </div>
             </div>
 
-            <!-- Results Count Bar -->
-            <div class="flex items-center justify-between px-2 pt-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <!-- Results Count Bar (With generous spacing to prevent overlap) -->
+            <div class="flex flex-wrap items-center justify-between px-3 pt-4 text-xs font-semibold text-slate-500 dark:text-slate-400 gap-2">
                 <span id="results-count">Showing 5 projects</span>
-                <span class="flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cs-pink"></i> Click any card to read its full Markdown docs</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-cs-pink"></i> Click any card to view full Markdown documentation in a popup</span>
             </div>
         </section>
 
         <!-- Projects Cards Grid -->
-        <section class="max-w-6xl mx-auto px-6 mb-20 relative z-10">
+        <section class="max-w-6xl mx-auto px-6 mb-16 relative z-10">
             <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <!-- Dynamically rendered by JavaScript -->
             </div>
         </section>
 
-        <!-- Markdown Project Reader Section -->
-        <section id="project-reader-section" class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 scroll-mt-28">
-            <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-2 border-cs-lilac rounded-3xl sm:rounded-[2.5rem] shadow-2xl p-6 sm:p-10 md:p-14 transition-all duration-500">
-                
-                <!-- Reader Top Bar -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-cs-lilac/20 mb-8">
-                    <div class="flex items-center gap-3">
-                        <div id="reader-icon-wrapper" class="w-12 h-12 rounded-2xl bg-cs-blue/20 dark:bg-cs-blue/10 flex items-center justify-center text-cs-blue shrink-0">
-                            <i data-lucide="file-text" id="reader-icon" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <span id="reader-category" class="text-xs uppercase tracking-widest font-bold text-cs-lilac">Project Documentation</span>
-                            <h2 id="reader-title" class="text-2xl sm:text-3xl font-bold">Select a Project</h2>
-                        </div>
+    </main>
+
+    <!-- Modal Window for Project Markdown Viewer -->
+    <div id="project-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="modal-project-title">
+        
+        <!-- Modal Card Container -->
+        <div class="modal-card">
+            
+            <!-- Sticky Modal Header -->
+            <div class="modal-header flex items-center justify-between px-6 py-4 border-b border-cs-lilac/25 bg-white/95 dark:bg-[#1D1722]/95 backdrop-blur-md shrink-0 gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div id="modal-icon-wrapper" class="w-11 h-11 rounded-2xl bg-cs-blue/20 flex items-center justify-center text-cs-blue shrink-0">
+                        <i data-lucide="file-text" id="modal-icon" class="w-5 h-5"></i>
                     </div>
-
-                    <!-- Reader Action Controls -->
-                    <div class="flex flex-wrap items-center gap-2">
-                        <a id="reader-github-link" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-[#F08DA1] font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700">
-                            <img src="../assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
-                            <span>GitHub</span>
-                        </a>
-
-                        <a id="reader-demo-link" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-cs-pink/15 text-cs-pink hover:bg-cs-pink/25 font-bold text-xs flex items-center gap-1.5 transition-colors border border-cs-pink/30">
-                            <i data-lucide="external-link" class="w-4 h-4"></i>
-                            <span>Live Site</span>
-                        </a>
-
-                        <button type="button" id="copy-markdown-btn" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-cs-lilac/20 font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700" title="Copy raw markdown to clipboard">
-                            <i data-lucide="copy" class="w-4 h-4"></i>
-                            <span id="copy-btn-text">Copy .md</span>
-                        </button>
-
-                        <button type="button" id="close-reader-btn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors ml-auto sm:ml-0" title="Back to grid">
-                            <i data-lucide="arrow-up" class="w-5 h-5"></i>
-                        </button>
+                    <div class="min-w-0">
+                        <span id="modal-category" class="text-[10px] uppercase tracking-widest font-bold text-cs-lilac block truncate">Project Specification</span>
+                        <h2 id="modal-project-title" class="text-xl sm:text-2xl font-bold truncate">Project Name</h2>
                     </div>
                 </div>
 
-                <!-- Markdown Content Render Container -->
+                <!-- Header Action Controls -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:text-[#F08DA1] font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-white/10">
+                        <img src="../assets/icons/github.svg" alt="GitHub" class="w-3.5 h-3.5 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
+                        <span class="hidden sm:inline">GitHub</span>
+                    </a>
+
+                    <a id="modal-demo-link" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-cs-pink/20 text-[#D87D85] dark:text-cs-pink hover:bg-cs-pink/30 font-bold text-xs flex items-center gap-1.5 transition-colors border border-cs-pink/30">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        <span class="hidden sm:inline">Live Site</span>
+                    </a>
+
+                    <button type="button" id="modal-copy-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-cs-lilac/20 font-bold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-white/10" title="Copy raw markdown to clipboard">
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <span id="modal-copy-text" class="hidden sm:inline">Copy .md</span>
+                    </button>
+
+                    <button type="button" id="modal-close-btn" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-all ml-1 cursor-pointer" title="Close Preview (Esc)">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Modal Body -->
+            <div id="modal-scroll-container" class="modal-body overflow-y-auto flex-grow p-6 sm:p-10 custom-scrollbar">
                 <article id="markdown-content" class="w-full break-words">
                     <div class="flex flex-col items-center justify-center py-20 text-center">
                         <i data-lucide="sparkles" class="animate-bounce w-12 h-12 text-cs-pink mb-4"></i>
@@ -348,23 +404,22 @@
                         <p class="text-sm opacity-70">Fetching live project specification directly from source.</p>
                     </div>
                 </article>
-
-                <!-- Reader Footer -->
-                <div class="mt-12 pt-8 border-t border-cs-lilac/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-500">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="file-code" class="w-4 h-4 text-cs-lilac"></i>
-                        <span id="markdown-filepath">projects/cutesense-weather.md</span>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-cs-lilac flex items-center gap-1 transition-colors">
-                            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i> Back to top
-                        </button>
-                    </div>
-                </div>
-
             </div>
-        </section>
-    </main>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer px-6 py-3 border-t border-cs-lilac/20 bg-slate-50/80 dark:bg-[#18131c]/80 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 shrink-0">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="file-code" class="w-4 h-4 text-cs-lilac"></i>
+                    <span id="modal-filepath" class="font-mono text-[11px]">projects/cutesense-weather.md</span>
+                </div>
+                <button type="button" id="modal-footer-close" class="hover:text-cs-lilac transition-colors flex items-center gap-1.5 cursor-pointer">
+                    <span>Close</span>
+                    <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-[10px] font-mono">ESC</kbd>
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <cs-footer></cs-footer>
     <script src="../assets/js/footer.js"></script>
@@ -385,7 +440,8 @@
                 demo: "https://cutesense-studios.github.io/Cutesense-Weather/",
                 status: "Active",
                 featured: true,
-                tags: ["React", "JavaScript", "Weather API", "PWA"]
+                tags: ["React", "JavaScript", "Weather API", "PWA"],
+                content: `# 🌤️ CuteSense Weather\n\n> **"A cozy, atmospheric weather web dashboard that pairs real-time open meteorological forecasts with serene anime sky gradients and ambient soundscapes."**\n\n---\n\n## 🌧️ Concept & Philosophy\n\nWeather apps are often filled with cluttered advertisements, harsh graphs, and anxiety-inducing radars. **CuteSense Weather** reframes the sky as an emotional companion.\n\nWhether you're working under an overcast drizzle, watching clouds roll over distant mountains, or resting on a warm balmy evening, CuteSense Weather translates wind speeds, humidity, and barometric pressure into serene visual landscapes and soothing soundscapes.\n\n---\n\n## 🌈 Key Highlights\n\n- **✨ Dynamic Sky Simulation:** The background canvas dynamically mirrors sunrise, golden hour, twilight, starlit nights, or gentle storms based on local solar angles and precipitation levels.\n- **🎧 Adaptive Lo-Fi Audio Generator:** Generates procedurally layered rain, gentle thunder, meadow breezes, or nighttime crickets via the Web Audio API.\n- **📊 Precision Open Data:** Powered by the privacy-respecting **Open-Meteo API**—no API keys required, no personal location logs stored.\n- **☕ "Cozy Index":** A playful proprietary metric calculating the ideal tea brew, blanket thickness, and reading book recommendation for the current meteorological conditions.\n- **📱 PWA & Offline Support:** Installable on Android, iOS, and desktop browsers with offline caching for last-known forecasts.\n\n---\n\n## 💻 Tech Architecture\n\n\`\`\`\n┌──────────────────────────────────────────────┐\n│            CuteSense Weather UI              │\n├──────────────────────────────────────────────┤\n│  • Canvas Sky Shader (CSS & HTML5 Canvas)    │\n│  • Procedural Soundscape Engine (Web Audio)  │\n│  • Cozy Index Heuristic Calculator           │\n└──────────────────────┬───────────────────────┘\n                       │ Fetch Forecasts\n                       ▼\n┌──────────────────────────────────────────────┐\n│         Open-Meteo REST API                  │\n│  • WMO Weather Interpretation Codes         │\n│  • Hourly Temperature & Precipitation        │\n│  • Zero IP Logging / Full GDPR Compliance    │\n└──────────────────────────────────────────────┘\n\`\`\`\n\n---\n\n## 📦 How to Run Locally\n\n\`\`\`bash\n# Clone the project\ngit clone https://github.com/CuteSense-Studios/Cutesense-Weather.git\ncd Cutesense-Weather\n\n# Start any local server\nnpx serve .\n# Or open index.html directly!\n\`\`\`\n\n---\n\n## 📝 Roadmap & Future Ideas\n\n- [x] Hourly & 7-day temperature trends with pastel curves\n- [x] Atmospheric ambient sound generator\n- [x] Geolocation auto-detection with manual search fallback\n- [ ] Customizable pixel mascots that react to rain and snow\n- [ ] Air Quality Index (AQI) visualizations with cute health advice\n\n---\n\n## 💖 Community & License\n\nBuilt with love by **CuteSense Studios**. Released under the **GNU AGPL v3**. Free for everyone to enjoy, modify, and build upon.`
             },
             {
                 id: "as-you-are-w",
@@ -399,7 +455,8 @@
                 demo: "https://cutesense-studios.github.io/As-You-Are-W/",
                 status: "Featured",
                 featured: true,
-                tags: ["Visual Novel", "HTML5", "Audio Player", "Story"]
+                tags: ["Visual Novel", "HTML5", "Audio Player", "Story"],
+                content: `# 🕊️ As You Are (Official Website)\n\n> **"The official web portal and emotional landing experience for 'As You Are' — an intimate indie visual novel exploring identity and human connection."**\n\n---\n\n## 📖 Overview\n\n**As-You-Are-W** is the dedicated web showcase for CuteSense Studios' flagship visual novel, **"As You Are"**. Designed as a tranquil digital sanctuary, the site introduces visitors to the visual novel's world, character lore, original soundtrack previews, and development journey.\n\nReflecting the emotional resonance of the game itself, the web experience features soft animated mist effects, responsive typography, and an interactive audio player allowing visitors to preview the ambient OST before diving into the story.\n\n---\n\n## ✨ Web Highlights\n\n- **🌸 Atmospheric Landing:** Delicate CSS animations and soothing color palettes mirroring coastal rain and ocean horizons.\n- **🎵 Interactive OST Player:** Built-in ambient music sampler featuring original piano and acoustic compositions.\n- **📜 Character Profiles & Art Gallery:** Interactive character cards introducing Ren and Maya with high-resolution concept illustrations and dialogue snippets.\n- **📱 Fully Responsive:** Handcrafted to feel immersive across desktop, tablet, and mobile viewport sizes.\n- **⚡ Zero Telemetry & Lightweight:** Fast loading with no third-party trackers or bloat.\n\n---\n\n## 🛠️ Tech Stack\n\n| Layer | Technology |\n| :--- | :--- |\n| **Markup & Styling** | Semantic HTML5 & Modern CSS3 |\n| **Interactivity** | Vanilla JavaScript (ES6+) |\n| **Hosting & CI/CD** | GitHub Pages with GitHub Actions |\n| **Repository** | [CuteSense-Studios/As-You-Are-W](https://github.com/CuteSense-Studios/As-You-Are-W) |\n| **Live Site** | [cutesense-studios.github.io/As-You-Are-W](https://cutesense-studios.github.io/As-You-Are-W/) |\n\n---\n\n## 🚀 Running Locally\n\n\`\`\`bash\n# Clone the website repository\ngit clone https://github.com/CuteSense-Studios/As-You-Are-W.git\ncd As-You-Are-W\n\n# Open directly or run with node server\nnode ../server.js\n# Or open index.html in your browser\n\`\`\`\n\n---\n\n## 📄 License & Attribution\n\nAll game assets, story text, and character designs are created by **CuteSense Studios**. Web code is open source under the **GNU AGPL v3**.`
             },
             {
                 id: "as-you-are-t",
@@ -413,7 +470,8 @@
                 demo: null,
                 status: "Active",
                 featured: true,
-                tags: ["Ren'Py", "Python", "Game Engine", "Open Source"]
+                tags: ["Ren'Py", "Python", "Game Engine", "Open Source"],
+                content: `# 🎮 As You Are (Ren'Py Template & Engine)\n\n> **"The open-source Ren'Py game engine template and dialogue framework powering the visual novel 'As You Are'."**\n\n---\n\n## 🌟 What is As-You-Are-T?\n\n**As-You-Are-T** is an open-source starter framework and boilerplate designed for creators, narrative designers, and indie game developers building emotional visual novels in **Ren'Py**. \n\nOriginally built as the technical foundation for CuteSense Studios' visual novel *"As You Are"*, this repository provides clean, modular Ren'Py script architecture, pre-configured UI screens, customized save/load interfaces, and accessible audio mixing pipelines.\n\n---\n\n## 🎨 Framework Features\n\n- **📖 Modular Script Organization:** Separates story arcs, character definitions, dialogue scripts, and music transitions into clean \`.rpy\` files.\n- **🎨 Custom Pastel UI Theme:** Hand-styled dialogue textboxes, choice menus, quick-menu buttons, and preference sliders matching CuteSense's soft aesthetic.\n- **🎧 Dynamic BGM Crossfading:** Helper functions for seamless transitions between rainy ambiance, character themes, and silent reflective beats.\n- **♿ Accessibility Built-in:** High-contrast text toggle, adjustable font sizes, and self-voicing screen reader compatibility out of the box.\n- **📦 Multi-Platform Packaging:** Ready-to-build configuration for Windows, macOS, Linux, and Web (HTML5/WebAssembly).\n\n---\n\n## 🛠️ Tech Architecture\n\n| Component | Specification |\n| :--- | :--- |\n| **Engine** | Ren'Py Visual Novel Engine (8.x+) |\n| **Language** | Python 3 & Ren'Py Script (.rpy) |\n| **Resolution** | 1920x1080 Full HD Native Canvas |\n| **Repository** | [CuteSense-Studios/As-You-Are-T](https://github.com/CuteSense-Studios/As-You-Are-T) |\n| **License** | MIT License / GNU AGPL v3 |\n\n---\n\n## 🚀 How to Use\n\n1. **Install Ren'Py SDK:** Download the latest Ren'Py SDK from [renpy.org](https://www.renpy.org/).\n2. **Clone the Template:**\n   \`\`\`bash\n   git clone https://github.com/CuteSense-Studios/As-You-Are-T.git\n   \`\`\`\n3. **Launch in Ren'Py:** Add the project folder to your Ren'Py launcher directory and click **Launch Project**.\n4. **Customize Dialogue:** Edit \`game/script.rpy\` and add your custom character sprites and background art.\n\n---\n\n## 💖 Community & Open Source\n\nReleased freely to empower diverse and independent narrative creators worldwide. Fork it, build your own stories, and share your creations with the world!`
             },
             {
                 id: "binary-break-india",
@@ -427,7 +485,8 @@
                 demo: "https://cutesense-studios.github.io/Binary-Break-India/",
                 status: "Research",
                 featured: true,
-                tags: ["Advocacy", "Research", "Data Viz", "Diversity"]
+                tags: ["Advocacy", "Research", "Data Viz", "Diversity"],
+                content: `# 🇮🇳 Binary Break India\n\n> **"An advocacy, research, and data visualization archive dedicated to supporting diversity, inclusion, and underrepresented voices in tech across India."**\n\n---\n\n## 🕊️ Mission & Scope\n\nAligned with CuteSense Studios' core pillar of **Diversity and Advocacy**, **Binary Break India** is an ongoing research initiative and open-access data repository documenting the lived experiences, systemic hurdles, and community successes of minorities, non-binary individuals, and underrepresented developers in the Indian technology and creative sectors.\n\nThrough qualitative interviews, historical timelines, and open-source data visualization, Binary Break India advocates for safer workplaces, equitable hiring practices, and empowering creative networks.\n\n---\n\n## 📊 Key Highlights\n\n- **📈 Interactive Data Visualizations:** Clean, accessible web charts tracking industry representation, pay equity metrics, and regional developer initiatives.\n- **🎙️ Community Voices & Case Studies:** Oral histories and anonymous case studies detailing challenges and breakthroughs in indie game development and tech hubs.\n- **📚 Educational Resource Directory:** Curated guides, mentorship programs, community grants, and legal aid references for marginalized creators in India.\n- **🤝 Open Research Call:** Transparent data collection methodologies allowing researchers, activists, and organizers to review and contribute data points.\n\n---\n\n## 🛠️ Technology Stack\n\n| Layer | Details |\n| :--- | :--- |\n| **Frontend** | Modern JavaScript, Semantic HTML5, Tailwind CSS |\n| **Visualizations** | Canvas & SVG Data Graphics |\n| **Repository** | [CuteSense-Studios/Binary-Break-India](https://github.com/CuteSense-Studios/Binary-Break-India) |\n| **Live Portal** | [cutesense-studios.github.io/Binary-Break-India](https://cutesense-studios.github.io/Binary-Break-India/) |\n| **License** | Creative Commons BY-SA 4.0 & GNU AGPL v3 |\n\n---\n\n## 🚀 Viewing & Contributing Locally\n\n\`\`\`bash\n# Clone the repository\ngit clone https://github.com/CuteSense-Studios/Binary-Break-India.git\ncd Binary-Break-India\n\n# Open index.html in any browser or serve locally\nnode ../server.js\n\`\`\`\n\n---\n\n## 🌸 Guiding Values\n\n> *"Advocacy without accessibility is incomplete. By publishing our research openly and pairing rigorous data with empathetic human storytelling, we help shape an industry where everyone can create with dignity."*  \n> — **CuteSense Studios Advocacy Cell**`
             },
             {
                 id: "official-website",
@@ -441,7 +500,8 @@
                 demo: "https://cutesense-studios.github.io/Official-Website/",
                 status: "Core",
                 featured: false,
-                tags: ["HTML5", "Web Components", "Tailwind", "SQLite"]
+                tags: ["HTML5", "Web Components", "Tailwind", "SQLite"],
+                content: `# 🌸 CuteSense Studios Official Website\n\n> **"The official web home and emotive digital sanctuary of CuteSense Studios — featuring live Markdown project rendering, SQLite WebAssembly signature wall, and custom Web Components."**\n\n---\n\n## 🌟 Overview\n\nThe **Official Website** is the central digital hub of CuteSense Studios. Built with an ethos of **"Quality Art, Openly Created"**, the website balances whimsical, emotive visual design with high-performance, lightweight engineering.\n\nIt serves as the front door for our community, our philosophy, our business model, and our open-source software catalog.\n\n---\n\n## ✨ Standout Features\n\n- **📂 Live Markdown Project Showcase:** Parses and renders \`.md\` project documentation directly from repository source files in the browser using Marked.js.\n- **🖊️ SQLite WebAssembly Signature Wall:** A live community guestbook powered by in-browser SQLite (\`sql-wasm.js\`) and persistent GitHub Action automation.\n- **🌙 Cohesive Theme & Micro-Interactions:** Seamless dark/light theme switching, kinetic button physics, and GPU-accelerated floating ambient animations.\n- **🧩 Custom Web Components:** Modular, dependency-free \`<cs-navbar>\` and \`<cs-footer>\` custom elements.\n- **♿ Accessible & Performant:** Zero third-party trackers, full keyboard navigation support, and strict \`prefers-reduced-motion\` compliance.\n\n---\n\n## 🛠️ Technology Stack\n\n| Layer | Technology |\n| :--- | :--- |\n| **Markup & Layout** | HTML5 Semantic Elements & CSS Flexbox/Grid |\n| **Styling** | Tailwind CSS + Custom CSS Variables & Animations |\n| **Components** | Vanilla JavaScript Web Components (\`HTMLElement\`) |\n| **Database** | SQLite via WebAssembly (\`sql-wasm.js\`) |\n| **Markdown** | Client-side Marked.js (\`marked.min.js\`) |\n| **Icons** | Lucide Icons |\n| **Repository** | [CuteSense-Studios/Official-Website](https://github.com/CuteSense-Studios/Official-Website) |\n| **License** | GNU AGPL v3 |\n\n---\n\n## 🚀 Local Development\n\nStart the local server with one command:\n\n\`\`\`bash\n# Using Node.js directly\nnode server.js\n\n# Or using npm\nnpm start\n\`\`\`\n\nVisit \`http://localhost:3000/\` in your browser!`
             }
         ];
 
@@ -454,21 +514,25 @@
             pink: {
                 border: 'border-cs-pink',
                 bg: 'bg-cs-pink/15 text-[#D87D85] dark:text-cs-pink',
-                badge: 'bg-cs-pink text-white',
                 shadow: 'shadow-[0_8px_0_#F4C6C9] dark:shadow-none'
             },
             blue: {
                 border: 'border-cs-blue',
                 bg: 'bg-cs-blue/15 text-[#599AB5] dark:text-cs-blue',
-                badge: 'bg-cs-blue text-slate-800',
                 shadow: 'shadow-[0_8px_0_#B9E1F1] dark:shadow-none'
             },
             lilac: {
                 border: 'border-cs-lilac',
                 bg: 'bg-cs-lilac/15 text-cs-lilac dark:text-[#E2CBEB]',
-                badge: 'bg-cs-lilac text-white',
                 shadow: 'shadow-[0_8px_0_#A178AF] dark:shadow-none'
             }
+        };
+
+        const STATUS_BADGE_CLASSES = {
+            'Active': 'badge-active',
+            'Featured': 'badge-featured',
+            'Research': 'badge-research',
+            'Core': 'badge-core'
         };
 
         function renderCards() {
@@ -506,19 +570,19 @@
 
             grid.innerHTML = filtered.map(project => {
                 const style = COLOR_STYLES[project.color] || COLOR_STYLES.pink;
-                const isSelected = currentLoadedProject && currentLoadedProject.id === project.id;
+                const badgeClass = STATUS_BADGE_CLASSES[project.status] || 'badge-active';
                 
                 return `
-                <div class="project-card glass-card bg-white dark:bg-slate-800/80 p-6 sm:p-8 rounded-[2rem] border-2 ${style.border} ${style.shadow} flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] cursor-pointer ${isSelected ? 'selected' : ''}" 
+                <div class="project-card glass-card bg-white dark:bg-slate-800/80 p-6 sm:p-8 rounded-[2rem] border-2 ${style.border} ${style.shadow} flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] cursor-pointer" 
                      data-project-id="${project.id}" 
-                     onclick="selectProject('${project.id}', true)">
+                     onclick="openProjectModal('${project.id}')">
                     
                     <div>
                         <div class="flex items-center justify-between mb-5">
                             <div class="w-12 h-12 rounded-2xl ${style.bg} flex items-center justify-center shrink-0">
                                 <i data-lucide="${project.icon}" class="w-6 h-6"></i>
                             </div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${style.badge}">
+                            <span class="text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full ${badgeClass}">
                                 ${project.status}
                             </span>
                         </div>
@@ -535,7 +599,7 @@
                         <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700/50">
                             <button type="button" class="text-xs font-bold text-cs-lilac hover:text-[#F08DA1] flex items-center gap-1.5 transition-colors">
                                 <i data-lucide="book-open" class="w-4 h-4"></i>
-                                <span>Read .md</span>
+                                <span>Read .md (Popup)</span>
                             </button>
 
                             <div class="flex items-center gap-2" onclick="event.stopPropagation()">
@@ -560,18 +624,25 @@
             if (window.lucide) lucide.createIcons();
         }
 
-        async function loadProjectMarkdown(project, shouldScroll = false) {
-            currentLoadedProject = project;
-            renderCards();
+        async function openProjectModal(projectId) {
+            const project = PROJECTS_DATA.find(p => p.id === projectId);
+            if (!project) return;
 
+            currentLoadedProject = project;
+            if (window.location.hash !== '#' + projectId) {
+                history.replaceState(null, '', '#' + projectId);
+            }
+
+            const modal = document.getElementById('project-modal');
             const container = document.getElementById('markdown-content');
-            const titleEl = document.getElementById('reader-title');
-            const categoryEl = document.getElementById('reader-category');
-            const iconWrapper = document.getElementById('reader-icon-wrapper');
-            const iconEl = document.getElementById('reader-icon');
-            const githubLink = document.getElementById('reader-github-link');
-            const demoLink = document.getElementById('reader-demo-link');
-            const filepathEl = document.getElementById('markdown-filepath');
+            const titleEl = document.getElementById('modal-project-title');
+            const categoryEl = document.getElementById('modal-category');
+            const iconWrapper = document.getElementById('modal-icon-wrapper');
+            const iconEl = document.getElementById('modal-icon');
+            const githubLink = document.getElementById('modal-github-link');
+            const demoLink = document.getElementById('modal-demo-link');
+            const filepathEl = document.getElementById('modal-filepath');
+            const scrollContainer = document.getElementById('modal-scroll-container');
 
             titleEl.textContent = project.title;
             categoryEl.textContent = `${project.category} • ${project.status}`;
@@ -579,7 +650,7 @@
 
             if (iconWrapper && project.color) {
                 const s = COLOR_STYLES[project.color] || COLOR_STYLES.pink;
-                iconWrapper.className = `w-12 h-12 rounded-2xl ${s.bg} flex items-center justify-center shrink-0`;
+                iconWrapper.className = `w-11 h-11 rounded-2xl ${s.bg} flex items-center justify-center shrink-0`;
             }
             if (iconEl) {
                 iconEl.setAttribute('data-lucide', project.icon);
@@ -603,11 +674,19 @@
                 }
             }
 
+            // Reset scroll position to top
+            if (scrollContainer) scrollContainer.scrollTop = 0;
+
+            // Show modal
+            modal.classList.remove('hidden');
+            modal.classList.add('modal-open', 'modal-visible');
+            document.body.style.overflow = 'hidden';
+
             container.innerHTML = `
                 <div class="flex flex-col items-center justify-center py-20 text-center">
                     <i data-lucide="sparkles" class="animate-bounce w-12 h-12 text-cs-pink mb-4"></i>
                     <h3 class="text-xl font-bold text-cs-lilac mb-2">Rendering ${project.title} Markdown...~</h3>
-                    <p class="text-sm opacity-70">Fetching live project specification from <code>projects/${project.file}</code></p>
+                    <p class="text-sm opacity-70">Fetching live specification from <code>projects/${project.file}</code></p>
                 </div>
             `;
             if (window.lucide) lucide.createIcons();
@@ -624,38 +703,52 @@
                 } else {
                     container.innerHTML = `<pre class="whitespace-pre-wrap">${rawMarkdown}</pre>`;
                 }
+                if (scrollContainer) scrollContainer.scrollTop = 0;
 
                 if (window.lucide) lucide.createIcons();
-
-                if (shouldScroll) {
-                    const readerSection = document.getElementById('project-reader-section');
-                    if (readerSection) {
-                        readerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
 
             } catch (err) {
-                console.error("Markdown Load Error:", err);
-                container.innerHTML = `
-                    <div class="text-center py-16">
-                        <i data-lucide="alert-circle" class="w-14 h-14 text-cs-pink mx-auto mb-3"></i>
-                        <h3 class="text-2xl font-bold mb-2">Could not load markdown</h3>
-                        <p class="opacity-70 mb-6">Failed to retrieve <b>projects/${project.file}</b>.</p>
-                        <button onclick="loadProjectMarkdown(currentLoadedProject)" class="px-6 py-2.5 bg-cs-lilac text-white rounded-2xl font-bold text-sm shadow hover:scale-105 transition-transform">
-                            Retry Loading ✨
-                        </button>
-                    </div>
-                `;
-                if (window.lucide) lucide.createIcons();
+                console.warn("Live fetch fallback to embedded spec:", err);
+                if (project.content) {
+                    currentRawMarkdown = project.content;
+                    if (window.marked && typeof window.marked.parse === 'function') {
+                        container.innerHTML = marked.parse(project.content);
+                    } else {
+                        container.innerHTML = `<pre class="whitespace-pre-wrap">${project.content}</pre>`;
+                    }
+                    if (scrollContainer) scrollContainer.scrollTop = 0;
+                    if (window.lucide) lucide.createIcons();
+                } else {
+                    container.innerHTML = `
+                        <div class="text-center py-16">
+                            <i data-lucide="alert-circle" class="w-14 h-14 text-cs-pink mx-auto mb-3"></i>
+                            <h3 class="text-2xl font-bold mb-2">Could not load markdown</h3>
+                            <p class="opacity-70 mb-6">Failed to retrieve <b>projects/${project.file}</b>.</p>
+                            <button onclick="openProjectModal('${project.id}')" class="px-6 py-2.5 bg-cs-lilac text-white rounded-2xl font-bold text-sm shadow hover:scale-105 transition-transform cursor-pointer">
+                                Retry Loading ✨
+                            </button>
+                        </div>
+                    `;
+                    if (window.lucide) lucide.createIcons();
+                }
             }
         }
 
-        window.selectProject = function(projectId, shouldScroll = true) {
-            const project = PROJECTS_DATA.find(p => p.id === projectId);
-            if (!project) return;
+        window.closeProjectModal = function() {
+            const modal = document.getElementById('project-modal');
+            if (!modal) return;
 
-            window.location.hash = projectId;
-            loadProjectMarkdown(project, shouldScroll);
+            modal.classList.remove('modal-open', 'modal-visible');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = '';
+                document.body.style.overflow = '';
+            }, 300);
+
+            // Clean up url hash cleanly
+            if (window.location.hash) {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
         };
 
         function initCategoryTabs() {
@@ -680,33 +773,46 @@
             });
         }
 
-        function initCopyButton() {
-            const btn = document.getElementById('copy-markdown-btn');
-            const textEl = document.getElementById('copy-btn-text');
-            if (!btn || !textEl) return;
+        function initModalControls() {
+            const closeBtn = document.getElementById('modal-close-btn');
+            const footerClose = document.getElementById('modal-footer-close');
+            const copyBtn = document.getElementById('modal-copy-btn');
+            const copyText = document.getElementById('modal-copy-text');
+            const modal = document.getElementById('project-modal');
 
-            btn.addEventListener('click', async () => {
-                if (!currentRawMarkdown) return;
-                try {
-                    await navigator.clipboard.writeText(currentRawMarkdown);
-                    textEl.textContent = 'Copied! ✨';
-                    setTimeout(() => { textEl.textContent = 'Copy .md'; }, 2000);
-                } catch (e) {
-                    textEl.textContent = 'Failed';
-                    setTimeout(() => { textEl.textContent = 'Copy .md'; }, 2000);
+            if (closeBtn) closeBtn.addEventListener('click', closeProjectModal);
+            if (footerClose) footerClose.addEventListener('click', closeProjectModal);
+
+            // Backdrop click closes modal
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeProjectModal();
+                    }
+                });
+            }
+
+            // Keyboard ESC closes modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeProjectModal();
                 }
             });
-        }
 
-        function initCloseReader() {
-            const btn = document.getElementById('close-reader-btn');
-            if (!btn) return;
-            btn.addEventListener('click', () => {
-                const gridSection = document.getElementById('projects-grid');
-                if (gridSection) {
-                    gridSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+            // Copy .md button
+            if (copyBtn && copyText) {
+                copyBtn.addEventListener('click', async () => {
+                    if (!currentRawMarkdown) return;
+                    try {
+                        await navigator.clipboard.writeText(currentRawMarkdown);
+                        copyText.textContent = 'Copied! ✨';
+                        setTimeout(() => { copyText.textContent = 'Copy .md'; }, 2000);
+                    } catch (e) {
+                        copyText.textContent = 'Failed';
+                        setTimeout(() => { copyText.textContent = 'Copy .md'; }, 2000);
+                    }
+                });
+            }
         }
 
         function handleHash() {
@@ -714,12 +820,9 @@
             if (hash) {
                 const match = PROJECTS_DATA.find(p => p.id === hash);
                 if (match) {
-                    loadProjectMarkdown(match, true);
-                    return;
+                    openProjectModal(match.id);
                 }
             }
-            // Default to first project (CuteSense Weather)
-            loadProjectMarkdown(PROJECTS_DATA[0], false);
         }
 
         function initParallax() {
@@ -748,18 +851,16 @@
             renderCards();
             initCategoryTabs();
             initSearch();
-            initCopyButton();
-            initCloseReader();
+            initModalControls();
             initParallax();
             handleHash();
 
             window.addEventListener('hashchange', () => {
                 const hash = window.location.hash.replace('#', '');
                 if (hash) {
-                    const match = PROJECTS_DATA.find(p => p.id === hash);
-                    if (match && (!currentLoadedProject || currentLoadedProject.id !== match.id)) {
-                        loadProjectMarkdown(match, true);
-                    }
+                    openProjectModal(hash);
+                } else {
+                    closeProjectModal();
                 }
             });
 

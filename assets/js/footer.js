@@ -73,14 +73,14 @@ class CuteSenseFooter extends HTMLElement {
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400 my-8">
-                    <a href="${path}index.html" class="hover:text-[#F08DA1] transition-colors">Home</a>
-                    <a href="${path}pages/projects.html" class="hover:text-[#F08DA1] transition-colors">Projects</a>
-                    <a href="${path}pages/mission.html" class="hover:text-[#F08DA1] transition-colors">Philosophy</a>
-                    <a href="${path}pages/motto.html" class="hover:text-[#F08DA1] transition-colors">Motto</a>
-                    <a href="${path}pages/code-of-conduct.html" class="hover:text-[#F08DA1] transition-colors">Conduct</a>
-                    <a href="${path}pages/contributing.html" class="hover:text-[#F08DA1] transition-colors">Contributing</a>
-                    <a href="${path}pages/buisness-model.html" class="hover:text-[#F08DA1] transition-colors">Model</a>
+                <div class="footer-links-container flex flex-wrap items-center justify-center text-xs font-semibold text-slate-500 dark:text-slate-400 my-8">
+                    <a href="${path}index.html" class="footer-link hover:text-[#F08DA1] transition-colors">Home</a>
+                    <a href="${path}pages/projects.html" class="footer-link hover:text-[#F08DA1] transition-colors">Projects</a>
+                    <a href="${path}pages/mission.html" class="footer-link hover:text-[#F08DA1] transition-colors">Philosophy</a>
+                    <a href="${path}pages/motto.html" class="footer-link hover:text-[#F08DA1] transition-colors">Motto</a>
+                    <a href="${path}pages/code-of-conduct.html" class="footer-link hover:text-[#F08DA1] transition-colors">Conduct</a>
+                    <a href="${path}pages/contributing.html" class="footer-link hover:text-[#F08DA1] transition-colors">Contributing</a>
+                    <a href="${path}pages/buisness-model.html" class="footer-link hover:text-[#F08DA1] transition-colors">Model</a>
                 </div>
 
                 <div class="flex justify-center my-6 opacity-0 transition-opacity duration-1000 delay-300" data-animate-divider>

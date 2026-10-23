@@ -41,6 +41,11 @@ function sanitizePath(urlPath) {
         pathname = '/index.html';
     }
 
+    // Normalize business-model alias to buisness-model
+    if (pathname.includes('/business-model')) {
+        pathname = pathname.replace('/business-model', '/buisness-model');
+    }
+
     // Resolve safely within ROOT
     const normalized = path.normalize(pathname).replace(/^(\.\.[\/\\])+/, '');
     let safePath = path.join(ROOT, normalized);
