@@ -19,7 +19,6 @@
     <script src="./assets/js/theme.js" defer></script>
     <script src="./assets/js/sql-wasm.js"></script>
 
-    
     <script type="module">
     let db = null;
     const SIGN_LIMIT = 3;
@@ -179,10 +178,11 @@
     <script src="./assets/js/navbar.js"></script>
 
     <main class="flex-grow">
-        <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
             <div class="absolute inset-0 pointer-events-none -z-10">
-                <div class="blob-parallax absolute top-1/4 right-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-40"></div>
-                <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-40"></div>
+                <div class="blob-parallax absolute top-1/4 right-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-35"></div>
+                <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-35"></div>
             </div>
             <div class="max-w-5xl mx-auto text-center px-6 relative z-20">
                 <div class="mb-10 flex justify-center">
@@ -191,15 +191,20 @@
                     </div>
                 </div>
                 <h1 class="text-5xl md:text-8xl font-bold mb-6 leading-tight">Quality Art, <br/><span class="gradient-text">Openly Created</span></h1>
-                <p class="text-lg md:text-2xl opacity-80 max-w-3xl mx-auto mb-14 font-medium">Empowering creative new voices through high-quality open-source tools and human-AI partnership.</p>
-                <div class="flex justify-center">
-                    <a href="./pages/mission.html" class="px-12 py-5 bg-cs-lilac text-white rounded-3xl font-bold text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/50" aria-label="Learn more about our mission">
+                <p class="text-lg md:text-2xl opacity-80 max-w-3xl mx-auto mb-12 font-medium">Empowering creative new voices through high-quality open-source tools and human-AI partnership.</p>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="./pages/projects.html" class="px-10 py-5 bg-cs-lilac text-white rounded-3xl font-bold text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/50 shadow-cs-lilac/30" aria-label="Explore our open source projects">
+                        Explore Projects <i data-lucide="sparkles"></i>
+                    </a>
+                    <a href="./pages/mission.html" class="px-10 py-5 bg-white/80 dark:bg-slate-800/80 text-cs-dark dark:text-white border-2 border-cs-lilac/30 rounded-3xl font-bold text-lg shadow-md hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/30 backdrop-blur-sm" aria-label="Learn more about our mission">
                         Our Mission <i data-lucide="compass"></i>
                     </a>
                 </div>
             </div>
         </section>
 
+        <!-- Founder / Motto Section -->
         <section id="founder" class="py-20 px-6 relative bg-white/60 dark:bg-slate-900/40 border-y-4 border-dotted border-cs-lilac/30">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="motto-wrapper">
@@ -222,6 +227,7 @@
             </div>
         </section>
 
+        <!-- Pillars Section -->
         <section id="motto" class="py-32 px-6">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-20">
@@ -229,7 +235,6 @@
                     <div class="w-32 h-2 bg-gradient-to-r from-cs-pink to-cs-blue mx-auto rounded-full mt-8"></div>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Cards unchanged for brevity, all original content preserved -->
                     <div class="glass-card bg-white dark:bg-slate-800/60 p-10 flex flex-col items-center text-center border-2 border-cs-pink rounded-[2.5rem] shadow-[0_8px_0_#F4C6C9] dark:shadow-none">
                         <div class="w-12 h-12 flex items-center justify-center rounded-2xl mb-4 bg-cs-pink text-white"><i data-lucide="gem"></i></div>
                         <h3 class="text-2xl font-bold mb-3">High Quality</h3>
@@ -264,6 +269,89 @@
             </div>
         </section>
 
+        <!-- Featured Projects Showcase Section -->
+        <section id="showcase" class="py-24 px-6 relative z-10 bg-white/40 dark:bg-slate-900/30 border-y border-cs-lilac/15">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+                    <div>
+                        <div class="inline-block px-4 py-1.5 bg-cs-pink/20 text-[#D87D85] dark:bg-cs-pink/10 dark:text-cs-pink rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+                            Flagship Creations
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-bold">Featured <span class="gradient-text">Projects</span></h2>
+                        <p class="text-lg opacity-80 mt-3 max-w-xl">
+                            Each project is built under our Emotive Open Source philosophy, accompanied by full Markdown documentation.
+                        </p>
+                    </div>
+                    <a href="./pages/projects.html" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-cs-lilac text-white font-bold hover:scale-105 transition-all shadow-md self-start md:self-auto shrink-0">
+                        View All Projects (.md) <i data-lucide="arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- CuteSense Weather -->
+                    <div class="glass-card bg-white dark:bg-slate-800/70 p-8 rounded-[2.5rem] border-2 border-cs-blue shadow-[0_8px_0_#B9E1F1] dark:shadow-none flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-cs-blue/20 text-[#599AB5] dark:text-cs-blue flex items-center justify-center">
+                                    <i data-lucide="cloud-sun" class="w-7 h-7"></i>
+                                </div>
+                                <span class="text-xs font-bold uppercase px-3 py-1 rounded-full bg-cs-blue text-slate-800">React App</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">CuteSense Weather</h3>
+                            <p class="opacity-80 text-sm leading-relaxed mb-6 font-medium">Atmospheric React weather dashboard with dynamic anime skies & ambient lo-fi soundscapes.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400">#React #OpenMeteo</span>
+                            <a href="./pages/projects.html#cutesense-weather" class="text-sm font-bold text-cs-lilac hover:text-[#D87D85] flex items-center gap-1 transition-colors">
+                                Read .md <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- As You Are (Visual Novel) -->
+                    <div class="glass-card bg-white dark:bg-slate-800/70 p-8 rounded-[2.5rem] border-2 border-cs-lilac shadow-[0_8px_0_#A178AF] dark:shadow-none flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-cs-lilac/20 text-cs-lilac dark:text-[#E2CBEB] flex items-center justify-center">
+                                    <i data-lucide="heart-handshake" class="w-7 h-7"></i>
+                                </div>
+                                <span class="text-xs font-bold uppercase px-3 py-1 rounded-full bg-cs-lilac text-white">Story</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">As You Are</h3>
+                            <p class="opacity-80 text-sm leading-relaxed mb-6 font-medium">An intimate visual novel exploring identity and belonging, with an open Ren'Py template.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400">#VisualNovel #Ren'Py</span>
+                            <a href="./pages/projects.html#as-you-are-w" class="text-sm font-bold text-cs-lilac hover:text-[#D87D85] flex items-center gap-1 transition-colors">
+                                Read .md <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Binary Break India -->
+                    <div class="glass-card bg-white dark:bg-slate-800/70 p-8 rounded-[2.5rem] border-2 border-cs-pink shadow-[0_8px_0_#F4C6C9] dark:shadow-none flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="w-14 h-14 rounded-2xl bg-cs-pink/20 text-[#D87D85] dark:text-cs-pink flex items-center justify-center">
+                                    <i data-lucide="sparkles" class="w-7 h-7"></i>
+                                </div>
+                                <span class="text-xs font-bold uppercase px-3 py-1 rounded-full bg-cs-pink text-white">Advocacy</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Binary Break India</h3>
+                            <p class="opacity-80 text-sm leading-relaxed mb-6 font-medium">Research archive and data visualizations supporting diversity and minority creators in tech.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400">#Advocacy #DataViz</span>
+                            <a href="./pages/projects.html#binary-break-india" class="text-sm font-bold text-cs-lilac hover:text-[#D87D85] flex items-center gap-1 transition-colors">
+                                Read .md <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Wall Section -->
         <section id="signatures" class="py-32 px-6 bg-cs-lilac/5 dark:bg-slate-900/40">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="flex items-center justify-center gap-4 flex-wrap mb-6">
@@ -290,7 +378,7 @@
 
     <script>
         (function() {
-            // --- Lucide Icons initialization (deferred but safe)
+            // --- Lucide Icons initialization
             function initLucide() {
                 if (window.lucide) {
                     lucide.createIcons();
@@ -300,7 +388,7 @@
             }
             document.addEventListener('DOMContentLoaded', initLucide);
 
-            // --- Throttled mousemove for blob parallax (performance + reduced motion)
+            // --- Throttled mousemove for blob parallax
             let ticking = false;
             const blobs = document.querySelectorAll('.blob-parallax');
             const handleMouseMove = (e) => {
@@ -321,12 +409,11 @@
             const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
             if (!motionMedia.matches && blobs.length) {
                 document.addEventListener('mousemove', handleMouseMove);
-                // Optional: add will-change hint
                 blobs.forEach(blob => blob.style.willChange = 'transform');
             }
 
-            // --- Motto rotation with accessibility and cleanup
-            const mottos = ["Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीপ্ত মিষ্টি ভাব!~", "道理にかなう可愛さ！~", "L’adorabile che ha senso!~"];
+            // --- Motto rotation
+            const mottos = ["Cuteness that makes sense!~", "ऐसी क्यूटनेस जो समझ में आए!~", "बुद्धिदीप्त মিষ্টি भाव!~", "道理にかなう可愛さ！~", "L’adorabile che ha senso!~"];
             let mottoIndex = 0;
             const mottoContainer = document.getElementById('motto-container');
             let mottoInterval = null;
@@ -349,7 +436,6 @@
 
             if (mottoContainer) {
                 startMottoRotation();
-                // Click and keyboard support
                 const handleMottoClick = () => {
                     clearInterval(mottoInterval);
                     rotateMotto();
@@ -364,7 +450,6 @@
                 });
             }
 
-            // Cleanup intervals on page unload (optional, good practice)
             window.addEventListener('beforeunload', () => {
                 if (mottoInterval) clearInterval(mottoInterval);
             });

@@ -18,7 +18,6 @@ class CuteSenseFooter extends HTMLElement {
     _getPath() {
         try {
             const path = window.location.pathname;
-            // Checks if we are in a subdirectory like /pages/ or /docs/
             const isSubdir = path.includes('/pages/') || path.includes('/docs/');
             return isSubdir ? '../' : './';
         } catch (e) { return './'; }
@@ -29,20 +28,20 @@ class CuteSenseFooter extends HTMLElement {
         const year = new Date().getFullYear();
         
         this.innerHTML = `
-        <footer class="py-10 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-700 opacity-0" data-footer-root>
+        <footer class="py-12 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-700 opacity-0" data-footer-root>
             <div class="max-w-6xl mx-auto">
                 
-                <div class="flex flex-col md:flex-row items-center justify-between gap-10 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
                     
-                    <div class="flex items-center gap-4 text-left">
-                        <div class="relative h-16 w-auto shrink-0 flex items-center justify-center">
+                    <a href="${path}index.html" class="flex items-center gap-4 text-left group">
+                        <div class="relative h-14 w-auto shrink-0 flex items-center justify-center">
                             <img src="${path}assets/icons/companylogo.webp" alt="CuteSense Logo" 
-                                 class="h-16 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 hover:scale-105"
+                                 class="h-14 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 group-hover:scale-105"
                                  onerror="this.src='${path}assets/icons/companylogo.webp';">
                         </div>
                         
                         <div class="flex flex-col">
-                            <span class="text-xl sm:text-2xl gradient-text borel-font leading-tight py-1">
+                            <span class="text-xl sm:text-2xl gradient-text borel-font leading-tight py-0.5">
                                 CuteSense Studios
                             </span>
                             <div class="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold text-cs-lilac/80">
@@ -54,33 +53,43 @@ class CuteSenseFooter extends HTMLElement {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="flex gap-8 items-center">
+                    <div class="flex gap-6 items-center">
                         <a href="mailto:cutesensestudios@protonmail.com" 
-                           class="text-cs-lilac hover:scale-110 transition-transform"
+                           class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-cs-lilac/20 flex items-center justify-center text-cs-lilac hover:text-[#F08DA1] hover:scale-110 shadow-sm transition-all"
                            aria-label="Email Us">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
+                            <i data-lucide="mail" class="w-4 h-4"></i>
                         </a>
 
                         <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
-                           class="text-cs-lilac hover:scale-110 transition-transform"
+                           class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-cs-lilac/20 flex items-center justify-center text-cs-lilac hover:text-[#F08DA1] hover:scale-110 shadow-sm transition-all"
                            aria-label="GitHub Organization">
                             <img src="${path}assets/icons/github.svg" 
                                  alt="GitHub" 
-                                 class="w-5 h-5 opacity-90 dark:invert-[0.1]"
+                                 class="w-4 h-4 opacity-80 dark:invert-[0.1]"
                                  onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
                         </a>
                     </div>
                 </div>
 
-                <div class="flex justify-center my-8 opacity-0 transition-opacity duration-1000 delay-300" data-animate-divider>
-                    <div class="w-12 h-[1px] bg-cs-lilac/20 rounded-full"></div>
+                <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400 my-8">
+                    <a href="${path}index.html" class="hover:text-[#F08DA1] transition-colors">Home</a>
+                    <a href="${path}pages/projects.html" class="hover:text-[#F08DA1] transition-colors">Projects</a>
+                    <a href="${path}pages/mission.html" class="hover:text-[#F08DA1] transition-colors">Philosophy</a>
+                    <a href="${path}pages/motto.html" class="hover:text-[#F08DA1] transition-colors">Motto</a>
+                    <a href="${path}pages/code-of-conduct.html" class="hover:text-[#F08DA1] transition-colors">Conduct</a>
+                    <a href="${path}pages/contributing.html" class="hover:text-[#F08DA1] transition-colors">Contributing</a>
+                    <a href="${path}pages/buisness-model.html" class="hover:text-[#F08DA1] transition-colors">Model</a>
                 </div>
 
-                <div class="flex justify-center items-center gap-2 opacity-30 hover:opacity-70 transition-opacity cursor-default">
-                    <i data-lucide="scale" class="w-3 h-3 text-cs-lilac"></i>
-                    <span class="text-[8px] uppercase tracking-[0.5em] font-bold text-cs-lilac">
+                <div class="flex justify-center my-6 opacity-0 transition-opacity duration-1000 delay-300" data-animate-divider>
+                    <div class="w-16 h-[1px] bg-cs-lilac/20 rounded-full"></div>
+                </div>
+
+                <div class="flex justify-center items-center gap-2 opacity-40 hover:opacity-80 transition-opacity cursor-default text-center px-4">
+                    <i data-lucide="scale" class="w-3.5 h-3.5 text-cs-lilac shrink-0"></i>
+                    <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-cs-lilac">
                         GNU AGPL v3 • Built with Gemini • Human Verified
                     </span>
                 </div>
@@ -103,7 +112,6 @@ class CuteSenseFooter extends HTMLElement {
             const response = await fetch('https://api.github.com/orgs/CuteSense-Studios');
             if (response.ok) {
                 const data = await response.json();
-                // Set to GitHub location, or fallback to India if location field is empty
                 textEl.textContent = data.location || "India";
             } else {
                 textEl.textContent = "India";
@@ -142,8 +150,6 @@ class CuteSenseFooter extends HTMLElement {
         }, { threshold: 0.1 });
 
         this._observer.observe(footer);
-        
-        // Safety timeout to ensure footer appears even if observer fails
         setTimeout(() => this._reveal(), 1000);
     }
 

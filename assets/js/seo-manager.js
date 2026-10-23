@@ -7,7 +7,7 @@ const SEO_CONFIG = {
     default: {
         title: "CuteSense Studios | Emotive Open Source Art",
         description: "High-quality, open-source art tools with a human-AI partnership. Empowering diverse voices through cute, meaningful design.",
-        keywords: "open source art, cute design, AI tools, game dev, diversity in tech",
+        keywords: "open source art, cute design, AI tools, game dev, diversity in tech, indie game",
         image: "/assets/icons/companylogo.webp",
         twitterCard: "summary_large_image"
     },
@@ -15,6 +15,11 @@ const SEO_CONFIG = {
         "index.html": {
             title: "CuteSense Studios | Emotive Open Source Art",
             description: "Quality art, openly created. Empowering creative new voices through high-quality open-source tools."
+        },
+        "projects.html": {
+            title: "Projects & Creations | CuteSense Studios",
+            description: "Explore our open-source tools, visual novels, creative software, and AI experiments rendered directly from source.",
+            keywords: "CuteSense projects, open source, visual novels, tools, Sakura Calculator, AI, As You Are"
         },
         "mission.html": {
             title: "Our Mission | CuteSense Studios",
@@ -24,20 +29,25 @@ const SEO_CONFIG = {
         "motto.html": {
             title: "Our Motto | CuteSense Studios",
             description: "Cuteness that makes sense!~ The philosophy behind our welcoming, emotionally resonant design and rigorous logic.",
+            keywords: "CuteSense motto, cuteness that makes sense, philosophy, indie studio"
         },
         "buisness-model.html": {
             title: "How We Work | CuteSense Studios",
             description: "The Logic and the Lore. Discover our Open-Studio Ecosystem and Fractal scaling model.",
+            keywords: "business model, fractal studio, open source licensing, indie economics"
         },
         "contributing.html": {
             title: "Contributing | CuteSense Studios",
             description: "Join the community! Learn how to contribute code, art, and music to our open-source projects.",
+            keywords: "contribute, open source, guidelines, game development, art"
         },
         "code-of-conduct.html": {
             title: "Code of Conduct | CuteSense Studios",
             description: "Our pledge to fostering an open, welcoming, and 'cute' environment for all creators.",
-        },    
-}, 
+            keywords: "code of conduct, community pledge, inclusivity, diversity"
+        }
+    }
+};
 
 function applySEO() {
     const path = window.location.pathname;

@@ -1,6 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-tailwind.exe 
-git lfs track "*.html"
-git lfs track "*.db"
-tailwind 
+
+# Binary files
+tailwind.exe binary
+tailwind binary
+*.db binary
+*.webp binary
+*.wasm binary

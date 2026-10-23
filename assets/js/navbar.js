@@ -3,7 +3,7 @@ class CuteSenseNavbar extends HTMLElement {
         super();
         this._isMenuOpen = false;
         this._iconRetryCount = 0;
-        this._maxIconRetries = 12;
+        this._maxIconRetries = 15;
         
         if (window.CuteSenseTheme) {
             this._isDark = window.CuteSenseTheme.get().isDark;
@@ -45,21 +45,22 @@ class CuteSenseNavbar extends HTMLElement {
 
     _getActivePage() {
         const path = window.location.pathname;
-        return path.split('/').pop().replace('.html', '') || 'index';
+        const page = path.split('/').pop().replace('.html', '');
+        return page || 'index';
     }
 
     _render() {
         const root = this._getPath();
         const active = this._getActivePage();
         
-        // Updated list of items with Projects and Reports removed
         const navItems = [
-            { id: 'index', label: 'Home', path: 'index.html' },
-            { id: 'mission', label: 'Philosophy', path: 'pages/mission.html' },
-            { id: 'motto', label: 'Motto', path: 'pages/motto.html' },
-            { id: 'code-of-conduct', label: 'Conduct', path: 'pages/code-of-conduct.html' },
-            { id: 'contributing', label: 'Contributing', path: 'pages/contributing.html' },
-            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html' }
+            { id: 'index', label: 'Home', path: 'index.html', icon: 'home' },
+            { id: 'projects', label: 'Projects', path: 'pages/projects.html', icon: 'folder-git-2' },
+            { id: 'mission', label: 'Philosophy', path: 'pages/mission.html', icon: 'compass' },
+            { id: 'motto', label: 'Motto', path: 'pages/motto.html', icon: 'quote' },
+            { id: 'code-of-conduct', label: 'Conduct', path: 'pages/code-of-conduct.html', icon: 'heart-handshake' },
+            { id: 'contributing', label: 'Contributing', path: 'pages/contributing.html', icon: 'users' },
+            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html', icon: 'network' }
         ];
 
         this.innerHTML = `
@@ -75,21 +76,25 @@ class CuteSenseNavbar extends HTMLElement {
                 transition: all 0.2s ease;
             }
 
-            #hamburger-btn { display: none !important; }
-            .links-section { 
-                display: flex !important; gap: 4px; 
-                position: absolute; left: 50%; transform: translateX(-50%);
-                width: max-content;
+            /* Responsive rules: Logo appears ONLY on mobile! */
+            @media (min-width: 1151px) {
+                .mobile-only-brand { display: none !important; }
+                .desktop-nav-container { 
+                    display: flex !important; 
+                    align-items: center; 
+                    gap: 6px; 
+                    margin: 0 auto; 
+                }
             }
-
             @media (max-width: 1150px) {
-                #hamburger-btn { display: flex !important; }
-                .links-section { display: none !important; }
+                .mobile-only-brand { display: flex !important; }
+                .desktop-nav-container { display: none !important; }
             }
 
             #theme-toggle-btn {
                 width: 48px; height: 26px; border-radius: 999px;
                 position: relative; border: none; background: #f1f5f9;
+                flex-shrink: 0;
             }
             .dark #theme-toggle-btn { background: #334155; }
             
@@ -102,37 +107,59 @@ class CuteSenseNavbar extends HTMLElement {
             .dark #theme-toggle-btn .toggle-knob { transform: translateX(22px); background: #c084fc; }
 
             .desktop-link {
-                font-size: 0.85rem; font-weight: 600; padding: 0.45rem 0.8rem;
+                font-size: 0.85rem; font-weight: 600; padding: 0.45rem 0.85rem;
                 border-radius: 0.8rem; color: #64748b; transition: all 0.2s ease;
                 white-space: nowrap;
             }
             .dark .desktop-link { color: #94a3b8; }
-            .nav-link-active { color: #F08DA1 !important; background: rgba(240, 141, 161, 0.1); }
+            .desktop-link:hover { color: #F08DA1; background: rgba(240, 141, 161, 0.08); }
+            .nav-link-active { color: #F08DA1 !important; background: rgba(240, 141, 161, 0.12) !important; font-weight: 700; }
             
             .nav-hidden { transform: translateY(-120%); }
             .nav-visible { transform: translateY(0); }
 
             #mobile-menu {
                 height: 100dvh; opacity: 0; visibility: hidden;
-                transition: all 0.3s ease-in-out;
+                transform: translateX(100%);
+                transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
             }
-            #mobile-menu.active { opacity: 1; visibility: visible; }
+            #mobile-menu.active { 
+                opacity: 1; 
+                visibility: visible; 
+                transform: translateX(0);
+            }
         </style>
 
         <nav class="fixed top-0 left-0 w-full z-[1000] px-4 pt-4 transition-transform duration-500 nav-visible" data-navbar>
-            <div class="max-w-7xl mx-auto flex items-center justify-between bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
+            <div class="max-w-5xl mx-auto flex items-center justify-between bg-white/85 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
                 
-                <div class="flex items-center">
-                    <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+                <!-- Mobile-Only Brand Header (Logo ONLY on mobile!) -->
+                <div class="mobile-only-brand items-center gap-2.5">
+                    <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
                         <i data-lucide="menu" class="w-6 h-6 shrink-0"></i>
                     </button>
+                    <a href="${root}index.html" class="flex items-center gap-2 group" aria-label="CuteSense Studios Home">
+                        <img src="${root}assets/icons/companylogo.webp" alt="CuteSense Logo" class="h-8 w-auto pixel-crisp drop-shadow-sm">
+                        <span class="text-base font-bold gradient-text borel-font">CuteSense</span>
+                    </a>
                 </div>
 
-                <div class="links-section">
-                    ${navItems.map(item => `<a href="${root}${item.path}" class="desktop-link ${active === item.id ? 'nav-link-active' : ''}">${item.label}</a>`).join('')}
+                <!-- Desktop Navigation Links (Centered, clean, NO left logo) -->
+                <div class="desktop-nav-container">
+                    ${navItems.map(item => `
+                        <a href="${root}${item.path}" class="desktop-link ${active === item.id ? 'nav-link-active' : ''}">
+                            ${item.label}
+                        </a>
+                    `).join('')}
                 </div>
                 
-                <div class="flex items-center">
+                <!-- Right Controls: GitHub Link + Theme Toggle -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" 
+                       class="p-2 text-slate-500 hover:text-[#F08DA1] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors hidden sm:flex items-center justify-center"
+                       aria-label="CuteSense GitHub">
+                        <i data-lucide="github" class="w-4 h-4 shrink-0"></i>
+                    </a>
                     <button type="button" id="theme-toggle-btn" aria-label="Toggle theme">
                         <div class="toggle-knob" id="knob-icon-container"></div>
                     </button>
@@ -140,15 +167,50 @@ class CuteSenseNavbar extends HTMLElement {
             </div>
         </nav>
 
-        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white dark:bg-slate-950 flex flex-col p-8 overflow-y-auto pb-20">
-            <div class="flex justify-between items-center mb-8 shrink-0">
-                <span class="text-2xl text-[#F08DA1] borel-font">Navigation</span>
-                <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
-                    <i data-lucide="x" class="w-6 h-6 shrink-0"></i>
+        <!-- Improved Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="fixed inset-0 z-[1100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl flex flex-col p-6 sm:p-8 overflow-y-auto">
+            <!-- Mobile Drawer Header with Logo -->
+            <div class="flex justify-between items-center pb-6 border-b border-slate-100 dark:border-slate-800/80 mb-6 shrink-0">
+                <a href="${root}index.html" class="flex items-center gap-3">
+                    <img src="${root}assets/icons/companylogo.webp" alt="CuteSense Logo" class="h-10 w-auto pixel-crisp">
+                    <div class="flex flex-col">
+                        <span class="text-2xl text-[#F08DA1] borel-font leading-none">CuteSense</span>
+                        <span class="text-[9px] uppercase tracking-[0.25em] font-bold text-cs-lilac mt-1">Studios</span>
+                    </div>
+                </a>
+                <button type="button" id="mobile-close-btn" aria-label="Close Menu" class="p-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-5 h-5 shrink-0"></i>
                 </button>
             </div>
-            <div class="flex flex-col gap-4 text-xl sm:text-2xl font-bold pb-4">
-                ${navItems.map(item => `<a href="${root}${item.path}" class="${active === item.id ? 'text-[#F08DA1]' : 'text-slate-600 dark:text-slate-400'}">${item.label}</a>`).join('')}
+
+            <!-- Mobile Nav Items -->
+            <div class="flex flex-col gap-2 font-bold pb-6">
+                ${navItems.map(item => `
+                    <a href="${root}${item.path}" class="${active === item.id ? 'text-[#F08DA1] bg-cs-pink/15 font-black border-l-4 border-[#F08DA1]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'} px-4 py-3 rounded-2xl flex items-center justify-between transition-colors">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="${item.icon}" class="w-5 h-5 opacity-70"></i>
+                            <span class="text-base">${item.label}</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 opacity-40"></i>
+                    </a>
+                `).join('')}
+            </div>
+
+            <!-- Mobile Drawer Footer / Quick External Links -->
+            <div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col gap-4 text-xs font-semibold text-slate-400">
+                <div class="flex items-center justify-center gap-6">
+                    <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-cs-lilac hover:text-[#F08DA1] transition-colors">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                        <span>GitHub Org</span>
+                    </a>
+                    <a href="mailto:cutesensestudios@protonmail.com" class="flex items-center gap-1.5 text-cs-lilac hover:text-[#F08DA1] transition-colors">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+                <div class="text-center text-[10px] uppercase tracking-wider text-slate-400">
+                    Art with Heart • © ${new Date().getFullYear()} CuteSense Studios
+                </div>
             </div>
         </div>
         `;
@@ -264,6 +326,7 @@ class CuteSenseNavbar extends HTMLElement {
         if (open) {
             menu.classList.add('active');
             document.body.style.overflow = 'hidden';
+            if (window.lucide) lucide.createIcons({ root: menu });
         } else {
             menu.classList.remove('active');
             document.body.style.overflow = '';
