@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Anti-FOUC Theme Script (Applies dark class before DOM paint) -->
     <script>
         (function() {
@@ -31,11 +31,11 @@
     <title>CuteSense Studios | Emotive Open Source Art</title>
     <meta name="description" content="Quality art, openly created. Empowering creative new voices through high-quality open-source tools and human-AI partnership.">
     <link rel="canonical" href="https://cutesense-studios.com/">
-    
+
     <link rel="stylesheet" href="./assets/css/cursor.css">
     <link rel="stylesheet" href="./assets/css/tailwind.css">
     <link rel="stylesheet" href="./assets/css/global.css">
-    
+
     <script src="./assets/js/favicon.js"></script>
     <script src="./assets/js/lucide.min.js" defer></script>
     <script src="./assets/js/theme.js"></script>
@@ -69,12 +69,12 @@
             const buf = await response.arrayBuffer();
             db = new SQL.Database(new Uint8Array(buf));
             console.log("Database loaded successfully! ✨");
-            
+
             renderWall();
         } catch (err) {
             console.error("SQLite Load Error:", err);
             // Fallback to rendering whatever is in local storage
-            renderWall(); 
+            renderWall();
         }
     }
 
@@ -107,10 +107,10 @@
 
         // Get local signatures (ones user just signed but aren't in DB yet)
         const localSigns = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-        
+
         // Merge them: Local first (newest), then Global
         const allSigns = [...localSigns, ...globalSigns].slice(0, 40);
-        
+
         countEl.innerText = (totalCount + localSigns.length).toLocaleString();
 
         const brandThemeClasses = [
@@ -164,8 +164,8 @@
         renderWall();
 
         // --- GITHUB ACTION TRIGGER ---
-        const GITHUB_USER = "CuteSense-Studios"; 
-        const GITHUB_REPO = "Official-Website"; 
+        const GITHUB_USER = "CuteSense-Studios";
+        const GITHUB_REPO = "Official-Website";
 
         const issueTitle = encodeURIComponent(name);
         const issueBody = encodeURIComponent("Automated signature request. Please click 'Submit new issue' to finalize your mark on the wall! ✨");
@@ -214,7 +214,7 @@
                 </div>
                 <h1 class="text-5xl md:text-8xl font-bold mb-6 leading-tight text-cs-dark dark:text-white">Quality Art, <br/><span class="gradient-text">Openly Created</span></h1>
                 <p class="text-lg md:text-2xl opacity-90 text-slate-700 dark:text-slate-200 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">Empowering creative new voices through high-quality open-source tools and human-AI partnership.</p>
-                
+
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="./pages/projects.html" class="px-10 py-5 bg-cs-lilac hover:bg-[#8e659c] text-white rounded-3xl font-bold text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/50 shadow-cs-lilac/30" aria-label="Explore our open source projects">
                         Explore Projects <i data-lucide="sparkles"></i>
@@ -230,9 +230,9 @@
         <section id="founder" class="py-20 px-6 relative bg-white/60 dark:bg-[#201A24] border-y-2 border-cs-lilac/30">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="motto-wrapper">
-                    <h2 id="motto-container" class="text-3xl md:text-5xl font-bold cute-font italic px-4 cursor-pointer hover:scale-105 transition-transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-cs-lilac rounded-lg text-cs-dark dark:text-white" 
-                        role="button" 
-                        tabindex="0" 
+                    <h2 id="motto-container" class="text-3xl md:text-5xl font-bold cute-font italic px-4 cursor-pointer hover:scale-105 transition-transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-cs-lilac rounded-lg text-cs-dark dark:text-white"
+                        role="button"
+                        tabindex="0"
                         aria-label="Click to change motto – currently 'Cuteness that makes sense!~'">
                         Cuteness that makes sense!~
                     </h2>
@@ -244,14 +244,6 @@
                     <div class="text-left">
                         <p class="font-bold text-xl text-cs-dark dark:text-white">Crossie</p>
                         <p class="text-[11px] text-cs-lilac dark:text-[#E2CBEB] font-bold uppercase tracking-wider">Chief Creative</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-                    </div>
-                    <div class="text-left">
-                        <p class="font-bold text-xl">Crossie</p>
-                        <p class="text-[10px] text-cs-lilac font-bold uppercase tracking-tighter">Chief Creative</p>
                     </div>
                 </div>
             </div>
@@ -389,17 +381,17 @@
                     <span id="signature-count" class="inline-flex items-center justify-center bg-cs-pink/20 dark:bg-cs-pink/20 border border-cs-pink/40 dark:border-cs-pink/40 text-[#A84555] dark:text-cs-pink text-sm sm:text-base font-extrabold px-3.5 py-1 rounded-full shadow-sm">0</span>
                 </div>
                 <p class="text-sm opacity-80 text-slate-600 dark:text-slate-300 mb-8 font-medium">Join our community – leave a kind mark!</p>
-                
+
                 <!-- Balanced Rounded Rectangle Form -->
                 <form onsubmit="signWall(event)" class="max-w-lg mx-auto mb-14 space-y-3">
                     <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-center">
                         <div class="relative flex-1">
-                            <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25" minlength="2" autocomplete="off" 
+                            <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25" minlength="2" autocomplete="off"
                                    class="w-full h-13 px-5 rounded-2xl bg-white dark:bg-[#27202B] border-2 border-cs-lilac/30 dark:border-cs-lilac/50 focus:border-cs-lilac dark:focus:border-[#E2CBEB] focus:outline-none transition-all text-sm sm:text-base text-cs-dark dark:text-white placeholder-slate-400 shadow-sm">
                         </div>
-                        <button type="submit" 
+                        <button type="submit"
                                 class="h-13 px-7 bg-cs-lilac hover:bg-[#8e659c] text-white rounded-2xl font-bold text-sm sm:text-base shadow-[0_4px_16px_rgba(161,120,175,0.4)] hover:shadow-[0_6px_22px_rgba(161,120,175,0.55)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm border border-cs-lilac/50 flex items-center justify-center gap-2 transition-all shrink-0 cursor-pointer">
-                            <span>Sign Wall</span> 
+                            <span>Sign Wall</span>
                             <i data-lucide="pen-tool" class="w-4 h-4"></i>
                         </button>
                     </div>

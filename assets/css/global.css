@@ -977,21 +977,31 @@ html.dark #project-modal .modal-footer {
 
 
 /* =========================================================
-   Footer Link Spacing Fix
+   Footer Link Spacing & Host Display
 ========================================================= */
+cs-footer {
+    display: block !important;
+    width: 100% !important;
+    margin-top: auto !important;
+}
+
 .footer-links-container {
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 0.6rem 1.75rem !important;
+    gap: 0.35rem 0.6rem !important;
 }
 
 .footer-link {
-    padding: 0.25rem 0.5rem !important;
-    transition: color 0.2s ease !important;
-    display: inline-block !important;
+    padding: 0.35rem 0.75rem !important;
+    border-radius: 0.75rem !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
     white-space: nowrap !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.25rem !important;
 }
 
 .footer-link:hover {
