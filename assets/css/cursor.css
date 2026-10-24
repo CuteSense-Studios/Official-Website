@@ -32,22 +32,23 @@
 html { cursor: var(--cs-default); }
 body { cursor: inherit; }
 
-/* Interactive elements */
-a, button, input[type="submit"], input[type="button"], input[type="reset"],
-select, summary, details, [role="button"], [contenteditable="true"],
-.cursor-pointer, .nav-link, .card-link, .pagination a, .menu-item,
+/* Interactive elements (and all nested children) */
+a, a *, button, button *, input[type="submit"], input[type="button"], input[type="reset"],
+select, summary, details, [role="button"], [role="button"] *,
+.cursor-pointer, .cursor-pointer *, .project-card, .project-card *, .category-tab, .category-tab *,
+.nav-link, .card-link, .pagination a, .menu-item,
 label, input[type="checkbox"] + label, input[type="radio"] + label {
-    cursor: var(--cs-pointer);
+    cursor: var(--cs-pointer) !important;
 }
 /* Fallback for :has() – modern browsers only */
 label:has(input:is([type="checkbox"], [type="radio"])) {
-    cursor: var(--cs-pointer);
+    cursor: var(--cs-pointer) !important;
 }
 
 /* Text inputs */
 input[type="text"], input[type="email"], input[type="password"],
 input[type="search"], input[type="tel"], input[type="url"],
-textarea, [contenteditable="true"]:empty, p, h1, h2, h3, h4, h5, h6, span {
+textarea, [contenteditable="true"]:empty {
     cursor: text;
 }
 

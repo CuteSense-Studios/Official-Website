@@ -7,7 +7,7 @@
     <script src="../assets/js/seo-manager.js" defer></script>
 
     <title>Code of Conduct | CuteSense Studios</title>
-    <meta name="description" content="Our pledge to fostering an open, welcoming, and 'cute' environment for all contributors, regardless of background or experience.">
+    <meta name="description" content="Our pledge to fostering an open, welcoming, and delightfully cute community where every creator feels safe, respected, and empowered.">
     <link rel="canonical" href="https://cutesense-studios.com/pages/code-of-conduct.html">
     
     <link rel="stylesheet" href="../assets/css/cursor.css">
@@ -17,67 +17,111 @@
     <script src="../assets/js/favicon.js"></script>
     <script src="../assets/js/lucide.min.js" defer></script>
     <script src="../assets/js/theme.js" defer></script>
-    
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
-        /* Markdown Rendering Styles for Code of Conduct */
-        #coc-render h1 {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
+        /* Table of Contents & Navigation Pills */
+        .toc-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.95rem;
+            border-radius: 9999px;
+            font-size: 0.78rem;
             font-weight: 700;
-            margin-bottom: 2.5rem;
-            text-align: center;
-            background: linear-gradient(to right, #FF9EBB, #599AB5);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
+            white-space: nowrap;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #4A3E4E;
+            border: 1px solid rgba(161, 120, 175, 0.2);
+            text-decoration: none !important;
         }
 
-        @media (min-width: 768px) {
-            #coc-render h1 { font-size: 4.5rem; line-height: 1; }
+        .dark .toc-pill {
+            background-color: rgba(30, 41, 59, 0.6);
+            color: #e2e8f0;
+            border-color: rgba(161, 120, 175, 0.35);
+        }
+
+        .toc-pill:hover {
+            background-color: #F4C6C9;
+            color: #5C1D26;
+            border-color: #F4C6C9;
+            transform: translateY(-1px);
+        }
+
+        .dark .toc-pill:hover {
+            background-color: rgba(244, 198, 201, 0.25);
+            color: #F4C6C9;
+            border-color: #F4C6C9;
+        }
+
+        /* Markdown Render Typography & Layout */
+        #coc-render {
+            color: inherit;
+        }
+
+        #coc-render h1 {
+            display: none; /* Already rendered in the rich page hero banner */
         }
 
         #coc-render h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 4rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.65rem;
+            font-weight: 800;
+            margin-top: 3.5rem;
+            margin-bottom: 1.25rem;
             color: #A178AF;
-            border-bottom: 4px dotted rgba(161, 120, 175, 0.3);
-            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            scroll-margin-top: 7rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 3px dotted rgba(161, 120, 175, 0.25);
+        }
+
+        .dark #coc-render h2 {
+            color: #E2CBEB;
+            border-bottom-color: rgba(226, 203, 235, 0.2);
         }
 
         #coc-render h3 {
             font-size: 1.25rem;
             font-weight: 700;
-            margin-top: 2.5rem;
+            margin-top: 2rem;
             margin-bottom: 1rem;
             color: #599AB5;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            scroll-margin-top: 7rem;
+        }
+
+        .dark #coc-render h3 {
+            color: #B9E1F1;
         }
 
         #coc-render p {
-            font-size: 1.125rem;
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-bottom: 1.25rem;
             font-weight: 500;
-            line-height: 1.625;
+            line-height: 1.7;
         }
 
         #coc-render ul {
-            padding-left: 0.5rem;
-            margin-bottom: 2rem;
+            padding-left: 0.25rem;
+            margin-bottom: 1.75rem;
             list-style: none;
         }
 
         #coc-render li {
             position: relative;
-            padding-left: 2rem;
-            font-size: 1.125rem;
+            padding-left: 1.85rem;
+            font-size: 1.025rem;
             font-weight: 500;
-            opacity: 0.9;
-            margin-bottom: 1rem;
+            opacity: 0.92;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
         }
 
         #coc-render li::before {
@@ -90,33 +134,103 @@
 
         #coc-render hr {
             border: none;
-            border-top: 4px dotted rgba(161, 120, 175, 0.2);
-            margin: 4rem 0;
+            border-top: 3px dotted rgba(161, 120, 175, 0.2);
+            margin: 3rem 0;
         }
 
         #coc-render strong {
-            color: #FF9EBB;
+            color: #D87D85;
             font-weight: 700;
+        }
+
+        .dark #coc-render strong {
+            color: #F4C6C9;
         }
 
         #coc-render a {
             color: #A178AF;
             text-decoration: underline;
             text-decoration-color: rgba(161, 120, 175, 0.4);
-            transition: all 0.2s;
             font-weight: 700;
+            transition: all 0.2s;
             word-break: break-all;
         }
 
         #coc-render a:hover {
-            color: #FF9EBB;
+            color: #F08DA1;
         }
 
-        #coc-render > :last-child {
+        /* Enhanced Standards Boxes */
+        .behavior-box {
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.75rem;
+            border-width: 2px;
+            border-style: solid;
+        }
+
+        .behavior-box.positive {
+            background-color: rgba(185, 225, 241, 0.12);
+            border-color: rgba(89, 154, 181, 0.35);
+        }
+
+        .dark .behavior-box.positive {
+            background-color: rgba(185, 225, 241, 0.06);
+            border-color: rgba(185, 225, 241, 0.25);
+        }
+
+        .behavior-box.unacceptable {
+            background-color: rgba(244, 198, 201, 0.14);
+            border-color: rgba(216, 125, 133, 0.35);
+        }
+
+        .dark .behavior-box.unacceptable {
+            background-color: rgba(244, 198, 201, 0.06);
+            border-color: rgba(244, 198, 201, 0.25);
+        }
+
+        .behavior-box ul {
             margin-bottom: 0 !important;
         }
 
-        .loading-spinner { color: #FF9EBB; }
+        .behavior-box.positive li::before {
+            content: '🌸';
+        }
+
+        .behavior-box.unacceptable li::before {
+            content: '⛔';
+        }
+
+        /* Escalation Step Cards */
+        .escalation-step-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.15rem;
+            border-radius: 1.25rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(161, 120, 175, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .dark .escalation-step-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(161, 120, 175, 0.3);
+        }
+
+        .escalation-step-card:hover {
+            transform: translateY(-2px);
+            border-color: #A178AF;
+            box-shadow: 0 4px 12px rgba(161, 120, 175, 0.12);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden flex flex-col min-h-screen">
@@ -125,23 +239,135 @@
     <script src="../assets/js/navbar.js"></script>
 
     <main class="flex-grow pt-32 pb-24 relative overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none -z-10">
-            <div class="blob-parallax absolute top-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[120px] opacity-30"></div>
-            <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[120px] opacity-30"></div>
+        <!-- Parallax Background Blobs (Soft, non-muddy dark mode opacity) -->
+        <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+            <div class="blob-parallax absolute top-[15%] right-[10%] w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-cs-blue rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
+            <div class="blob-parallax absolute top-[45%] left-[5%] w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-cs-pink rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
+            <div class="blob-parallax absolute bottom-[15%] right-[20%] w-[300px] md:w-[550px] h-[300px] md:h-[550px] bg-cs-lilac rounded-full blur-[130px] opacity-20 dark:opacity-10"></div>
         </div>
 
-        <div class="max-w-3xl mx-auto px-4 md:px-6 mb-16">
+        <!-- Decorative Sparkles -->
+        <div class="absolute top-[18%] left-[10%] sparkle-slow text-cs-pink z-0" aria-hidden="true"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
+        <div class="absolute top-[32%] right-[12%] sparkle-slow text-cs-blue z-0" aria-hidden="true"><i data-lucide="sparkle" class="w-12 h-12"></i></div>
+
+        <!-- Hero Section -->
+        <section class="max-w-4xl mx-auto px-6 text-center mb-12 relative z-10">
+            <div class="floating inline-flex items-center gap-2 px-4 py-1.5 bg-cs-pink/20 text-[#D87D85] dark:bg-cs-pink/15 dark:text-cs-pink rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-[#D87D85]/20 dark:border-cs-pink/20 backdrop-blur-sm">
+                <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i>
+                <span>Community Standards</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Code of <span class="gradient-text">Conduct</span>
+            </h1>
+
+            <p class="text-base sm:text-lg md:text-xl opacity-80 max-w-2xl mx-auto leading-relaxed font-medium">
+                Our pledge to fostering an open, welcoming, and delightfully cute community where every creator feels safe, valued, and empowered.
+            </p>
+        </section>
+
+        <!-- Container for Summary Cards + Jump Bar + Main Content -->
+        <div class="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
             
-            <div class="glass-card bg-white dark:bg-slate-800/60 p-6 md:p-8 border-2 border-cs-lilac rounded-3xl shadow-[0_8px_0_#A178AF33] dark:shadow-none animate-in fade-in slide-in-from-bottom-6 duration-700 w-full">
+            <!-- 4 Quick Takeaway Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                <!-- Card 1 -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-pink/40 dark:border-cs-pink/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-2xl bg-cs-pink/20 dark:bg-cs-pink/15 flex items-center justify-center text-[#D87D85] dark:text-cs-pink mb-3">
+                            <i data-lucide="heart" class="w-5 h-5"></i>
+                        </div>
+                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">Inclusive Space</h2>
+                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">Warmly welcoming contributors of all identities, skill levels, and backgrounds.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-cs-pink/20 text-[11px] font-bold text-[#D87D85] dark:text-cs-pink uppercase tracking-wider">Pledge & Care</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-blue/40 dark:border-cs-blue/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-2xl bg-cs-blue/20 dark:bg-cs-blue/15 flex items-center justify-center text-[#599AB5] dark:text-cs-blue mb-3">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">Zero Harassment</h2>
+                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">No trolling, hate speech, doxing, or exclusionary conduct in our spaces.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-cs-blue/20 text-[11px] font-bold text-[#599AB5] dark:text-cs-blue uppercase tracking-wider">Protected Space</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-lilac/40 dark:border-cs-lilac/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-2xl bg-cs-lilac/20 dark:bg-cs-lilac/15 flex items-center justify-center text-cs-lilac dark:text-[#E2CBEB] mb-3">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">AI Transparency</h2>
+                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">Honest disclosure of AI tools. AI is a helper; human artistry and review lead.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-cs-lilac/20 text-[11px] font-bold text-cs-lilac dark:text-[#E2CBEB] uppercase tracking-wider">Ethics & Honesty</div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-pink/40 dark:border-cs-pink/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-2xl bg-cs-pink/20 dark:bg-cs-pink/15 flex items-center justify-center text-[#D87D85] dark:text-cs-pink mb-3">
+                            <i data-lucide="scale" class="w-5 h-5"></i>
+                        </div>
+                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">Fair Enforcement</h2>
+                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">Confidential reporting and measured escalation to keep everyone safe.</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-cs-pink/20 text-[11px] font-bold text-[#D87D85] dark:text-cs-pink uppercase tracking-wider">Confidential</div>
+                </div>
+            </div>
+
+            <!-- Sticky Jump Pills Menu -->
+            <div class="sticky top-20 z-20 mb-8 p-2.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-cs-lilac/30 shadow-sm flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-cs-lilac pl-2 shrink-0 flex items-center gap-1.5">
+                    <i data-lucide="compass" class="w-3.5 h-3.5"></i> Jump To:
+                </span>
+                <a href="#pledge" class="toc-pill">1. Pledge</a>
+                <a href="#standards" class="toc-pill">2. Standards</a>
+                <a href="#enforcement" class="toc-pill">3. Enforcement</a>
+                <a href="#scope" class="toc-pill">4. Scope</a>
+                <a href="#reporting" class="toc-pill">5. Reporting</a>
+                <a href="#attribution" class="toc-pill">6. Attribution</a>
+            </div>
+
+            <!-- Main Render Card -->
+            <div class="glass-card bg-white dark:bg-slate-800/60 p-6 sm:p-10 md:p-12 border-2 border-cs-lilac/40 dark:border-cs-lilac/25 rounded-[2.5rem] shadow-[0_8px_0_#A178AF22] dark:shadow-none animate-in fade-in slide-in-from-bottom-6 duration-700 w-full mb-12">
                 
                 <article id="coc-render" class="w-full break-words">
                     <div class="flex flex-col items-center justify-center py-20">
-                        <i data-lucide="sparkles" class="animate-bounce w-10 h-10 loading-spinner mb-4"></i>
-                        <p class="text-cs-lilac font-bold animate-pulse text-sm md:text-base">Polishing the rules...~</p>
+                        <i data-lucide="sparkles" class="animate-bounce w-10 h-10 text-cs-pink mb-4"></i>
+                        <p class="text-cs-lilac font-bold animate-pulse text-sm md:text-base">Polishing community guidelines...~</p>
                     </div>
                 </article>
 
             </div>
+
+            <!-- Direct Reporting Contact Card at Bottom -->
+            <div class="p-6 md:p-8 rounded-[2rem] bg-gradient-to-r from-cs-pink/15 via-cs-lilac/15 to-cs-blue/15 border border-cs-lilac/30 dark:border-cs-lilac/25 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 mb-16">
+                <div class="flex items-center gap-4 text-center md:text-left flex-col md:flex-row">
+                    <div class="w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-cs-lilac shrink-0">
+                        <i data-lucide="mail-warning" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold mb-1">Need to report an incident?</h2>
+                        <p class="text-sm opacity-80 max-w-md">All reports are strictly confidential. Our core maintainers respond swiftly and impartially.</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
+                    <button id="copy-report-email-btn" class="px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-800 border border-cs-lilac/30 text-cs-dark dark:text-slate-100 text-xs font-bold hover:border-cs-pink transition-all flex items-center gap-2 shadow-sm">
+                        <i data-lucide="copy" class="w-3.5 h-3.5 text-cs-pink"></i>
+                        <span id="copy-btn-label">Copy Email</span>
+                    </button>
+                    <a href="mailto:cutesensestudios@protonmail.com" class="px-5 py-2.5 rounded-2xl bg-cs-lilac text-white text-xs font-bold hover:bg-[#8e659c] transition-all flex items-center gap-2 shadow-sm">
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                        <span>Send Email</span>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -149,46 +375,214 @@
     <script src="../assets/js/footer.js"></script>
 
     <script>
+        // Full fallback markdown to ensure instant, zero-failure rendering under all conditions
+        const FALLBACK_COC_MD = `# Our Commitment to Excellence
+
+## 1. Our Pledge
+
+In the interest of fostering an open, welcoming, and "cute" environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+---
+
+## 2. Our Standards
+
+### ✅ Positive Behavior
+
+Examples of behavior that contributes to creating a positive environment include:
+
+* **Being Kind and Inclusive:** Using welcoming and inclusive language.
+* **Respecting Differences:** Being respectful of differing viewpoints and experiences.
+* **Graceful Acceptance:** Gracefully accepting constructive criticism.
+* **Focusing on Community:** Focusing on what is best for the community and the project’s goals.
+* **Showing Empathy:** Exercising empathy towards other community members.
+* **Transparency:** Being honest about the use of AI tools in your creative process.
+
+### ❌ Unacceptable Behavior
+
+Examples of unacceptable behavior by participants include:
+
+* **Harassment:** The use of sexualized language or imagery and unwelcome sexual attention or advances.
+* **Trolling:** Trolling, insulting/derogatory comments, and personal or political attacks.
+* **Doxing:** Publishing others' private information, such as a physical or electronic address, without explicit permission.
+* **Dishonesty:** Intentionally hiding the use of AI tools to bypass our [Contribution Guidelines](./pages/contributing.html).
+* **Unprofessional Conduct:** Other conduct which could reasonably be considered inappropriate in a professional or community setting.
+---
+
+## 3. Enforcement Responsibilities
+
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+
+Maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+---
+
+## 4. Scope
+
+This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
+---
+
+## 5. Reporting and Enforcement
+
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at: [cutesensestudios@protonmail.com]
+
+All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident.
+
+### Enforcement Escalation
+
+1. **Correction:** A private, written warning providing clarity around the nature of the violation.
+2. **Warning:** A warning with consequences for continued behavior.
+3. **Temporary Ban:** A temporary ban from any sort of interaction or communication for a specified period.
+4. **Permanent Ban:** A permanent ban from the community, including all public repositories and communication channels.
+---
+
+## 6. Attribution
+
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 1.4, available at [https://www.contributor-covenant.org/version/1/4/code-of-conduct.html](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html)
+
+**Thank you for keeping CuteSense Studios a safe, creative, and kind space for everyone!**`;
+
         document.addEventListener('DOMContentLoaded', async () => {
             const container = document.getElementById('coc-render');
-            
+            let rawMarkdown = FALLBACK_COC_MD;
+
             try {
-                // Fetch CODE_OF_CONDUCT.md from the root directory
                 const response = await fetch('../CODE_OF_CONDUCT.md');
-                if (!response.ok) throw new Error('MD file missing');
-                let rawMarkdown = await response.text();
-                rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
-
-                // Render with local marked.js script
-                container.innerHTML = marked.parse(rawMarkdown);
-
-                // Initialize Lucide Icons for rendered content
-                if (window.lucide) {
-                    lucide.createIcons();
+                if (response.ok) {
+                    const fetched = await response.text();
+                    if (fetched && fetched.trim().length > 10) {
+                        rawMarkdown = fetched;
+                    }
                 }
-
-                // Parallax logic for brand blobs
-                const blobs = document.querySelectorAll('.blob-parallax');
-                document.addEventListener('mousemove', (e) => {
-                    const x = (e.clientX / window.innerWidth) - 0.5;
-                    const y = (e.clientY / window.innerHeight) - 0.5;
-                    blobs.forEach((blob, i) => {
-                        const speed = (i + 1) * 30;
-                        blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-                    });
-                });
-                
             } catch (err) {
-                console.error('Render Error:', err);
-                container.innerHTML = `
-                    <div class="text-center py-20">
-                        <i data-lucide="alert-circle" class="w-16 h-16 text-cs-pink mx-auto mb-4"></i>
-                        <h2 class="text-2xl font-bold">Something went wrong!</h2>
-                        <p class="opacity-70">Check if <b>CODE_OF_CONDUCT.md</b> is in the root directory.</p>
-                    </div>
-                `;
-                if (window.lucide) lucide.createIcons();
+                console.warn('Using embedded Code of Conduct fallback.', err);
             }
+
+            // Adjust relative links to internal pages
+            rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
+
+            // Render Markdown
+            container.innerHTML = marked.parse(rawMarkdown);
+
+            // Enhance Section Anchors & IDs for smooth jump navigation
+            const sectionMap = [
+                { match: /Pledge/i, id: 'pledge', badge: '1', icon: 'heart' },
+                { match: /Standards/i, id: 'standards', badge: '2', icon: 'sparkles' },
+                { match: /Enforcement Responsibilities/i, id: 'enforcement', badge: '3', icon: 'shield-alert' },
+                { match: /Scope/i, id: 'scope', badge: '4', icon: 'globe' },
+                { match: /Reporting/i, id: 'reporting', badge: '5', icon: 'file-text' },
+                { match: /Attribution/i, id: 'attribution', badge: '6', icon: 'award' }
+            ];
+
+            const h2Elements = container.querySelectorAll('h2');
+            h2Elements.forEach(h2 => {
+                const text = h2.textContent;
+                const found = sectionMap.find(item => item.match.test(text));
+                if (found) {
+                    h2.id = found.id;
+                    h2.innerHTML = `
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-cs-lilac/20 text-cs-lilac dark:text-[#E2CBEB] text-xs font-extrabold mr-2 shrink-0">
+                            ${found.badge}
+                        </span>
+                        <span>${text.replace(/^\d+\.\s*/, '')}</span>
+                    `;
+                }
+            });
+
+            // Enhance Positive and Unacceptable Behavior sections
+            const h3Elements = container.querySelectorAll('h3');
+            h3Elements.forEach(h3 => {
+                const text = h3.textContent;
+                if (/Positive Behavior/i.test(text)) {
+                    const nextUl = h3.nextElementSibling && h3.nextElementSibling.tagName === 'P' 
+                        ? h3.nextElementSibling.nextElementSibling 
+                        : h3.nextElementSibling;
+                    if (nextUl && nextUl.tagName === 'UL') {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'behavior-box positive';
+                        h3.parentNode.insertBefore(wrapper, h3);
+                        wrapper.appendChild(h3);
+                        if (h3.nextElementSibling && h3.nextElementSibling.tagName === 'P') {
+                            wrapper.appendChild(h3.nextElementSibling);
+                        }
+                        wrapper.appendChild(nextUl);
+                    }
+                } else if (/Unacceptable Behavior/i.test(text)) {
+                    const nextUl = h3.nextElementSibling && h3.nextElementSibling.tagName === 'P' 
+                        ? h3.nextElementSibling.nextElementSibling 
+                        : h3.nextElementSibling;
+                    if (nextUl && nextUl.tagName === 'UL') {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'behavior-box unacceptable';
+                        h3.parentNode.insertBefore(wrapper, h3);
+                        wrapper.appendChild(h3);
+                        if (h3.nextElementSibling && h3.nextElementSibling.tagName === 'P') {
+                            wrapper.appendChild(h3.nextElementSibling);
+                        }
+                        wrapper.appendChild(nextUl);
+                    }
+                }
+            });
+
+            // Enhance Enforcement Escalation ordered list
+            const olElements = container.querySelectorAll('ol');
+            olElements.forEach(ol => {
+                ol.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3', 'my-6', 'list-none', 'pl-0');
+                const items = ol.querySelectorAll('li');
+                const badges = [
+                    { name: '1. Correction', color: 'bg-cs-blue/20 text-[#0E3450] dark:text-cs-blue border-cs-blue/30' },
+                    { name: '2. Warning', color: 'bg-cs-pink/20 text-[#5C1D26] dark:text-cs-pink border-cs-pink/30' },
+                    { name: '3. Temporary Ban', color: 'bg-cs-lilac/20 text-[#381442] dark:text-[#E2CBEB] border-cs-lilac/30' },
+                    { name: '4. Permanent Ban', color: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30' }
+                ];
+
+                items.forEach((li, idx) => {
+                    const badgeInfo = badges[idx] || { name: `${idx+1}`, color: 'bg-cs-lilac/20 text-cs-lilac' };
+                    li.className = 'escalation-step-card';
+                    li.innerHTML = `
+                        <div class="flex-shrink-0">
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-xl font-extrabold text-xs border ${badgeInfo.color}">
+                                ${idx + 1}
+                            </span>
+                        </div>
+                        <div class="text-sm">
+                            ${li.innerHTML}
+                        </div>
+                    `;
+                });
+            });
+
+            // Initialize Lucide Icons
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            // Copy Email Interaction
+            const copyBtn = document.getElementById('copy-report-email-btn');
+            const copyLabel = document.getElementById('copy-btn-label');
+            if (copyBtn && copyLabel) {
+                copyBtn.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText('cutesensestudios@protonmail.com');
+                        copyLabel.textContent = 'Copied! ✨';
+                        copyBtn.classList.add('border-cs-pink', 'bg-cs-pink/15');
+                        setTimeout(() => {
+                            copyLabel.textContent = 'Copy Email';
+                            copyBtn.classList.remove('border-cs-pink', 'bg-cs-pink/15');
+                        }, 2500);
+                    } catch (e) {
+                        copyLabel.textContent = 'cutesensestudios@protonmail.com';
+                    }
+                });
+            }
+
+            // Parallax Blobs
+            const blobs = document.querySelectorAll('.blob-parallax');
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+                blobs.forEach((blob, i) => {
+                    const speed = (i + 1) * 20;
+                    blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                });
+            });
         });
     </script>
 </body>

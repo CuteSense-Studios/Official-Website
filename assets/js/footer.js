@@ -73,21 +73,21 @@ class CuteSenseFooter extends HTMLElement {
                     </div>
                 </div>
 
-                <div class="footer-links-container flex flex-wrap items-center justify-center text-xs font-semibold text-slate-500 dark:text-slate-400 my-8">
-                    <a href="${path}index.html" class="footer-link hover:text-[#F08DA1] transition-colors">Home</a>
-                    <a href="${path}pages/projects.html" class="footer-link hover:text-[#F08DA1] transition-colors">Projects</a>
-                    <a href="${path}pages/mission.html" class="footer-link hover:text-[#F08DA1] transition-colors">Philosophy</a>
-                    <a href="${path}pages/motto.html" class="footer-link hover:text-[#F08DA1] transition-colors">Motto</a>
-                    <a href="${path}pages/code-of-conduct.html" class="footer-link hover:text-[#F08DA1] transition-colors">Conduct</a>
-                    <a href="${path}pages/contributing.html" class="footer-link hover:text-[#F08DA1] transition-colors">Contributing</a>
-                    <a href="${path}pages/buisness-model.html" class="footer-link hover:text-[#F08DA1] transition-colors">Model</a>
+                <div class="footer-links-container flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 my-8">
+                    <a href="${path}index.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Home</a>
+                    <a href="${path}pages/projects.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Projects</a>
+                    <a href="${path}pages/mission.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Philosophy</a>
+                    <a href="${path}pages/motto.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Motto</a>
+                    <a href="${path}pages/code-of-conduct.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Conduct</a>
+                    <a href="${path}pages/contributing.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Contributing</a>
+                    <a href="${path}pages/buisness-model.html" class="footer-link px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-[#F08DA1] hover:bg-cs-pink/10 dark:hover:bg-cs-pink/15 transition-all">Model</a>
                 </div>
 
                 <div class="flex justify-center my-6 opacity-0 transition-opacity duration-1000 delay-300" data-animate-divider>
                     <div class="w-16 h-[1px] bg-cs-lilac/20 rounded-full"></div>
                 </div>
 
-                <div class="flex justify-center items-center gap-2 opacity-40 hover:opacity-80 transition-opacity cursor-default text-center px-4">
+                <div class="flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-opacity cursor-default text-center px-4">
                     <i data-lucide="scale" class="w-3.5 h-3.5 text-cs-lilac shrink-0"></i>
                     <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-cs-lilac">
                         GNU AGPL v3 • Built with Gemini • Human Verified
@@ -107,18 +107,7 @@ class CuteSenseFooter extends HTMLElement {
     async _fetchLocation() {
         const textEl = this.querySelector('#gh-location');
         if (!textEl) return;
-
-        try {
-            const response = await fetch('https://api.github.com/orgs/CuteSense-Studios');
-            if (response.ok) {
-                const data = await response.json();
-                textEl.textContent = data.location || "India";
-            } else {
-                textEl.textContent = "India";
-            }
-        } catch (e) {
-            textEl.textContent = "India";
-        }
+        textEl.textContent = "India";
     }
 
     _initIcons() {

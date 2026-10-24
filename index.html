@@ -180,9 +180,9 @@
     <main class="flex-grow">
         <!-- Hero Section -->
         <section id="hero" class="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none -z-10">
-                <div class="blob-parallax absolute top-1/4 right-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-35"></div>
-                <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-35"></div>
+            <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+                <div class="blob-parallax absolute top-1/4 right-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-blue rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
+                <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-cs-pink rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
             </div>
             <div class="max-w-5xl mx-auto text-center px-6 relative z-20">
                 <div class="mb-10 flex justify-center">
@@ -354,16 +354,16 @@
         <!-- Signature Wall Section -->
         <section id="signatures" class="py-32 px-6 bg-cs-lilac/5 dark:bg-slate-900/40">
             <div class="max-w-4xl mx-auto text-center">
-                <div class="flex items-center justify-center gap-4 flex-wrap mb-6">
+                <div class="flex items-center justify-center gap-3.5 flex-wrap mb-6">
                     <h2 class="text-4xl md:text-6xl font-bold">Signature Wall</h2>
-                    <span id="signature-count" class="bg-cs-pink text-white text-xl font-bold px-4 py-1 rounded-full shadow-md">0</span>
+                    <span id="signature-count" class="inline-flex items-center justify-center bg-cs-pink/20 dark:bg-cs-pink/20 border border-cs-pink/40 dark:border-cs-pink/40 text-[#A84555] dark:text-cs-pink text-sm sm:text-base font-extrabold px-3.5 py-1 rounded-full shadow-sm">0</span>
                 </div>
                 <p class="text-sm opacity-70 mb-8">Join our community – leave a kind mark!</p>
                 <form onsubmit="signWall(event)" class="max-w-md mx-auto mb-16 space-y-4">
-                    <div class="flex gap-4">
-                        <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25" minlength="2" autocomplete="off" class="flex-1 px-6 py-4 rounded-3xl bg-white dark:bg-slate-800 border-4 border-cs-pink focus:outline-none focus:border-cs-lilac transition-all">
-                        <button type="submit" class="px-10 py-4 bg-cs-lilac text-white rounded-3xl font-bold hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-cs-lilac/50 flex items-center gap-2">
-                            Sign <i data-lucide="pen-tool"></i>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+                        <input type="text" id="signer-name" placeholder="Your nickname..." required maxlength="25" minlength="2" autocomplete="off" class="flex-1 h-14 px-6 rounded-3xl bg-white dark:bg-slate-800 border-2 sm:border-4 border-cs-pink focus:outline-none focus:border-cs-lilac transition-all text-base text-cs-dark dark:text-white">
+                        <button type="submit" class="h-14 px-8 bg-cs-lilac hover:bg-[#8D619D] text-white rounded-3xl font-bold shadow-md hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-cs-lilac/40 flex items-center justify-center gap-2.5 shrink-0 cursor-pointer">
+                            <span>Sign</span> <i data-lucide="pen-tool" class="w-4 h-4"></i>
                         </button>
                     </div>
                     <p id="form-status" class="text-sm font-bold text-cs-lilac h-4"></p>

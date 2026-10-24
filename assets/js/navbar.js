@@ -88,6 +88,7 @@ class CuteSenseNavbar extends HTMLElement {
             /* Responsive rules: Logo appears ONLY on mobile (<768px)! */
             @media (min-width: 768px) {
                 .mobile-only-brand { display: none !important; }
+                .desktop-spacer { display: block !important; }
                 .desktop-nav-container { 
                     display: flex !important; 
                     align-items: center; 
@@ -98,6 +99,7 @@ class CuteSenseNavbar extends HTMLElement {
             }
             @media (max-width: 767px) {
                 .mobile-only-brand { display: flex !important; }
+                .desktop-spacer { display: none !important; }
                 .desktop-nav-container { display: none !important; }
             }
 
@@ -156,6 +158,9 @@ class CuteSenseNavbar extends HTMLElement {
         <nav class="fixed top-0 left-0 w-full z-[1000] px-4 pt-4 transition-transform duration-500 nav-visible" data-navbar>
             <div class="navbar-pill max-w-5xl mx-auto flex items-center justify-between border border-slate-200/60 dark:border-slate-800/60 rounded-[2.5rem] h-16 shadow-xl px-5">
                 
+                <!-- Desktop Left Spacer (Balances right controls for true mathematical centering) -->
+                <div class="desktop-spacer hidden md:block shrink-0 w-[92px]" aria-hidden="true"></div>
+
                 <!-- Mobile-Only Brand Header (Logo ONLY on mobile!) -->
                 <div class="mobile-only-brand items-center gap-2.5">
                     <button type="button" id="hamburger-btn" aria-label="Open Menu" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer flex items-center justify-center">

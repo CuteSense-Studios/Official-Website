@@ -802,34 +802,72 @@ html.dark #project-modal .modal-footer {
 .gap-8   { gap: 2rem !important; }
 
 /* =========================================================
-   Project Status Badges (High-Contrast Legibility)
+   Project Status Badges (High-Contrast Legibility & Elegant Pills)
 ========================================================= */
+.badge-active,
+.badge-featured,
+.badge-research,
+.badge-core {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    padding: 0.35rem 0.8rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+}
+
 .badge-active {
     background-color: #B9E1F1 !important;
-    color: #163654 !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.05em !important;
+    color: #0E3450 !important;
+    border: 1px solid rgba(14, 52, 80, 0.15) !important;
 }
 
 .badge-featured {
     background-color: #A178AF !important;
     color: #FFFFFF !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.05em !important;
+    border: 1px solid rgba(161, 120, 175, 0.3) !important;
 }
 
 .badge-research {
     background-color: #F4C6C9 !important;
-    color: #63222B !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.05em !important;
+    color: #5C1D26 !important;
+    border: 1px solid rgba(92, 29, 38, 0.15) !important;
 }
 
 .badge-core {
     background-color: #E2CBEB !important;
-    color: #3F1D4B !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.05em !important;
+    color: #381442 !important;
+    border: 1px solid rgba(56, 20, 66, 0.15) !important;
+}
+
+html.dark .badge-active {
+    background-color: rgba(185, 225, 241, 0.15) !important;
+    color: #B9E1F1 !important;
+    border: 1px solid rgba(185, 225, 241, 0.45) !important;
+}
+
+html.dark .badge-featured {
+    background-color: rgba(161, 120, 175, 0.22) !important;
+    color: #E2CBEB !important;
+    border: 1px solid rgba(161, 120, 175, 0.5) !important;
+}
+
+html.dark .badge-research {
+    background-color: rgba(244, 198, 201, 0.15) !important;
+    color: #F4C6C9 !important;
+    border: 1px solid rgba(244, 198, 201, 0.45) !important;
+}
+
+html.dark .badge-core {
+    background-color: rgba(226, 203, 235, 0.15) !important;
+    color: #E2CBEB !important;
+    border: 1px solid rgba(226, 203, 235, 0.45) !important;
 }
 
 /* =========================================================
