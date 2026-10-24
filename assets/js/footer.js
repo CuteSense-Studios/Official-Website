@@ -28,16 +28,16 @@ class CuteSenseFooter extends HTMLElement {
         const year = new Date().getFullYear();
         
         this.innerHTML = `
-        <footer class="py-12 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto transition-opacity duration-700 opacity-0" data-footer-root>
+        <footer class="py-12 border-t border-cs-lilac/10 px-6 w-full z-10 relative bg-cs-cream/50 dark:bg-cs-dark/50 backdrop-blur-sm mt-auto" data-footer-root>
             <div class="max-w-6xl mx-auto">
                 
-                <div class="flex flex-col md:flex-row items-center justify-between gap-8 transform translate-y-4 transition-transform duration-700 ease-out" data-animate="true">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 transform transition-transform duration-700 ease-out" data-animate="true">
                     
                     <a href="${path}index.html" class="flex items-center gap-4 text-left group">
                         <div class="relative h-14 w-auto shrink-0 flex items-center justify-center">
                             <img src="${path}assets/icons/companylogo.webp" alt="CuteSense Logo" 
                                  class="h-14 w-auto opacity-90 pixel-crisp shrink-0 transition-transform duration-300 group-hover:scale-105"
-                                 onerror="this.src='${path}assets/icons/companylogo.webp';">
+                                 onerror="this.onerror=null; this.src='${path}assets/icons/companylogo.webp';">
                         </div>
                         
                         <div class="flex flex-col">
@@ -129,26 +129,30 @@ class CuteSenseFooter extends HTMLElement {
         const footer = this.querySelector('[data-footer-root]');
         if (!footer) return;
 
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            this._reveal();
+            return;
+        }
+
         this._observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     this._reveal();
-                    this._observer.unobserve(entry.target);
+                    if (this._observer) this._observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.05 });
 
         this._observer.observe(footer);
-        setTimeout(() => this._reveal(), 1000);
+        setTimeout(() => this._reveal(), 300);
     }
 
     _reveal() {
-        const root = this.querySelector('[data-footer-root]');
         const content = this.querySelector('[data-animate="true"]');
         const divider = this.querySelector('[data-animate-divider]');
         
-        if (root) root.classList.replace('opacity-0', 'opacity-100');
-        if (content) content.classList.replace('translate-y-4', 'translate-y-0');
+        if (content) content.classList.remove('translate-y-4');
         if (divider) divider.classList.replace('opacity-0', 'opacity-100');
     }
 }

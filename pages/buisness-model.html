@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Anti-FOUC Theme Script (Applies dark class before DOM paint) -->
+    <script>
+        (function() {
+            try {
+                const s = localStorage.getItem('theme');
+                if (s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
+
+    <!-- Font Preloads for Instant Rendering (Eliminates FOIT/CLS) -->
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/borel-v10-latin/borel-v10-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
     <script src="../assets/js/seo-manager.js" defer></script>
 
     <title>How We Work | CuteSense Studios</title>
@@ -16,7 +38,7 @@
     
     <script src="../assets/js/favicon.js"></script>
     <script src="../assets/js/lucide.min.js" defer></script>
-    <script src="../assets/js/theme.js" defer></script> 
+    <script src="../assets/js/theme.js"></script> 
 </head>
 <body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden min-h-screen flex flex-col">
 

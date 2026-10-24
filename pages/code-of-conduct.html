@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Anti-FOUC Theme Script (Applies dark class before DOM paint) -->
+    <script>
+        (function() {
+            try {
+                const s = localStorage.getItem('theme');
+                if (s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
+
+    <!-- Font Preloads for Instant Rendering (Eliminates FOIT/CLS) -->
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/borel-v10-latin/borel-v10-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
     <script src="../assets/js/seo-manager.js" defer></script>
 
     <title>Code of Conduct | CuteSense Studios</title>
-    <meta name="description" content="Our pledge to fostering an open, welcoming, and delightfully cute community where every creator feels safe, respected, and empowered.">
+    <meta name="description" content="Our pledge to fostering an open, welcoming, and safe creative environment for all community members and contributors.">
     <link rel="canonical" href="https://cutesense-studios.com/pages/code-of-conduct.html">
     
     <link rel="stylesheet" href="../assets/css/cursor.css">
@@ -16,220 +38,141 @@
     
     <script src="../assets/js/favicon.js"></script>
     <script src="../assets/js/lucide.min.js" defer></script>
-    <script src="../assets/js/theme.js" defer></script>
+    <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
-        /* Table of Contents & Navigation Pills */
-        .toc-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.45rem 0.95rem;
-            border-radius: 9999px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            white-space: nowrap;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: rgba(255, 255, 255, 0.7);
-            color: #4A3E4E;
-            border: 1px solid rgba(161, 120, 175, 0.2);
-            text-decoration: none !important;
+        /* Document Typography & Clean Spacing */
+        .prose-content h1 {
+            display: none; /* Document title is rendered in header */
         }
 
-        .dark .toc-pill {
-            background-color: rgba(30, 41, 59, 0.6);
-            color: #e2e8f0;
-            border-color: rgba(161, 120, 175, 0.35);
-        }
-
-        .toc-pill:hover {
-            background-color: #F4C6C9;
-            color: #5C1D26;
-            border-color: #F4C6C9;
-            transform: translateY(-1px);
-        }
-
-        .dark .toc-pill:hover {
-            background-color: rgba(244, 198, 201, 0.25);
-            color: #F4C6C9;
-            border-color: #F4C6C9;
-        }
-
-        /* Markdown Render Typography & Layout */
-        #coc-render {
-            color: inherit;
-        }
-
-        #coc-render h1 {
-            display: none; /* Already rendered in the rich page hero banner */
-        }
-
-        #coc-render h2 {
-            font-size: 1.65rem;
+        .prose-content h2 {
+            font-size: 1.35rem;
             font-weight: 800;
-            margin-top: 3.5rem;
-            margin-bottom: 1.25rem;
-            color: #A178AF;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            scroll-margin-top: 7rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 3px dotted rgba(161, 120, 175, 0.25);
-        }
-
-        .dark #coc-render h2 {
-            color: #E2CBEB;
-            border-bottom-color: rgba(226, 203, 235, 0.2);
-        }
-
-        #coc-render h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
             margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #599AB5;
+            margin-bottom: 0.75rem;
+            color: #A178AF;
+            scroll-margin-top: 5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            scroll-margin-top: 7rem;
+            border-bottom: 1px solid rgba(161, 120, 175, 0.2);
+            padding-bottom: 0.35rem;
         }
 
-        .dark #coc-render h3 {
+        .dark .prose-content h2 {
+            color: #E2CBEB;
+            border-bottom-color: rgba(226, 203, 235, 0.15);
+        }
+
+        .prose-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1D6585;
+            scroll-margin-top: 5rem;
+        }
+
+        .dark .prose-content h3 {
             color: #B9E1F1;
         }
 
-        #coc-render p {
-            font-size: 1.05rem;
-            opacity: 0.9;
-            margin-bottom: 1.25rem;
-            font-weight: 500;
+        .prose-content p {
+            margin-bottom: 0.85rem;
             line-height: 1.7;
         }
 
-        #coc-render ul {
-            padding-left: 0.25rem;
-            margin-bottom: 1.75rem;
+        .prose-content ul {
             list-style: none;
+            padding-left: 0;
+            margin-bottom: 1rem;
         }
 
-        #coc-render li {
+        .prose-content li {
             position: relative;
-            padding-left: 1.85rem;
-            font-size: 1.025rem;
-            font-weight: 500;
-            opacity: 0.92;
-            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            margin-bottom: 0.45rem;
             line-height: 1.6;
         }
 
-        #coc-render li::before {
-            content: '✨';
+        .prose-content li::before {
+            content: '•';
             position: absolute;
-            left: 0;
-            color: #FF9EBB;
+            left: 0.5rem;
+            color: #A178AF;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .dark .prose-content li::before {
+            color: #E2CBEB;
+        }
+
+        .prose-content ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+            list-style-type: decimal;
+        }
+
+        .prose-content ol li {
+            padding-left: 0.35rem;
+            margin-bottom: 0.45rem;
+            line-height: 1.6;
+        }
+
+        .prose-content blockquote {
+            background: rgba(161, 120, 175, 0.08);
+            border-left: 4px solid #A178AF;
+            padding: 0.75rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 1rem 1rem 0;
+            font-style: italic;
+        }
+
+        .dark .prose-content blockquote {
+            background: rgba(161, 120, 175, 0.12);
+            border-left-color: #E2CBEB;
+        }
+
+        .prose-content blockquote p {
+            margin-bottom: 0;
+        }
+
+        .prose-content strong {
+            color: #A83848;
             font-weight: 700;
         }
 
-        #coc-render hr {
-            border: none;
-            border-top: 3px dotted rgba(161, 120, 175, 0.2);
-            margin: 3rem 0;
-        }
-
-        #coc-render strong {
-            color: #D87D85;
-            font-weight: 700;
-        }
-
-        .dark #coc-render strong {
+        .dark .prose-content strong {
             color: #F4C6C9;
         }
 
-        #coc-render a {
+        .prose-content a {
             color: #A178AF;
             text-decoration: underline;
-            text-decoration-color: rgba(161, 120, 175, 0.4);
-            font-weight: 700;
-            transition: all 0.2s;
-            word-break: break-all;
+            text-underline-offset: 3px;
+            font-weight: 600;
+            transition: color 0.15s ease;
         }
 
-        #coc-render a:hover {
-            color: #F08DA1;
+        .prose-content a:hover {
+            color: #D87D85;
         }
 
-        /* Enhanced Standards Boxes */
-        .behavior-box {
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.75rem;
-            border-width: 2px;
-            border-style: solid;
+        .dark .prose-content a {
+            color: #E2CBEB;
         }
 
-        .behavior-box.positive {
-            background-color: rgba(185, 225, 241, 0.12);
-            border-color: rgba(89, 154, 181, 0.35);
+        .dark .prose-content a:hover {
+            color: #F4C6C9;
         }
 
-        .dark .behavior-box.positive {
-            background-color: rgba(185, 225, 241, 0.06);
-            border-color: rgba(185, 225, 241, 0.25);
-        }
-
-        .behavior-box.unacceptable {
-            background-color: rgba(244, 198, 201, 0.14);
-            border-color: rgba(216, 125, 133, 0.35);
-        }
-
-        .dark .behavior-box.unacceptable {
-            background-color: rgba(244, 198, 201, 0.06);
-            border-color: rgba(244, 198, 201, 0.25);
-        }
-
-        .behavior-box ul {
-            margin-bottom: 0 !important;
-        }
-
-        .behavior-box.positive li::before {
-            content: '🌸';
-        }
-
-        .behavior-box.unacceptable li::before {
-            content: '⛔';
-        }
-
-        /* Escalation Step Cards */
-        .escalation-step-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1.15rem;
-            border-radius: 1.25rem;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(161, 120, 175, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .dark .escalation-step-card {
-            background: rgba(30, 41, 59, 0.5);
-            border-color: rgba(161, 120, 175, 0.3);
-        }
-
-        .escalation-step-card:hover {
-            transform: translateY(-2px);
-            border-color: #A178AF;
-            box-shadow: 0 4px 12px rgba(161, 120, 175, 0.12);
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .prose-content hr {
+            border: none;
+            border-top: 1px dotted rgba(161, 120, 175, 0.25);
+            margin: 1.75rem 0;
         }
     </style>
 </head>
@@ -238,135 +181,72 @@
     <cs-navbar></cs-navbar>
     <script src="../assets/js/navbar.js"></script>
 
-    <main class="flex-grow pt-32 pb-24 relative overflow-hidden">
-        <!-- Parallax Background Blobs (Soft, non-muddy dark mode opacity) -->
+    <main class="flex-grow pt-24 sm:pt-28 pb-16 relative overflow-hidden">
+        <!-- Parallax Background Blobs (Low opacity to prevent color discoloration) -->
         <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-            <div class="blob-parallax absolute top-[15%] right-[10%] w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-cs-blue rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
-            <div class="blob-parallax absolute top-[45%] left-[5%] w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-cs-pink rounded-full blur-[120px] opacity-25 dark:opacity-10"></div>
-            <div class="blob-parallax absolute bottom-[15%] right-[20%] w-[300px] md:w-[550px] h-[300px] md:h-[550px] bg-cs-lilac rounded-full blur-[130px] opacity-20 dark:opacity-10"></div>
+            <div class="blob-parallax absolute top-[20%] right-[10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-cs-blue rounded-full blur-[120px] opacity-20 dark:opacity-10"></div>
+            <div class="blob-parallax absolute bottom-[20%] left-[10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-cs-pink rounded-full blur-[120px] opacity-20 dark:opacity-10"></div>
         </div>
 
-        <!-- Decorative Sparkles -->
-        <div class="absolute top-[18%] left-[10%] sparkle-slow text-cs-pink z-0" aria-hidden="true"><i data-lucide="sparkles" class="w-10 h-10"></i></div>
-        <div class="absolute top-[32%] right-[12%] sparkle-slow text-cs-blue z-0" aria-hidden="true"><i data-lucide="sparkle" class="w-12 h-12"></i></div>
-
-        <!-- Hero Section -->
-        <section class="max-w-4xl mx-auto px-6 text-center mb-12 relative z-10">
-            <div class="floating inline-flex items-center gap-2 px-4 py-1.5 bg-cs-pink/20 text-[#D87D85] dark:bg-cs-pink/15 dark:text-cs-pink rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-[#D87D85]/20 dark:border-cs-pink/20 backdrop-blur-sm">
-                <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i>
-                <span>Community Standards</span>
-            </div>
-
-            <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Code of <span class="gradient-text">Conduct</span>
-            </h1>
-
-            <p class="text-base sm:text-lg md:text-xl opacity-80 max-w-2xl mx-auto leading-relaxed font-medium">
-                Our pledge to fostering an open, welcoming, and delightfully cute community where every creator feels safe, valued, and empowered.
-            </p>
-        </section>
-
-        <!-- Container for Summary Cards + Jump Bar + Main Content -->
-        <div class="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
             
-            <!-- 4 Quick Takeaway Cards Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-                <!-- Card 1 -->
-                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-pink/40 dark:border-cs-pink/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-2xl bg-cs-pink/20 dark:bg-cs-pink/15 flex items-center justify-center text-[#D87D85] dark:text-cs-pink mb-3">
-                            <i data-lucide="heart" class="w-5 h-5"></i>
-                        </div>
-                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">Inclusive Space</h2>
-                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">Warmly welcoming contributors of all identities, skill levels, and backgrounds.</p>
-                    </div>
-                    <div class="mt-3 pt-2 border-t border-cs-pink/20 text-[11px] font-bold text-[#D87D85] dark:text-cs-pink uppercase tracking-wider">Pledge & Care</div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-blue/40 dark:border-cs-blue/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-2xl bg-cs-blue/20 dark:bg-cs-blue/15 flex items-center justify-center text-[#599AB5] dark:text-cs-blue mb-3">
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        </div>
-                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">Zero Harassment</h2>
-                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">No trolling, hate speech, doxing, or exclusionary conduct in our spaces.</p>
-                    </div>
-                    <div class="mt-3 pt-2 border-t border-cs-blue/20 text-[11px] font-bold text-[#599AB5] dark:text-cs-blue uppercase tracking-wider">Protected Space</div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-lilac/40 dark:border-cs-lilac/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-2xl bg-cs-lilac/20 dark:bg-cs-lilac/15 flex items-center justify-center text-cs-lilac dark:text-[#E2CBEB] mb-3">
-                            <i data-lucide="sparkles" class="w-5 h-5"></i>
-                        </div>
-                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">AI Transparency</h2>
-                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">Honest disclosure of AI tools. AI is a helper; human artistry and review lead.</p>
-                    </div>
-                    <div class="mt-3 pt-2 border-t border-cs-lilac/20 text-[11px] font-bold text-cs-lilac dark:text-[#E2CBEB] uppercase tracking-wider">Ethics & Honesty</div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-800/80 border border-cs-pink/40 dark:border-cs-pink/20 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-2xl bg-cs-pink/20 dark:bg-cs-pink/15 flex items-center justify-center text-[#D87D85] dark:text-cs-pink mb-3">
-                            <i data-lucide="scale" class="w-5 h-5"></i>
-                        </div>
-                        <h2 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100">Fair Enforcement</h2>
-                        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">Confidential reporting and measured escalation to keep everyone safe.</p>
-                    </div>
-                    <div class="mt-3 pt-2 border-t border-cs-pink/20 text-[11px] font-bold text-[#D87D85] dark:text-cs-pink uppercase tracking-wider">Confidential</div>
-                </div>
-            </div>
-
-            <!-- Sticky Jump Pills Menu -->
-            <div class="sticky top-20 z-20 mb-8 p-2.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-cs-lilac/30 shadow-sm flex items-center gap-2 overflow-x-auto no-scrollbar">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-cs-lilac pl-2 shrink-0 flex items-center gap-1.5">
-                    <i data-lucide="compass" class="w-3.5 h-3.5"></i> Jump To:
-                </span>
-                <a href="#pledge" class="toc-pill">1. Pledge</a>
-                <a href="#standards" class="toc-pill">2. Standards</a>
-                <a href="#enforcement" class="toc-pill">3. Enforcement</a>
-                <a href="#scope" class="toc-pill">4. Scope</a>
-                <a href="#reporting" class="toc-pill">5. Reporting</a>
-                <a href="#attribution" class="toc-pill">6. Attribution</a>
-            </div>
-
-            <!-- Main Render Card -->
-            <div class="glass-card bg-white dark:bg-slate-800/60 p-6 sm:p-10 md:p-12 border-2 border-cs-lilac/40 dark:border-cs-lilac/25 rounded-[2.5rem] shadow-[0_8px_0_#A178AF22] dark:shadow-none animate-in fade-in slide-in-from-bottom-6 duration-700 w-full mb-12">
+            <!-- Cohesive Document Container -->
+            <article class="bg-white/95 dark:bg-[#241E28]/95 border border-cs-lilac/25 dark:border-cs-lilac/20 rounded-3xl p-6 sm:p-10 shadow-sm backdrop-blur-sm">
                 
-                <article id="coc-render" class="w-full break-words">
-                    <div class="flex flex-col items-center justify-center py-20">
-                        <i data-lucide="sparkles" class="animate-bounce w-10 h-10 text-cs-pink mb-4"></i>
-                        <p class="text-cs-lilac font-bold animate-pulse text-sm md:text-base">Polishing community guidelines...~</p>
+                <!-- Document Header -->
+                <header class="border-b border-cs-lilac/20 pb-5 mb-6">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cs-pink/15 text-[#A83848] dark:text-cs-pink text-xs font-bold uppercase tracking-wider mb-2.5">
+                        <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i>
+                        <span>Community Standards</span>
                     </div>
-                </article>
+                    <h1 class="text-3xl sm:text-4xl font-bold mb-2">
+                        Code of <span class="gradient-text">Conduct</span>
+                    </h1>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+                        Our pledge to fostering an open, welcoming, and safe creative environment for all.
+                    </p>
 
-            </div>
+                    <!-- Compact Inline Quick Navigation (Single row, no giant card) -->
+                    <nav class="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-4 pt-3 border-t border-dotted border-cs-lilac/20 text-xs font-semibold text-cs-lilac dark:text-[#E2CBEB]" aria-label="Table of contents">
+                        <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Jump to:</span>
+                        <a href="#pledge" class="hover:text-cs-pink hover:underline">1. Pledge</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#standards" class="hover:text-cs-pink hover:underline">2. Standards</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#enforcement" class="hover:text-cs-pink hover:underline">3. Enforcement</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#scope" class="hover:text-cs-pink hover:underline">4. Scope</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#reporting" class="hover:text-cs-pink hover:underline">5. Reporting</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#attribution" class="hover:text-cs-pink hover:underline">6. Attribution</a>
+                    </nav>
+                </header>
 
-            <!-- Direct Reporting Contact Card at Bottom -->
-            <div class="p-6 md:p-8 rounded-[2rem] bg-gradient-to-r from-cs-pink/15 via-cs-lilac/15 to-cs-blue/15 border border-cs-lilac/30 dark:border-cs-lilac/25 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 mb-16">
-                <div class="flex items-center gap-4 text-center md:text-left flex-col md:flex-row">
-                    <div class="w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-cs-lilac shrink-0">
-                        <i data-lucide="mail-warning" class="w-7 h-7"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-1">Need to report an incident?</h2>
-                        <p class="text-sm opacity-80 max-w-md">All reports are strictly confidential. Our core maintainers respond swiftly and impartially.</p>
-                    </div>
+                <!-- Markdown Content Render Target -->
+                <div id="coc-render" class="prose-content text-slate-800 dark:text-slate-200 text-[15px] sm:text-base">
+                    <p class="opacity-75 italic text-sm py-4">Loading community standards...~</p>
                 </div>
-                <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
-                    <button id="copy-report-email-btn" class="px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-800 border border-cs-lilac/30 text-cs-dark dark:text-slate-100 text-xs font-bold hover:border-cs-pink transition-all flex items-center gap-2 shadow-sm">
-                        <i data-lucide="copy" class="w-3.5 h-3.5 text-cs-pink"></i>
-                        <span id="copy-btn-label">Copy Email</span>
-                    </button>
-                    <a href="mailto:cutesensestudios@protonmail.com" class="px-5 py-2.5 rounded-2xl bg-cs-lilac text-white text-xs font-bold hover:bg-[#8e659c] transition-all flex items-center gap-2 shadow-sm">
-                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                        <span>Send Email</span>
-                    </a>
-                </div>
-            </div>
+
+                <!-- Compact Confidential Reporting Notice at End -->
+                <footer class="mt-8 pt-5 border-t border-cs-lilac/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-cs-lilac shrink-0"></i>
+                        <span>Reports are investigated with strict confidentiality.</span>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button id="copy-report-email-btn" type="button" class="px-3 py-1.5 rounded-xl bg-cs-lilac/10 hover:bg-cs-lilac/20 text-cs-lilac dark:text-[#E2CBEB] font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="copy" class="w-3.5 h-3.5 text-cs-pink"></i>
+                            <span id="copy-btn-label">Copy Email</span>
+                        </button>
+                        <a href="mailto:cutesensestudios@protonmail.com" class="px-3 py-1.5 rounded-xl bg-cs-lilac hover:bg-[#8e659c] text-white font-bold transition-all flex items-center gap-1.5">
+                            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                            <span>Send Email</span>
+                        </a>
+                    </div>
+                </footer>
+
+            </article>
 
         </div>
     </main>
@@ -375,7 +255,6 @@
     <script src="../assets/js/footer.js"></script>
 
     <script>
-        // Full fallback markdown to ensure instant, zero-failure rendering under all conditions
         const FALLBACK_COC_MD = `# Our Commitment to Excellence
 
 ## 1. Our Pledge
@@ -455,98 +334,28 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
                 console.warn('Using embedded Code of Conduct fallback.', err);
             }
 
-            // Adjust relative links to internal pages
+            // Adjust internal links
             rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
 
             // Render Markdown
             container.innerHTML = marked.parse(rawMarkdown);
 
-            // Enhance Section Anchors & IDs for smooth jump navigation
+            // Assign clean anchor IDs matching the quick navigation without changing text casing
             const sectionMap = [
-                { match: /Pledge/i, id: 'pledge', badge: '1', icon: 'heart' },
-                { match: /Standards/i, id: 'standards', badge: '2', icon: 'sparkles' },
-                { match: /Enforcement Responsibilities/i, id: 'enforcement', badge: '3', icon: 'shield-alert' },
-                { match: /Scope/i, id: 'scope', badge: '4', icon: 'globe' },
-                { match: /Reporting/i, id: 'reporting', badge: '5', icon: 'file-text' },
-                { match: /Attribution/i, id: 'attribution', badge: '6', icon: 'award' }
+                { match: /Pledge/i, id: 'pledge' },
+                { match: /Standards/i, id: 'standards' },
+                { match: /Enforcement Responsibilities/i, id: 'enforcement' },
+                { match: /Scope/i, id: 'scope' },
+                { match: /Reporting/i, id: 'reporting' },
+                { match: /Attribution/i, id: 'attribution' }
             ];
 
             const h2Elements = container.querySelectorAll('h2');
             h2Elements.forEach(h2 => {
-                const text = h2.textContent;
-                const found = sectionMap.find(item => item.match.test(text));
+                const found = sectionMap.find(item => item.match.test(h2.textContent));
                 if (found) {
                     h2.id = found.id;
-                    h2.innerHTML = `
-                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-cs-lilac/20 text-cs-lilac dark:text-[#E2CBEB] text-xs font-extrabold mr-2 shrink-0">
-                            ${found.badge}
-                        </span>
-                        <span>${text.replace(/^\d+\.\s*/, '')}</span>
-                    `;
                 }
-            });
-
-            // Enhance Positive and Unacceptable Behavior sections
-            const h3Elements = container.querySelectorAll('h3');
-            h3Elements.forEach(h3 => {
-                const text = h3.textContent;
-                if (/Positive Behavior/i.test(text)) {
-                    const nextUl = h3.nextElementSibling && h3.nextElementSibling.tagName === 'P' 
-                        ? h3.nextElementSibling.nextElementSibling 
-                        : h3.nextElementSibling;
-                    if (nextUl && nextUl.tagName === 'UL') {
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'behavior-box positive';
-                        h3.parentNode.insertBefore(wrapper, h3);
-                        wrapper.appendChild(h3);
-                        if (h3.nextElementSibling && h3.nextElementSibling.tagName === 'P') {
-                            wrapper.appendChild(h3.nextElementSibling);
-                        }
-                        wrapper.appendChild(nextUl);
-                    }
-                } else if (/Unacceptable Behavior/i.test(text)) {
-                    const nextUl = h3.nextElementSibling && h3.nextElementSibling.tagName === 'P' 
-                        ? h3.nextElementSibling.nextElementSibling 
-                        : h3.nextElementSibling;
-                    if (nextUl && nextUl.tagName === 'UL') {
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'behavior-box unacceptable';
-                        h3.parentNode.insertBefore(wrapper, h3);
-                        wrapper.appendChild(h3);
-                        if (h3.nextElementSibling && h3.nextElementSibling.tagName === 'P') {
-                            wrapper.appendChild(h3.nextElementSibling);
-                        }
-                        wrapper.appendChild(nextUl);
-                    }
-                }
-            });
-
-            // Enhance Enforcement Escalation ordered list
-            const olElements = container.querySelectorAll('ol');
-            olElements.forEach(ol => {
-                ol.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-3', 'my-6', 'list-none', 'pl-0');
-                const items = ol.querySelectorAll('li');
-                const badges = [
-                    { name: '1. Correction', color: 'bg-cs-blue/20 text-[#0E3450] dark:text-cs-blue border-cs-blue/30' },
-                    { name: '2. Warning', color: 'bg-cs-pink/20 text-[#5C1D26] dark:text-cs-pink border-cs-pink/30' },
-                    { name: '3. Temporary Ban', color: 'bg-cs-lilac/20 text-[#381442] dark:text-[#E2CBEB] border-cs-lilac/30' },
-                    { name: '4. Permanent Ban', color: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30' }
-                ];
-
-                items.forEach((li, idx) => {
-                    const badgeInfo = badges[idx] || { name: `${idx+1}`, color: 'bg-cs-lilac/20 text-cs-lilac' };
-                    li.className = 'escalation-step-card';
-                    li.innerHTML = `
-                        <div class="flex-shrink-0">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-xl font-extrabold text-xs border ${badgeInfo.color}">
-                                ${idx + 1}
-                            </span>
-                        </div>
-                        <div class="text-sm">
-                            ${li.innerHTML}
-                        </div>
-                    `;
-                });
             });
 
             // Initialize Lucide Icons
@@ -562,10 +371,8 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
                     try {
                         await navigator.clipboard.writeText('cutesensestudios@protonmail.com');
                         copyLabel.textContent = 'Copied! ✨';
-                        copyBtn.classList.add('border-cs-pink', 'bg-cs-pink/15');
                         setTimeout(() => {
                             copyLabel.textContent = 'Copy Email';
-                            copyBtn.classList.remove('border-cs-pink', 'bg-cs-pink/15');
                         }, 2500);
                     } catch (e) {
                         copyLabel.textContent = 'cutesensestudios@protonmail.com';
@@ -573,16 +380,28 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
                 });
             }
 
-            // Parallax Blobs
-            const blobs = document.querySelectorAll('.blob-parallax');
-            document.addEventListener('mousemove', (e) => {
-                const x = (e.clientX / window.innerWidth) - 0.5;
-                const y = (e.clientY / window.innerHeight) - 0.5;
-                blobs.forEach((blob, i) => {
-                    const speed = (i + 1) * 20;
-                    blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-                });
-            });
+            // Parallax Blobs with throttling & reduced motion check
+            const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!motionMedia.matches) {
+                const blobs = document.querySelectorAll('.blob-parallax');
+                if (blobs.length) {
+                    let ticking = false;
+                    blobs.forEach(b => b.style.willChange = 'transform');
+                    document.addEventListener('mousemove', (e) => {
+                        if (ticking) return;
+                        ticking = true;
+                        requestAnimationFrame(() => {
+                            const x = (e.clientX / window.innerWidth) - 0.5;
+                            const y = (e.clientY / window.innerHeight) - 0.5;
+                            blobs.forEach((blob, i) => {
+                                const speed = (i + 1) * 25;
+                                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                            });
+                            ticking = false;
+                        });
+                    });
+                }
+            }
         });
     </script>
 </body>

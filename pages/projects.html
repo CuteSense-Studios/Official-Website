@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Anti-FOUC Theme Script (Applies dark class before DOM paint) -->
+    <script>
+        (function() {
+            try {
+                const s = localStorage.getItem('theme');
+                if (s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
+
+    <!-- Font Preloads for Instant Rendering (Eliminates FOIT/CLS) -->
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/borel-v10-latin/borel-v10-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
     <script src="../assets/js/seo-manager.js" defer></script>
 
     <title>Projects & Creations | CuteSense Studios</title>
-    <meta name="description" content="Explore our open-source tools, visual novels, creative software, and advocacy research rendered directly from live Markdown source.">
+    <meta name="description" content="Explore our open-source tools, games, creative software, and advocacy research rendered directly from live Markdown source.">
     <link rel="canonical" href="https://cutesense-studios.com/pages/projects.html">
 
     <link rel="stylesheet" href="../assets/css/cursor.css">
@@ -16,7 +38,7 @@
     
     <script src="../assets/js/favicon.js"></script>
     <script src="../assets/js/lucide.min.js" defer></script>
-    <script src="../assets/js/theme.js" defer></script>
+    <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
@@ -321,7 +343,7 @@
                         Weather &amp; Apps
                     </button>
                     <button type="button" data-category="Games" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
-                        Visual Novel ("As You Are")
+                        Games
                     </button>
                     <button type="button" data-category="Advocacy" class="category-tab px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm transition-all">
                         Advocacy Research
@@ -446,7 +468,7 @@
             {
                 id: "as-you-are-w",
                 title: "As You Are (Website)",
-                tagline: "Official interactive landing experience and OST sampler for the visual novel.",
+                tagline: "Official interactive landing experience and OST sampler for the narrative game.",
                 category: "Games",
                 icon: "heart-handshake",
                 color: "lilac",
@@ -455,13 +477,13 @@
                 demo: "https://cutesense-studios.github.io/As-You-Are-W/",
                 status: "Featured",
                 featured: true,
-                tags: ["Visual Novel", "HTML5", "Audio Player", "Story"],
-                content: `# 🕊️ As You Are (Official Website)\n\n> **"The official web portal and emotional landing experience for 'As You Are' — an intimate indie visual novel exploring identity and human connection."**\n\n---\n\n## 📖 Overview\n\n**As-You-Are-W** is the dedicated web showcase for CuteSense Studios' flagship visual novel, **"As You Are"**. Designed as a tranquil digital sanctuary, the site introduces visitors to the visual novel's world, character lore, original soundtrack previews, and development journey.\n\nReflecting the emotional resonance of the game itself, the web experience features soft animated mist effects, responsive typography, and an interactive audio player allowing visitors to preview the ambient OST before diving into the story.\n\n---\n\n## ✨ Web Highlights\n\n- **🌸 Atmospheric Landing:** Delicate CSS animations and soothing color palettes mirroring coastal rain and ocean horizons.\n- **🎵 Interactive OST Player:** Built-in ambient music sampler featuring original piano and acoustic compositions.\n- **📜 Character Profiles & Art Gallery:** Interactive character cards introducing Ren and Maya with high-resolution concept illustrations and dialogue snippets.\n- **📱 Fully Responsive:** Handcrafted to feel immersive across desktop, tablet, and mobile viewport sizes.\n- **⚡ Zero Telemetry & Lightweight:** Fast loading with no third-party trackers or bloat.\n\n---\n\n## 🛠️ Tech Stack\n\n| Layer | Technology |\n| :--- | :--- |\n| **Markup & Styling** | Semantic HTML5 & Modern CSS3 |\n| **Interactivity** | Vanilla JavaScript (ES6+) |\n| **Hosting & CI/CD** | GitHub Pages with GitHub Actions |\n| **Repository** | [CuteSense-Studios/As-You-Are-W](https://github.com/CuteSense-Studios/As-You-Are-W) |\n| **Live Site** | [cutesense-studios.github.io/As-You-Are-W](https://cutesense-studios.github.io/As-You-Are-W/) |\n\n---\n\n## 🚀 Running Locally\n\n\`\`\`bash\n# Clone the website repository\ngit clone https://github.com/CuteSense-Studios/As-You-Are-W.git\ncd As-You-Are-W\n\n# Open directly or run with node server\nnode ../server.js\n# Or open index.html in your browser\n\`\`\`\n\n---\n\n## 📄 License & Attribution\n\nAll game assets, story text, and character designs are created by **CuteSense Studios**. Web code is open source under the **GNU AGPL v3**.`
+                tags: ["Game", "HTML5", "Audio Player", "Story"],
+                content: `# 🕊️ As You Are (Official Website)\n\n> **"The official web portal and emotional landing experience for 'As You Are' — an intimate indie narrative game exploring identity and human connection."**\n\n---\n\n## 📖 Overview\n\n**As-You-Are-W** is the dedicated web showcase for CuteSense Studios' flagship game, **"As You Are"**. Designed as a tranquil digital sanctuary, the site introduces visitors to the game's world, character lore, original soundtrack previews, and development journey.\n\nReflecting the emotional resonance of the game itself, the web experience features soft animated mist effects, responsive typography, and an interactive audio player allowing visitors to preview the ambient OST before diving into the story.\n\n---\n\n## ✨ Web Highlights\n\n- **🌸 Atmospheric Landing:** Delicate CSS animations and soothing color palettes mirroring coastal rain and ocean horizons.\n- **🎵 Interactive OST Player:** Built-in ambient music sampler featuring original piano and acoustic compositions.\n- **📜 Character Profiles & Art Gallery:** Interactive character cards introducing Ren and Maya with high-resolution concept illustrations and dialogue snippets.\n- **📱 Fully Responsive:** Handcrafted to feel immersive across desktop, tablet, and mobile viewport sizes.\n- **⚡ Zero Telemetry & Lightweight:** Fast loading with no third-party trackers or bloat.\n\n---\n\n## 🛠️ Tech Stack\n\n| Layer | Technology |\n| :--- | :--- |\n| **Markup & Styling** | Semantic HTML5 & Modern CSS3 |\n| **Interactivity** | Vanilla JavaScript (ES6+) |\n| **Hosting & CI/CD** | GitHub Pages with GitHub Actions |\n| **Repository** | [CuteSense-Studios/As-You-Are-W](https://github.com/CuteSense-Studios/As-You-Are-W) |\n| **Live Site** | [cutesense-studios.github.io/As-You-Are-W](https://cutesense-studios.github.io/As-You-Are-W/) |\n\n---\n\n## 🚀 Running Locally\n\n\`\`\`bash\n# Clone the website repository\ngit clone https://github.com/CuteSense-Studios/As-You-Are-W.git\ncd As-You-Are-W\n\n# Open directly or run with node server\nnode ../server.js\n# Or open index.html in your browser\n\`\`\`\n\n---\n\n## 📄 License & Attribution\n\nAll game assets, story text, and character designs are created by **CuteSense Studios**. Web code is open source under the **GNU AGPL v3**.`
             },
             {
                 id: "as-you-are-t",
                 title: "As You Are (Ren'Py Template)",
-                tagline: "Open-source starter framework & dialogue engine template for emotional visual novels.",
+                tagline: "Open-source starter framework & dialogue engine template for emotional narrative games.",
                 category: "Games",
                 icon: "gamepad-2",
                 color: "pink",
@@ -471,7 +493,7 @@
                 status: "Active",
                 featured: true,
                 tags: ["Ren'Py", "Python", "Game Engine", "Open Source"],
-                content: `# 🎮 As You Are (Ren'Py Template & Engine)\n\n> **"The open-source Ren'Py game engine template and dialogue framework powering the visual novel 'As You Are'."**\n\n---\n\n## 🌟 What is As-You-Are-T?\n\n**As-You-Are-T** is an open-source starter framework and boilerplate designed for creators, narrative designers, and indie game developers building emotional visual novels in **Ren'Py**. \n\nOriginally built as the technical foundation for CuteSense Studios' visual novel *"As You Are"*, this repository provides clean, modular Ren'Py script architecture, pre-configured UI screens, customized save/load interfaces, and accessible audio mixing pipelines.\n\n---\n\n## 🎨 Framework Features\n\n- **📖 Modular Script Organization:** Separates story arcs, character definitions, dialogue scripts, and music transitions into clean \`.rpy\` files.\n- **🎨 Custom Pastel UI Theme:** Hand-styled dialogue textboxes, choice menus, quick-menu buttons, and preference sliders matching CuteSense's soft aesthetic.\n- **🎧 Dynamic BGM Crossfading:** Helper functions for seamless transitions between rainy ambiance, character themes, and silent reflective beats.\n- **♿ Accessibility Built-in:** High-contrast text toggle, adjustable font sizes, and self-voicing screen reader compatibility out of the box.\n- **📦 Multi-Platform Packaging:** Ready-to-build configuration for Windows, macOS, Linux, and Web (HTML5/WebAssembly).\n\n---\n\n## 🛠️ Tech Architecture\n\n| Component | Specification |\n| :--- | :--- |\n| **Engine** | Ren'Py Visual Novel Engine (8.x+) |\n| **Language** | Python 3 & Ren'Py Script (.rpy) |\n| **Resolution** | 1920x1080 Full HD Native Canvas |\n| **Repository** | [CuteSense-Studios/As-You-Are-T](https://github.com/CuteSense-Studios/As-You-Are-T) |\n| **License** | MIT License / GNU AGPL v3 |\n\n---\n\n## 🚀 How to Use\n\n1. **Install Ren'Py SDK:** Download the latest Ren'Py SDK from [renpy.org](https://www.renpy.org/).\n2. **Clone the Template:**\n   \`\`\`bash\n   git clone https://github.com/CuteSense-Studios/As-You-Are-T.git\n   \`\`\`\n3. **Launch in Ren'Py:** Add the project folder to your Ren'Py launcher directory and click **Launch Project**.\n4. **Customize Dialogue:** Edit \`game/script.rpy\` and add your custom character sprites and background art.\n\n---\n\n## 💖 Community & Open Source\n\nReleased freely to empower diverse and independent narrative creators worldwide. Fork it, build your own stories, and share your creations with the world!`
+                content: `# 🎮 As You Are (Ren'Py Template & Engine)\n\n> **"The open-source Ren'Py game engine template and dialogue framework powering the game 'As You Are'."**\n\n---\n\n## 🌟 What is As-You-Are-T?\n\n**As-You-Are-T** is an open-source starter framework and boilerplate designed for creators, narrative designers, and indie game developers building emotional games in **Ren'Py**. \n\nOriginally built as the technical foundation for CuteSense Studios' game *"As You Are"*, this repository provides clean, modular Ren'Py script architecture, pre-configured UI screens, customized save/load interfaces, and accessible audio mixing pipelines.\n\n---\n\n## 🎨 Framework Features\n\n- **📖 Modular Script Organization:** Separates story arcs, character definitions, dialogue scripts, and music transitions into clean \`.rpy\` files.\n- **🎨 Custom Pastel UI Theme:** Hand-styled dialogue textboxes, choice menus, quick-menu buttons, and preference sliders matching CuteSense's soft aesthetic.\n- **🎧 Dynamic BGM Crossfading:** Helper functions for seamless transitions between rainy ambiance, character themes, and silent reflective beats.\n- **♿ Accessibility Built-in:** High-contrast text toggle, adjustable font sizes, and self-voicing screen reader compatibility out of the box.\n- **📦 Multi-Platform Packaging:** Ready-to-build configuration for Windows, macOS, Linux, and Web (HTML5/WebAssembly).\n\n---\n\n## 🛠️ Tech Architecture\n\n| Component | Specification |\n| :--- | :--- |\n| **Engine** | Ren'Py Game Engine (8.x+) |\n| **Language** | Python 3 & Ren'Py Script (.rpy) |\n| **Resolution** | 1920x1080 Full HD Native Canvas |\n| **Repository** | [CuteSense-Studios/As-You-Are-T](https://github.com/CuteSense-Studios/As-You-Are-T) |\n| **License** | MIT License / GNU AGPL v3 |\n\n---\n\n## 🚀 How to Use\n\n1. **Install Ren'Py SDK:** Download the latest Ren'Py SDK from [renpy.org](https://www.renpy.org/).\n2. **Clone the Template:**\n   \`\`\`bash\n   git clone https://github.com/CuteSense-Studios/As-You-Are-T.git\n   \`\`\`\n3. **Launch in Ren'Py:** Add the project folder to your Ren'Py launcher directory and click **Launch Project**.\n4. **Customize Dialogue:** Edit \`game/script.rpy\` and add your custom character sprites and background art.\n\n---\n\n## 💖 Community & Open Source\n\nReleased freely to empower diverse and independent narrative creators worldwide. Fork it, build your own stories, and share your creations with the world!`
             },
             {
                 id: "binary-break-india",
@@ -509,6 +531,7 @@
         let currentSearchQuery = '';
         let currentLoadedProject = null;
         let currentRawMarkdown = '';
+        let modalCloseTimer = null;
 
         const COLOR_STYLES = {
             pink: {
@@ -628,6 +651,11 @@
             const project = PROJECTS_DATA.find(p => p.id === projectId);
             if (!project) return;
 
+            if (modalCloseTimer) {
+                clearTimeout(modalCloseTimer);
+                modalCloseTimer = null;
+            }
+
             currentLoadedProject = project;
             if (window.location.hash !== '#' + projectId) {
                 history.replaceState(null, '', '#' + projectId);
@@ -738,11 +766,16 @@
             const modal = document.getElementById('project-modal');
             if (!modal) return;
 
+            if (modalCloseTimer) {
+                clearTimeout(modalCloseTimer);
+            }
+
             modal.classList.remove('modal-open', 'modal-visible');
-            setTimeout(() => {
+            modalCloseTimer = setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.style.display = '';
                 document.body.style.overflow = '';
+                modalCloseTimer = null;
             }, 300);
 
             // Clean up url hash cleanly

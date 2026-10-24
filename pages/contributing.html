@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Anti-FOUC Theme Script (Applies dark class before DOM paint) -->
+    <script>
+        (function() {
+            try {
+                const s = localStorage.getItem('theme');
+                if (s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
+
+    <!-- Font Preloads for Instant Rendering (Eliminates FOIT/CLS) -->
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/quicksand-v37-latin/quicksand-v37-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/borel-v10-latin/borel-v10-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
     <script src="../assets/js/seo-manager.js" defer></script>
 
-    <title>Contributing | CuteSense Studios</title>
-    <meta name="description" content="Thank you for your interest in contributing! We welcome code, art, music, and more to all CuteSense Studios projects.">
+    <title>Contributor Handbook | CuteSense Studios</title>
+    <meta name="description" content="Thank you for building with us! Learn how we collaborate across code, pixel art, sound, writing, and docs with transparent AI collaboration standards.">
     <link rel="canonical" href="https://cutesense-studios.com/pages/contributing.html">
     
     <link rel="stylesheet" href="../assets/css/cursor.css">
@@ -16,126 +38,199 @@
     
     <script src="../assets/js/favicon.js"></script>
     <script src="../assets/js/lucide.min.js" defer></script>
-    <script src="../assets/js/theme.js" defer></script>
-    
+    <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/marked.min.js"></script>
 
     <style>
-        /* Markdown Render Styles */
-        #contributing-render h1 {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-            background: linear-gradient(to right, #FF9EBB, #599AB5);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
+        /* Document Typography & Clean Editorial Spacing */
+        .prose-content h1 {
+            display: none; /* Document title rendered in header */
         }
 
-        @media (min-width: 768px) {
-            #contributing-render h1 { font-size: 4rem; line-height: 1.1; }
-        }
-
-        #contributing-render h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 3rem;
-            margin-bottom: 1.25rem;
-            color: #A178AF;
-            border-bottom: 4px dotted rgba(161, 120, 175, 0.2);
-            padding-bottom: 0.5rem;
-        }
-
-        #contributing-render h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
+        .prose-content h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
             margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #599AB5;
+            margin-bottom: 0.75rem;
+            color: #A178AF;
+            scroll-margin-top: 5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(161, 120, 175, 0.2);
+            padding-bottom: 0.35rem;
         }
 
-        #contributing-render p {
-            font-size: 1.125rem;
-            opacity: 0.85;
-            margin-bottom: 1.25rem;
-            font-weight: 500;
+        .dark .prose-content h2 {
+            color: #E2CBEB;
+            border-bottom-color: rgba(226, 203, 235, 0.15);
+        }
+
+        .prose-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1D6585;
+            scroll-margin-top: 5rem;
+        }
+
+        .dark .prose-content h3 {
+            color: #B9E1F1;
+        }
+
+        .prose-content p {
+            margin-bottom: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .prose-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+
+        .prose-content li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.45rem;
             line-height: 1.6;
         }
 
-        #contributing-render blockquote {
-            background-color: rgba(161, 120, 175, 0.08);
-            border-left: 6px solid #A178AF;
-            padding: 1.25rem;
-            margin: 2rem 0;
-            border-radius: 1.25rem;
+        .prose-content li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: #A178AF;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .dark .prose-content li::before {
+            color: #E2CBEB;
+        }
+
+        .prose-content ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+            list-style-type: decimal;
+        }
+
+        .prose-content ol li {
+            padding-left: 0.35rem;
+            margin-bottom: 0.45rem;
+            line-height: 1.6;
+        }
+
+        .prose-content blockquote {
+            background: rgba(161, 120, 175, 0.08);
+            border-left: 4px solid #A178AF;
+            padding: 0.75rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 1rem 1rem 0;
             font-style: italic;
         }
 
-        #contributing-render ul {
-            padding-left: 0.25rem;
-            margin-bottom: 1.5rem;
-            list-style: none;
+        .dark .prose-content blockquote {
+            background: rgba(161, 120, 175, 0.12);
+            border-left-color: #E2CBEB;
         }
 
-        #contributing-render li {
-            position: relative;
-            padding-left: 2rem;
-            font-size: 1.125rem;
-            font-weight: 500;
-            opacity: 0.9;
-            margin-bottom: 0.75rem;
+        .prose-content blockquote p {
+            margin-bottom: 0;
         }
 
-        #contributing-render li::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
-            color: #FF9EBB;
+        .prose-content strong {
+            color: #A83848;
             font-weight: 700;
         }
 
-        #contributing-render pre {
-            background-color: rgba(0, 0, 0, 0.04);
-            padding: 1.25rem;
-            border-radius: 1.25rem;
-            margin-bottom: 1.5rem;
-            overflow-x: auto;
-            border: 2px solid rgba(161, 120, 175, 0.1);
-            font-family: ui-monospace, monospace;
+        .dark .prose-content strong {
+            color: #F4C6C9;
         }
 
-        #contributing-render hr {
-            border: none;
-            border-top: 4px dotted rgba(161, 120, 175, 0.15);
-            margin: 3.5rem 0;
-        }
-
-        #contributing-render strong {
-            color: #FF9EBB;
-            font-weight: 700;
-        }
-
-        #contributing-render a {
+        .prose-content a {
             color: #A178AF;
             text-decoration: underline;
-            text-decoration-color: rgba(161, 120, 175, 0.3);
-            transition: all 0.2s;
+            text-underline-offset: 3px;
+            font-weight: 600;
+            transition: color 0.15s ease;
+        }
+
+        .prose-content a:hover {
+            color: #D87D85;
+        }
+
+        .dark .prose-content a {
+            color: #E2CBEB;
+        }
+
+        .dark .prose-content a:hover {
+            color: #F4C6C9;
+        }
+
+        .prose-content hr {
+            border: none;
+            border-top: 1px dotted rgba(161, 120, 175, 0.25);
+            margin: 1.75rem 0;
+        }
+
+        /* Compact, clean code snippets */
+        .code-box {
+            margin: 1rem 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(161, 120, 175, 0.2);
+            background: #18141D;
+        }
+
+        .code-box-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.45rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.72rem;
             font-weight: 700;
-            word-break: break-all;
+            color: #B9E1F1;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        #contributing-render a:hover {
-            color: #FF9EBB;
+        .code-copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 0.2rem 0.55rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
         }
 
-        #contributing-render > :last-child {
-            margin-bottom: 0 !important;
+        .code-copy-btn:hover {
+            background: #A178AF;
         }
 
-        .loading-spinner { color: #FF9EBB; }
+        .prose-content pre {
+            margin: 0;
+            padding: 0.85rem 1rem;
+            background: transparent;
+            color: #F8FAFC;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+
+        .prose-content code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
     </style>
 </head>
 <body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden flex flex-col min-h-screen">
@@ -143,24 +238,73 @@
     <cs-navbar></cs-navbar>
     <script src="../assets/js/navbar.js"></script>
 
-    <main class="flex-grow pt-32 pb-24 relative overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none -z-10">
-            <div class="blob-parallax absolute top-1/4 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-blue rounded-full blur-[120px] opacity-30"></div>
-            <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cs-pink rounded-full blur-[120px] opacity-30"></div>
+    <main class="flex-grow pt-24 sm:pt-28 pb-16 relative overflow-hidden">
+        <!-- Parallax Background Blobs -->
+        <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+            <div class="blob-parallax absolute top-[20%] right-[10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-cs-blue rounded-full blur-[120px] opacity-20 dark:opacity-10"></div>
+            <div class="blob-parallax absolute bottom-[20%] left-[10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-cs-pink rounded-full blur-[120px] opacity-20 dark:opacity-10"></div>
         </div>
 
-        <div class="max-w-3xl mx-auto px-4 md:px-6 mb-16">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
             
-            <div class="glass-card bg-white dark:bg-slate-800/60 p-6 md:p-8 border-2 border-cs-lilac rounded-3xl shadow-[0_8px_0_#A178AF33] dark:shadow-none animate-in fade-in slide-in-from-bottom-6 duration-700 w-full">
+            <!-- Cohesive Document Container -->
+            <article class="bg-white/95 dark:bg-[#241E28]/95 border border-cs-lilac/25 dark:border-cs-lilac/20 rounded-3xl p-6 sm:p-10 shadow-sm backdrop-blur-sm">
                 
-                <article id="contributing-render" class="w-full break-words">
-                    <div class="flex flex-col items-center justify-center py-16">
-                        <i data-lucide="sparkles" class="animate-bounce w-10 h-10 loading-spinner mb-4"></i>
-                        <p class="text-cs-lilac font-bold animate-pulse text-sm md:text-base">Drafting with care...~</p>
+                <!-- Document Header -->
+                <header class="border-b border-cs-lilac/20 pb-5 mb-6">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cs-blue/15 text-[#1D6585] dark:text-cs-blue text-xs font-bold uppercase tracking-wider mb-2.5">
+                        <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                        <span>Contributor Handbook</span>
                     </div>
-                </article>
+                    <h1 class="text-3xl sm:text-4xl font-bold mb-2">
+                        Contributing to <span class="gradient-text">CuteSense</span>
+                    </h1>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+                        Guidelines for code, pixel art, sound, writing, and transparent AI collaboration.
+                    </p>
 
-            </div>
+                    <!-- Compact Inline Quick Navigation -->
+                    <nav class="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-4 pt-3 border-t border-dotted border-cs-lilac/20 text-xs font-semibold text-cs-lilac dark:text-[#E2CBEB]" aria-label="Table of contents">
+                        <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Jump to:</span>
+                        <a href="#quick-start" class="hover:text-cs-pink hover:underline">1. Quick Start</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#workflow" class="hover:text-cs-pink hover:underline">2. Workflow</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#asset-rules" class="hover:text-cs-pink hover:underline">3. Asset Rules</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#ai-policy" class="hover:text-cs-pink hover:underline">4. AI Policy</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#review-process" class="hover:text-cs-pink hover:underline">5. Review Process</a>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <a href="#help-contact" class="hover:text-cs-pink hover:underline">6. Help &amp; Contact</a>
+                    </nav>
+                </header>
+
+                <!-- Markdown Content Render Target -->
+                <div id="contributing-render" class="prose-content text-slate-800 dark:text-slate-200 text-[15px] sm:text-base">
+                    <p class="opacity-75 italic text-sm py-4">Loading contributor guidelines...~</p>
+                </div>
+
+                <!-- Compact Action Footer -->
+                <footer class="mt-8 pt-5 border-t border-cs-lilac/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-cs-pink shrink-0"></i>
+                        <span>Ready to build something cute? We're thrilled to have you!</span>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <a href="https://github.com/CuteSense-Studios" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-cs-blue/10 hover:bg-cs-blue/20 text-[#1D6585] dark:text-cs-blue font-bold transition-all flex items-center gap-1.5">
+                            <img src="../assets/icons/github.svg" class="w-3.5 h-3.5 opacity-80 dark:invert-[0.1]" alt="GitHub">
+                            <span>GitHub Org</span>
+                        </a>
+                        <a href="mailto:cutesensestudios@protonmail.com" class="px-3 py-1.5 rounded-xl bg-cs-lilac hover:bg-[#8e659c] text-white font-bold transition-all flex items-center gap-1.5">
+                            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                            <span>Contact Maintainers</span>
+                        </a>
+                    </div>
+                </footer>
+
+            </article>
+
         </div>
     </main>
 
@@ -168,45 +312,250 @@
     <script src="../assets/js/footer.js"></script>
 
     <script>
+        const FALLBACK_CONTRIBUTING_MD = `# The Contributor’s Handbook
+
+**Thank you for your interest in contributing!** We welcome contributions of all kinds – code, art, music, writing, testing, documentation, and translations.
+
+This guide applies to **all CuteSense Studios projects** (tools, games, libraries, assets). It explains how to contribute effectively and how we handle AI‑assisted contributions with transparency and fairness.
+
+> 💡 **Our core belief** – AI is a collaborator, not a replacement. Human creativity and final responsibility always come first.
+---
+
+## 1. Quick Start – What You Need to Know
+
+* **All contributions** must comply with the project’s license (MIT, Apache‑2.0, GPL‑3.0, CC BY‑SA, etc.). Check the \`LICENSE\` file in the repository.
+* **If you use AI** to generate any part of your contribution (code, art, music, text), you **must disclose it** – see section 4.
+* **You are responsible** for your contribution’s legality (copyright, training data, terms of service of AI tools you use).
+* **Human review** is mandatory – every pull request or asset submission will be reviewed by a human maintainer.
+---
+
+## 2. How to Contribute (General Workflow)
+
+1. **Find an issue or idea** – Look for labels like \`good first issue\`, \`help wanted\`, or propose a new feature via an issue.
+2. **Discuss first** – For significant changes, open an issue to discuss before working (saves you time).
+3. **Fork & branch** – Create a branch with a descriptive name (\`fix‑ui‑crash\`, \`add‑new‑background‑art\`).
+4. **Make your changes** – Follow the AI disclosure rules below.
+5. **Test locally** – Ensure your changes work and don’t break existing functionality.
+6. **Open a pull request (PR)** – Fill out the PR template (including AI disclosure if applicable).
+7. **Wait for review** – A maintainer will review, request changes, or merge.
+---
+
+## 3. Contribution Types & Specific Rules
+
+### Code (Python, JavaScript, Rust, etc.)
+
+* **Style** – Follow the project’s \`.editorconfig\` and linting rules (if any). When in doubt, match existing code.
+* **Tests** – Add or update tests for new functionality.
+* **AI Disclosure:** Any AI-generated code (>10 lines) or complex algorithms must be credited in the \`README.md\`, an \`ATTRIBUTION.md\` file, or via inline code comments:
+
+\`\`\`python
+# AI‑assisted (GPT-4, prompt: "function to validate email format") – reviewed and adapted by @yourname
+\`\`\`
+
+For smaller snippets (e.g., one‑line fixes, obvious boilerplate), no comment is required, but you may still note it in the PR description.
+
+### Art (sprites, backgrounds, UI, character designs)
+
+* **Format** – Use open formats (PNG, SVG, WebP, etc.) unless the project specifies otherwise.
+* **Source files** – Include source (.psd, .kra, .blend) if possible, especially for complex assets.
+* **AI disclosure** – Include a \`.txt\` with or credit the source inside the README.md file or embed metadata (EXIF) or \`ATTRIBUTION.md\` file. Example:
+
+\`\`\`text
+forest_background.txt:
+Generated by: Stable Diffusion 3.5 (local, fine‑tuned on CC0 landscapes)
+Prompt: "peaceful forest path, morning light, stylized for 2D game"
+Human changes: Cropped, colour‑corrected, added a hidden character.
+\`\`\`
+
+* **No unmodified raw AI outputs** – Every AI‑generated asset must be **meaningfully edited** by a human (adjust colours, composition, fix errors). Pure “prompt‑and‑publish” is not accepted.
+
+### Music & Sound Effects
+
+* **Formats** – OGG, WAV, or FLAC (lossless preferred for source).
+* **AI disclosure** – Include a \`.txt\` with or credit the source inside the README.md or \`ATTRIBUTION.md\` file:
+
+\`\`\`text
+bgm_cave_loop.txt:
+Tool: Suno AI (free tier, license allows open‑source use)
+Prompt: "atmospheric cave ambient, soft piano, 60 BPM"
+Human edits: Remixed in Audacity – shortened to 45s, added reverb, normalised.
+\`\`\`
+
+* **License verification** – You must confirm that the AI tool’s terms **allow** the output to be used under the project’s open license. Attach a screenshot or link to the relevant license clause in the PR.
+
+### Writing & Narrative (dialogue, descriptions, documentation)
+
+* **AI Assistance:** While using LLMs to overcome writer’s block or to rephrase content is permitted, any **substantial AI-generated text** must be disclosed. Please note this in your Pull Request (PR) or a \`.txt\` file, and ensure the source is credited within the \`README.md\` or \`ATTRIBUTION.md\` file.
+* **Final human polish** – Every text contribution must be read and edited by a human for tone, accuracy, and “cuteness”.
+* **Disclosure example** – “Dialogue for NPC X was drafted using Claude 3 (prompt: ‘write three shy greeting lines for a bunny baker’) and then rewritten by me.”
+---
+
+## 4. AI Usage & Transparency Policy
+
+### ✅ Permitted Use
+
+* **Ideation & Drafts:** Using AI to generate initial concepts, boilerplate code, or creative outlines.
+* **Code Refactoring:** Utilizing AI to optimize, clean, or document existing code.
+* **Foundational Assets:** Creating background art, music, or sketches to serve as a **starting point** for further manual work.
+* **Accessibility:** Leveraging AI tools for speech-to-text, automated captions, or accessibility-focused improvements.
+
+### ❌ Prohibited Actions
+
+* **Raw Submissions:** Submitting unmodified AI-generated outputs as a final contribution.
+* **Unethical Models:** Using AI models trained on copyrighted material without explicit permission. When in doubt, consult project maintainers via an Issue or Pull Request before proceeding.
+* **Restrictive Licenses:** Using tools that claim ownership or restrictive rights over the generated output (always review the Terms of Service).
+* **Non-Disclosure:** Failing to report AI usage. This violates our **Transparency Policy** and will lead to PR rejection or a potential ban for repeat offenses.
+---
+
+### 📋 How to Disclose AI Use
+
+* **In-File Attribution:** Add a comment within the code, a sidecar file, or relevant metadata acknowledging the tool used.
+* **PR Description:** Provide a summary in your Pull Request detailing which AI tools were used and which specific components they influenced.
+* **Licensing Verification:** For third-party assets (e.g., AI-generated audio), confirm the license permits open-source distribution and note any specific requirements, such as attribution or non-commercial clauses.
+
+## 5. Review Process & Human Oversight
+
+Every contribution goes through a **human maintainer**. They will:
+
+1. Check for AI disclosure and compliance with this guide.
+2. Evaluate the **human effort** – Is there meaningful human creativity or problem‑solving? (We reject purely generated content.)
+3. Verify licensing – If you used an AI tool that restricts commercial use, and the project is commercially usable (e.g., MIT license), the contribution will be rejected unless the restriction is compatible.
+4. Request changes if disclosure is missing or if the AI tool’s terms are violated.
+
+**If a copyright issue is discovered after merging** – We will remove or replace the contribution, credit the original creator (if known), and document the takedown in the project’s \`ATTRIBUTION.md\` or README.md.
+---
+
+## 6. Code of Conduct (Short Version)
+
+* Be respectful, inclusive, and kind.
+* No harassment, hate speech, or trolling.
+* Disclose AI use honestly – hiding it is considered deceptive.
+* If you see a problem, report it to cutesensestudios@protonmail.com.
+
+Full Code of Conduct available at [CODE_OF_CONDUCT.md](./pages/code-of-conduct.html).
+---
+
+## 7. Getting Help & Contact
+
+* **Technical questions** – Open a GitHub Discussion.
+* **AI policy questions** – Contact us via email.
+* **Copyright or legal concerns** – Contact us via email.
+---
+
+## 8. Acknowledgment
+
+By contributing, you agree that:
+
+* Your contribution is **original** or properly attributed (including AI assistance).
+* You have the right to license your contribution under the project’s open license.
+* You understand that CuteSense Studios may remove your contribution if it violates copyright or our AI policy.
+
+**Thank you for helping us build open, ethical, and cute creations – with humans and AI working together, transparently.**
+
+— CuteSense Studios Team`;
+
         document.addEventListener('DOMContentLoaded', async () => {
             const container = document.getElementById('contributing-render');
-            
+            let rawMarkdown = FALLBACK_CONTRIBUTING_MD;
+
             try {
-                // Fetch CONTRIBUTING.md from the root directory
                 const response = await fetch('../CONTRIBUTING.md');
-                if (!response.ok) throw new Error('Contributing file missing');
-                let rawMarkdown = await response.text();
-                rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
-
-                // Render with local marked.js
-                container.innerHTML = marked.parse(rawMarkdown);
-
-                // Re-initialize icons
-                if (window.lucide) {
-                    lucide.createIcons();
+                if (response.ok) {
+                    const fetched = await response.text();
+                    if (fetched && fetched.trim().length > 10) {
+                        rawMarkdown = fetched;
+                    }
                 }
-
-                // Parallax logic for brand blobs
-                const blobs = document.querySelectorAll('.blob-parallax');
-                document.addEventListener('mousemove', (e) => {
-                    const x = (e.clientX / window.innerWidth) - 0.5;
-                    const y = (e.clientY / window.innerHeight) - 0.5;
-                    blobs.forEach((blob, i) => {
-                        const speed = (i + 1) * 30;
-                        blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-                    });
-                });
-                
             } catch (err) {
-                console.error('Render Error:', err);
-                container.innerHTML = `
-                    <div class="text-center py-16">
-                        <i data-lucide="alert-circle" class="w-12 h-12 text-cs-pink mx-auto mb-4"></i>
-                        <h2 class="text-2xl font-bold">Guide Not Found!</h2>
-                        <p class="opacity-70">Please check if <b>CONTRIBUTING.md</b> is in the root directory.</p>
-                    </div>
+                console.warn('Using embedded Contributing guide fallback.', err);
+            }
+
+            // Adjust internal links
+            rawMarkdown = rawMarkdown.replace(/\.\/pages\//g, './');
+
+            // Render Markdown
+            container.innerHTML = marked.parse(rawMarkdown);
+
+            // Assign clean anchor IDs matching the quick navigation
+            const sectionMap = [
+                { match: /Quick Start/i, id: 'quick-start' },
+                { match: /How to Contribute/i, id: 'workflow' },
+                { match: /Contribution Types/i, id: 'asset-rules' },
+                { match: /AI Usage/i, id: 'ai-policy' },
+                { match: /Review Process/i, id: 'review-process' },
+                { match: /Getting Help|Code of Conduct|Acknowledgment/i, id: 'help-contact' }
+            ];
+
+            const h2Elements = container.querySelectorAll('h2');
+            h2Elements.forEach(h2 => {
+                const found = sectionMap.find(item => item.match.test(h2.textContent));
+                if (found) {
+                    h2.id = found.id;
+                }
+            });
+
+            // Wrap <pre> blocks in compact code boxes with a copy button
+            const preElements = container.querySelectorAll('pre');
+            preElements.forEach((pre, idx) => {
+                const code = pre.querySelector('code');
+                const rawCode = code ? code.innerText : pre.innerText;
+                const isPython = rawCode.includes('# AI');
+                const langName = isPython ? 'python' : 'attribution text';
+
+                const box = document.createElement('div');
+                box.className = 'code-box';
+
+                const header = document.createElement('div');
+                header.className = 'code-box-header';
+                header.innerHTML = `
+                    <span>${langName}</span>
+                    <button class="code-copy-btn" type="button" data-idx="${idx}">Copy</button>
                 `;
-                if (window.lucide) lucide.createIcons();
+
+                pre.parentNode.insertBefore(box, pre);
+                box.appendChild(header);
+                box.appendChild(pre);
+
+                const btn = header.querySelector('.code-copy-btn');
+                btn.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(rawCode.trim());
+                        btn.textContent = 'Copied! ✨';
+                        setTimeout(() => {
+                            btn.textContent = 'Copy';
+                        }, 2500);
+                    } catch (e) {
+                        btn.textContent = 'Copied!';
+                    }
+                });
+            });
+
+            // Initialize Lucide Icons
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            // Parallax Blobs with throttling & reduced motion check
+            const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!motionMedia.matches) {
+                const blobs = document.querySelectorAll('.blob-parallax');
+                if (blobs.length) {
+                    let ticking = false;
+                    blobs.forEach(b => b.style.willChange = 'transform');
+                    document.addEventListener('mousemove', (e) => {
+                        if (ticking) return;
+                        ticking = true;
+                        requestAnimationFrame(() => {
+                            const x = (e.clientX / window.innerWidth) - 0.5;
+                            const y = (e.clientY / window.innerHeight) - 0.5;
+                            blobs.forEach((blob, i) => {
+                                const speed = (i + 1) * 25;
+                                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                            });
+                            ticking = false;
+                        });
+                    });
+                }
             }
         });
     </script>

@@ -193,7 +193,9 @@ class CuteSenseNavbar extends HTMLElement {
                         <img src="${root}assets/icons/github.svg" alt="GitHub" class="w-4 h-4 shrink-0 dark:brightness-125" onerror="this.src='https://cdn.simpleicons.org/github/64748b';">
                     </a>
                     <button type="button" id="theme-toggle-btn" aria-label="Toggle theme">
-                        <div class="toggle-knob" id="knob-icon-container"></div>
+                        <div class="toggle-knob" id="knob-icon-container">
+                            ${this._getKnobSvg(this._isDark)}
+                        </div>
                     </button>
                 </div>
             </div>
@@ -268,17 +270,16 @@ class CuteSenseNavbar extends HTMLElement {
         }
     }
 
+    _getKnobSvg(isDark) {
+        return isDark
+            ? `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-white shrink-0"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>`
+            : `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-orange-500 shrink-0"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>`;
+    }
+
     _updateThemeIcon() {
         const knob = this.querySelector('#knob-icon-container');
-        if (knob && window.lucide) {
-            knob.innerHTML = this._isDark 
-                ? `<i data-lucide="moon" class="w-3.5 h-3.5 text-white shrink-0"></i>`
-                : `<i data-lucide="sun" class="w-3.5 h-3.5 text-orange-500 shrink-0"></i>`;
-            
-            window.lucide.createIcons({
-                root: knob,
-                attrs: { 'stroke-width': '2.5' }
-            });
+        if (knob) {
+            knob.innerHTML = this._getKnobSvg(this._isDark);
         }
     }
 
