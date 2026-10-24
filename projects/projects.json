@@ -14,6 +14,20 @@
     "tags": ["React", "JavaScript", "Weather API", "PWA"]
   },
   {
+    "id": "as-you-are",
+    "title": "As You Are",
+    "tagline": "A cozy visual novel where every cup tells a story and every bond is brewed to perfection.",
+    "category": "Games",
+    "icon": "coffee",
+    "color": "pink",
+    "file": "as-you-are.md",
+    "github": null,
+    "demo": "https://crossie9.itch.io/as-you-are",
+    "status": "Featured",
+    "featured": true,
+    "tags": ["Visual Novel", "Cozy", "Cafe", "Story"]
+  },
+  {
     "id": "as-you-are-w",
     "title": "As You Are (Website)",
     "tagline": "Official interactive landing experience and OST sampler for the visual novel.",
