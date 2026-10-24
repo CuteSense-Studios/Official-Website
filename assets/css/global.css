@@ -1148,6 +1148,147 @@ html.dark #project-modal .modal-footer {
     transform: scale(1.1);
 }
 
+/* =========================================================
+   Projects Page Theme & Toolbar Controls
+========================================================= */
+.project-toolbar-card {
+    background-color: rgba(255, 255, 255, 0.88) !important;
+    border: 1.5px solid rgba(161, 120, 175, 0.25) !important;
+    border-radius: 1.5rem !important;
+    padding: 1rem 1.25rem !important;
+    box-shadow: 0 8px 30px rgba(161, 120, 175, 0.08) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+html.dark .project-toolbar-card,
+.dark .project-toolbar-card {
+    background-color: #241E28 !important;
+    border-color: rgba(161, 120, 175, 0.35) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+}
+
+.project-search-input {
+    width: 100% !important;
+    height: 2.85rem !important;
+    padding-left: 2.75rem !important;
+    padding-right: 2.5rem !important;
+    border-radius: 0.95rem !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    box-sizing: border-box !important;
+    background-color: #FFFFFF !important;
+    color: #1E293B !important;
+    border: 1.5px solid rgba(161, 120, 175, 0.25) !important;
+    transition: all 0.2s ease !important;
+}
+
+html.dark .project-search-input,
+.dark .project-search-input {
+    background-color: #1A161D !important;
+    color: #F8FAFC !important;
+    border-color: rgba(161, 120, 175, 0.35) !important;
+}
+
+.project-search-input::placeholder {
+    color: #94A3B8 !important;
+    opacity: 1 !important;
+}
+
+html.dark .project-search-input::placeholder,
+.dark .project-search-input::placeholder {
+    color: #94A3B8 !important;
+    opacity: 1 !important;
+}
+
+.project-search-input:focus {
+    outline: none !important;
+    border-color: #A178AF !important;
+    box-shadow: 0 0 0 3px rgba(161, 120, 175, 0.25) !important;
+    background-color: #FFFFFF !important;
+}
+
+html.dark .project-search-input:focus,
+.dark .project-search-input:focus {
+    background-color: #1A161D !important;
+    border-color: #C084FC !important;
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.25) !important;
+}
+
+.project-filter-select {
+    width: 100% !important;
+    height: 2.85rem !important;
+    padding-left: 2.75rem !important;
+    padding-right: 2.5rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+    background-color: #FFFFFF !important;
+    color: #334155 !important;
+    border: 1.5px solid rgba(161, 120, 175, 0.3) !important;
+    border-radius: 0.95rem !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    cursor: pointer !important;
+}
+
+html.dark .project-filter-select,
+.dark .project-filter-select {
+    background-color: #1A161D !important;
+    color: #F1F5F9 !important;
+    border-color: rgba(161, 120, 175, 0.35) !important;
+}
+
+.project-filter-select:hover {
+    border-color: #A178AF !important;
+    background-color: #FFFFFF !important;
+}
+
+html.dark .project-filter-select:hover,
+.dark .project-filter-select:hover {
+    background-color: #201A24 !important;
+    border-color: #C084FC !important;
+}
+
+.project-filter-select:focus {
+    outline: none !important;
+    border-color: #A178AF !important;
+    box-shadow: 0 0 0 3px rgba(161, 120, 175, 0.25) !important;
+}
+
+html.dark .project-filter-select:focus,
+.dark .project-filter-select:focus {
+    border-color: #C084FC !important;
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.25) !important;
+}
+
+.project-filter-select option {
+    background-color: #FFFFFF !important;
+    color: #1E293B !important;
+    padding: 0.5rem !important;
+    font-weight: 600 !important;
+}
+
+html.dark .project-filter-select option,
+.dark .project-filter-select option {
+    background-color: #1A161D !important;
+    color: #F1F5F9 !important;
+}
+
+.project-card-theme {
+    background-color: #FFFFFF !important;
+    color: #1A161D !important;
+}
+
+html.dark .project-card-theme,
+.dark .project-card-theme {
+    background-color: #27202B !important;
+    color: #F1F5F9 !important;
+}
+
 
 /* =========================================================
    Footer Link Spacing & Host Display

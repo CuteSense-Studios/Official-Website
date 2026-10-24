@@ -1,17 +1,41 @@
 @import "tailwindcss";
 
-/* 1. Explicitly tell Tailwind where to look for your JS files */
-/* Adjust this path if your navbar.js is in a specific folder (e.g., "./js" or "./components") */
-@source "../"; 
+/* 1. Content sources: Scan all HTML pages, JS components, and project metadata from root */
+@source "../../index.html";
+@source "../../pages/**/*.html";
+@source "../../assets/js/**/*.js";
+@source "../../projects/**/*.json";
+@source "../../projects/**/*.md";
 
-/* 2. Tell Tailwind to use your manual toggle for Dark Mode */
+/* 2. Tell Tailwind to use manual toggle for Dark Mode (.dark class on <html>) */
 @variant dark (&:is(.dark *));
 
-/* 3. Define your brand colors */
+/* 3. CuteSense Studios Design System & Brand Theme */
 @theme {
+  /* Typography */
+  --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Fredoka', ui-sans-serif, system-ui, sans-serif;
+  --font-brand: 'Borel', cursive;
+
+  /* Primary Brand Pastels */
   --color-cs-pink: #F4C6C9;
+  --color-cs-pink-hover: #F08DA1;
+  --color-cs-pink-dark: #B83A4B;
+  --color-cs-pink-light: #FFB3BC;
+
   --color-cs-blue: #B9E1F1;
+  --color-cs-blue-hover: #98D0E8;
+  --color-cs-blue-dark: #2B799E;
+  --color-cs-blue-light: #E0F2FE;
+
   --color-cs-lilac: #A178AF;
+  --color-cs-lilac-hover: #8C559E;
+  --color-cs-lilac-dark: #6D3D7E;
+  --color-cs-lilac-light: #E2CBEB;
+
+  /* Neutrals & Theme Surfaces */
   --color-cs-cream: #FFF9F4;
   --color-cs-dark: #1A161D;
+  --color-cs-dark-surface: #1F1925;
+  --color-cs-dark-card: #251D2C;
 }
