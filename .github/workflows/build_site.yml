@@ -5,7 +5,6 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch: # This MUST be here for the bot to trigger it
-  
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -31,6 +30,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Ensure .nojekyll exists
+        run: touch .nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

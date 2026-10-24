@@ -28,9 +28,17 @@
 
     <script src="../assets/js/seo-manager.js" defer></script>
 
+    <!-- Automatic redirect from legacy alias to standardized spelling -->
+    <meta http-equiv="refresh" content="0; url=business-model.html">
+    <script>
+        try {
+            window.location.replace("business-model.html" + window.location.search + window.location.hash);
+        } catch(e) {}
+    </script>
+
     <title>How We Work | CuteSense Studios</title>
     <meta name="description" content="The Logic and the Lore. Discover our Open-Studio Ecosystem and Fractal scaling model.">
-    <link rel="canonical" href="https://cutesense-studios.com/pages/buisness-model.html">
+    <link rel="canonical" href="https://cutesense-studios.com/pages/business-model.html">
 
     <link rel="stylesheet" href="../assets/css/cursor.css">
     <link rel="stylesheet" href="../assets/css/tailwind.css">

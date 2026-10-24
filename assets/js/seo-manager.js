@@ -31,6 +31,11 @@ const SEO_CONFIG = {
             description: "Cuteness that makes sense!~ The philosophy behind our welcoming, emotionally resonant design and rigorous logic.",
             keywords: "CuteSense motto, cuteness that makes sense, philosophy, indie studio"
         },
+        "business-model.html": {
+            title: "How We Work | CuteSense Studios",
+            description: "The Logic and the Lore. Discover our Open-Studio Ecosystem and Fractal scaling model.",
+            keywords: "business model, fractal studio, open source licensing, indie economics"
+        },
         "buisness-model.html": {
             title: "How We Work | CuteSense Studios",
             description: "The Logic and the Lore. Discover our Open-Studio Ecosystem and Fractal scaling model.",
@@ -45,6 +50,10 @@ const SEO_CONFIG = {
             title: "Code of Conduct | CuteSense Studios",
             description: "Our pledge to fostering an open, welcoming, and 'cute' environment for all creators.",
             keywords: "code of conduct, community pledge, inclusivity, diversity"
+        },
+        "404.html": {
+            title: "404 - Lost in the Clouds? | CuteSense Studios",
+            description: "The requested page floated away. Explore our open-source creations and community tools."
         }
     }
 };
@@ -54,6 +63,23 @@ function applySEO() {
     const fileName = path.split("/").pop() || "index.html";
     const pageConfig = SEO_CONFIG.pages[fileName] || SEO_CONFIG.default;
     const finalConfig = { ...SEO_CONFIG.default, ...pageConfig };
+
+    // Resolve absolute URL for social sharing (crucial for GitHub Pages / subpaths)
+    const resolveAbsoluteUrl = (relPath) => {
+        if (!relPath) return "";
+        if (/^https?:\/\//i.test(relPath)) return relPath;
+        try {
+            const isSubdir = path.includes('/pages/') || path.includes('/docs/');
+            const clean = relPath.startsWith('/') ? relPath.slice(1) : relPath;
+            const prefix = isSubdir ? '../' : './';
+            return new URL(prefix + clean, window.location.href).href;
+        } catch (e) {
+            return relPath;
+        }
+    };
+
+    const absoluteImage = resolveAbsoluteUrl(finalConfig.image);
+    const cleanCanonicalUrl = window.location.origin + window.location.pathname;
 
     // 1. Update Document Title
     document.title = finalConfig.title;
@@ -81,14 +107,14 @@ function applySEO() {
     // 4. Open Graph / Facebook
     setMeta("og:title", finalConfig.title, true);
     setMeta("og:description", finalConfig.description, true);
-    setMeta("og:image", finalConfig.image, true);
-    setMeta("og:url", window.location.href, true);
+    setMeta("og:image", absoluteImage, true);
+    setMeta("og:url", cleanCanonicalUrl, true);
     setMeta("og:type", "website", true);
 
     // 5. Twitter
     setMeta("twitter:title", finalConfig.title);
     setMeta("twitter:description", finalConfig.description);
-    setMeta("twitter:image", finalConfig.image);
+    setMeta("twitter:image", absoluteImage);
     setMeta("twitter:card", finalConfig.twitterCard);
 
     // 6. Canonical Link
@@ -98,7 +124,7 @@ function applySEO() {
         canonical.setAttribute('rel', 'canonical');
         document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', window.location.href);
+    canonical.setAttribute('href', cleanCanonicalUrl);
 }
 
 // Run immediately

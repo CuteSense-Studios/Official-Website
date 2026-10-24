@@ -13,6 +13,8 @@ class CuteSenseFooter extends HTMLElement {
 
     _getPath() {
         try {
+            const baseTag = document.querySelector('base');
+            if (baseTag && baseTag.href) return '';
             const path = window.location.pathname;
             const isSubdir = path.includes('/pages/') || path.includes('/docs/');
             return isSubdir ? '../' : './';
@@ -43,11 +45,12 @@ class CuteSenseFooter extends HTMLElement {
             { id: 'motto', label: 'Motto', href: `${path}pages/motto.html` },
             { id: 'code-of-conduct', label: 'Conduct', href: `${path}pages/code-of-conduct.html` },
             { id: 'contributing', label: 'Contributing', href: `${path}pages/contributing.html` },
-            { id: 'buisness-model', label: 'Model', href: `${path}pages/buisness-model.html` }
+            { id: 'business-model', label: 'Model', href: `${path}pages/business-model.html` }
         ];
 
         const linksHtml = navLinks.map(link => {
-            const isActive = active === link.id || (active === '' && link.id === 'index');
+            const isModelMatch = link.id === 'business-model' && (active === 'buisness-model' || active === 'business-model');
+            const isActive = active === link.id || (active === '' && link.id === 'index') || isModelMatch;
             const activeClass = isActive ? 'active' : '';
 
             return `<a href="${link.href}" class="footer-link ${activeClass}">${link.label}</a>`;

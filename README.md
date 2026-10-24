@@ -1,6 +1,11 @@
 # **CuteSense Studios Official Website**
 
+[![Deploy to GitHub Pages](https://github.com/CuteSense-Studios/Official-Website/actions/workflows/build_site.yml/badge.svg)](https://github.com/CuteSense-Studios/Official-Website/actions/workflows/build_site.yml)
+[![Live Site](https://img.shields.io/badge/Live%20Site-cutesense--studios.github.io%2FOfficial--Website-F08DA1?style=flat&logo=github)](https://cutesense-studios.github.io/Official-Website/)
+
 Welcome to the official repository for the **CuteSense Studios** website. CuteSense Studios is a creative collective focused on "Emotive Open Source Art," blending high-quality digital experiences with a commitment to open-source accessibility and human-AI partnership.
+
+🌐 **Live Website:** [https://cutesense-studios.github.io/Official-Website/](https://cutesense-studios.github.io/Official-Website/)
 
 ## **🌟 About CuteSense Studios**
 

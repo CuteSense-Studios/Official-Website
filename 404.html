@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Dynamic Base & Smart GitHub Pages Clean-URL Redirect -->
+    <script>
+        (function() {
+            // 1. Anti-FOUC Theme Detection
+            try {
+                const s = localStorage.getItem('theme');
+                if (s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch(e) {}
+
+            // 2. Base Detection for GitHub Pages Subpath vs Custom Domain
+            const pathname = window.location.pathname;
+            const isRepo = pathname.startsWith('/Official-Website/') || pathname === '/Official-Website';
+            const baseHref = isRepo ? '/Official-Website/' : '/';
+
+            // 3. Smart SPA / Clean URL Redirect (e.g. /projects -> pages/projects.html)
+            const cleanPath = (isRepo ? pathname.replace(/^\/Official-Website/, '') : pathname).replace(/\/$/, '');
+            const cleanLower = cleanPath.toLowerCase();
+
+            const routeMap = {
+                '/pages/projects': 'pages/projects.html',
+                '/pages/mission': 'pages/mission.html',
+                '/pages/motto': 'pages/motto.html',
+                '/pages/business-model': 'pages/business-model.html',
+                '/pages/buisness-model': 'pages/business-model.html',
+                '/pages/buisness-model.html': 'pages/business-model.html',
+                '/pages/contributing': 'pages/contributing.html',
+                '/pages/code-of-conduct': 'pages/code-of-conduct.html',
+                '/projects': 'pages/projects.html',
+                '/mission': 'pages/mission.html',
+                '/motto': 'pages/motto.html',
+                '/business-model': 'pages/business-model.html',
+                '/buisness-model': 'pages/business-model.html',
+                '/contributing': 'pages/contributing.html',
+                '/code-of-conduct': 'pages/code-of-conduct.html',
+                '/home': 'index.html'
+            };
+
+            const targetPage = routeMap[cleanLower];
+            if (targetPage) {
+                const destination = baseHref + targetPage + window.location.search + window.location.hash;
+                window.location.replace(destination);
+                return;
+            }
+
+            // If not redirected, write base tag for relative asset loading
+            document.write('<base href="' + baseHref + '">');
+        })();
+    </script>
+
+    <!-- Font Preloads for Instant Rendering -->
+    <link rel="preload" href="assets/fonts/quicksand-v37-latin/quicksand-v37-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/quicksand-v37-latin/quicksand-v37-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/quicksand-v37-latin/quicksand-v37-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/fredoka-v17-latin/fredoka-v17-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/fredoka-v17-latin/fredoka-v17-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/borel-v10-latin/borel-v10-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+    <script src="assets/js/seo-manager.js" defer></script>
+
+    <title>404 - Lost in the Clouds? | CuteSense Studios</title>
+    <meta name="description" content="The page you were looking for floated away or doesn't exist. Return home to explore our emotive open-source creations.">
+
+    <link rel="stylesheet" href="assets/css/cursor.css">
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <link rel="stylesheet" href="assets/css/global.css?v=6">
+
+    <script src="assets/js/favicon.js"></script>
+    <script src="assets/js/lucide.min.js" defer></script>
+    <script src="assets/js/theme.js"></script>
+</head>
+<body class="bg-cs-cream dark:bg-cs-dark text-cs-dark dark:text-slate-100 selection:bg-cs-pink selection:text-white overflow-x-hidden min-h-screen flex flex-col">
+
+    <cs-navbar></cs-navbar>
+    <script src="assets/js/navbar.js"></script>
+
+    <main class="flex-grow flex items-center justify-center relative py-20 px-6 overflow-hidden">
+        <!-- Floating Pastel Blobs -->
+        <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+            <div class="blob-parallax absolute top-1/4 right-1/4 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-cs-blue/40 dark:bg-cs-blue/15 rounded-full blur-[120px]"></div>
+            <div class="blob-parallax absolute bottom-1/4 left-1/4 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-cs-pink/40 dark:bg-cs-pink/15 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-2xl mx-auto text-center relative z-10">
+            <!-- Floating Mascot -->
+            <div class="mb-8 flex justify-center">
+                <div class="floating">
+                    <img src="assets/icons/companylogo.webp" alt="CuteSense Logo" class="h-28 md:h-36 w-auto drop-shadow-2xl pixel-crisp">
+                </div>
+            </div>
+
+            <!-- Big 404 Badge -->
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-cs-pink/20 dark:bg-cs-pink/15 text-[#A83848] dark:text-cs-pink text-xs font-bold uppercase tracking-widest mb-6 border border-cs-pink/30">
+                <i data-lucide="cloud-off" class="w-4 h-4"></i>
+                <span>Page Not Found</span>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-black mb-4 tracking-tight">
+                <span class="gradient-text">404</span>
+            </h1>
+
+            <h2 class="text-2xl md:text-4xl font-bold mb-4 text-cs-dark dark:text-white cute-font">
+                Lost in the Clouds? ✨
+            </h2>
+
+            <p class="text-base md:text-lg opacity-85 text-slate-700 dark:text-slate-300 max-w-lg mx-auto mb-10 font-medium leading-relaxed">
+                The page you're searching for floated away or doesn't exist yet! Don't worry, cuteness and helpful tools are always within reach.
+            </p>
+
+            <!-- Navigation Buttons -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="index.html" class="px-8 py-4 bg-cs-lilac hover:bg-[#8e659c] text-white rounded-2xl font-bold text-base shadow-xl hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/40 cursor-pointer">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Back to Home</span>
+                </a>
+                <a href="pages/projects.html" class="px-8 py-4 bg-white/90 dark:bg-[#27202B] text-cs-dark dark:text-white border-2 border-cs-lilac/40 rounded-2xl font-bold text-base shadow-md hover:scale-105 transition-all flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-cs-lilac/30 backdrop-blur-sm hover:border-cs-pink cursor-pointer">
+                    <i data-lucide="folder-git-2" class="w-5 h-5"></i>
+                    <span>Explore Projects</span>
+                </a>
+                <a href="pages/mission.html" class="px-8 py-4 bg-white/70 dark:bg-[#201A24] text-cs-dark dark:text-white border border-slate-300 dark:border-slate-700 rounded-2xl font-bold text-base shadow-sm hover:scale-105 transition-all flex items-center gap-2 focus:outline-none cursor-pointer">
+                    <i data-lucide="compass" class="w-5 h-5"></i>
+                    <span>Philosophy</span>
+                </a>
+            </div>
+
+            <!-- Helpful Quick Links -->
+            <div class="mt-12 pt-8 border-t border-slate-200/60 dark:border-slate-800/60">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Popular Pages</p>
+                <div class="flex flex-wrap justify-center gap-3 text-sm font-medium">
+                    <a href="pages/business-model.html" class="text-cs-lilac dark:text-[#E2CBEB] hover:underline">How We Work (Model)</a>
+                    <span class="text-slate-300 dark:text-slate-700">•</span>
+                    <a href="pages/contributing.html" class="text-cs-lilac dark:text-[#E2CBEB] hover:underline">Contributing</a>
+                    <span class="text-slate-300 dark:text-slate-700">•</span>
+                    <a href="pages/code-of-conduct.html" class="text-cs-lilac dark:text-[#E2CBEB] hover:underline">Code of Conduct</a>
+                    <span class="text-slate-300 dark:text-slate-700">•</span>
+                    <a href="pages/motto.html" class="text-cs-lilac dark:text-[#E2CBEB] hover:underline">Our Motto</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <cs-footer></cs-footer>
+    <script src="assets/js/footer.js?v=6"></script>
+
+    <script>
+        (function() {
+            function initLucide() {
+                if (window.lucide) {
+                    lucide.createIcons();
+                } else {
+                    setTimeout(initLucide, 100);
+                }
+            }
+            document.addEventListener('DOMContentLoaded', initLucide);
+
+            const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!motionMedia.matches) {
+                const blobs = document.querySelectorAll('.blob-parallax');
+                if (blobs.length) {
+                    let ticking = false;
+                    blobs.forEach(b => b.style.willChange = 'transform');
+                    window.addEventListener('mousemove', (e) => {
+                        if (ticking) return;
+                        ticking = true;
+                        requestAnimationFrame(() => {
+                            const x = (e.clientX / window.innerWidth) - 0.5;
+                            const y = (e.clientY / window.innerHeight) - 0.5;
+                            blobs.forEach((b, i) => {
+                                const sp = (i + 1) * 35;
+                                b.style.transform = `translate(${x * sp}px, ${y * sp}px)`;
+                            });
+                            ticking = false;
+                        });
+                    });
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

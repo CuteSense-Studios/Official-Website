@@ -83,6 +83,12 @@ function handleRequest(req, res) {
 
     fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {
+            const notFoundPage = path.join(ROOT, '404.html');
+            if (fs.existsSync(notFoundPage)) {
+                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                fs.createReadStream(notFoundPage).pipe(res);
+                return;
+            }
             res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
             res.end(`
                 <!DOCTYPE html>
@@ -155,4 +161,8 @@ function startServer(port) {
     });
 }
 
-startServer(DEFAULT_PORT);
+if (require.main === module) {
+    startServer(DEFAULT_PORT);
+}
+
+module.exports = { startServer, sanitizePath, handleRequest };

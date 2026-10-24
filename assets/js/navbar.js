@@ -46,6 +46,8 @@ class CuteSenseNavbar extends HTMLElement {
 
     _getPath() {
         try {
+            const baseTag = document.querySelector('base');
+            if (baseTag && baseTag.href) return '';
             const path = window.location.pathname;
             const isSubdir = path.includes('/pages/') || path.includes('/docs/');
             return isSubdir ? '../' : './';
@@ -69,8 +71,14 @@ class CuteSenseNavbar extends HTMLElement {
             { id: 'motto', label: 'Motto', path: 'pages/motto.html', icon: 'quote' },
             { id: 'code-of-conduct', label: 'Conduct', path: 'pages/code-of-conduct.html', icon: 'heart-handshake' },
             { id: 'contributing', label: 'Contributing', path: 'pages/contributing.html', icon: 'users' },
-            { id: 'buisness-model', label: 'Model', path: 'pages/buisness-model.html', icon: 'network' }
+            { id: 'business-model', label: 'Model', path: 'pages/business-model.html', icon: 'network' }
         ];
+
+        const isItemActive = (itemId) => {
+            if (active === itemId) return true;
+            if (itemId === 'business-model' && active === 'buisness-model') return true;
+            return false;
+        };
 
         this.innerHTML = `
         <style>
@@ -179,7 +187,7 @@ class CuteSenseNavbar extends HTMLElement {
                 <!-- Desktop Navigation Links (Centered, clean, NO left logo) -->
                 <div class="desktop-nav-container">
                     ${navItems.map(item => `
-                        <a href="${root}${item.path}" class="desktop-link ${active === item.id ? 'nav-link-active' : ''}">
+                        <a href="${root}${item.path}" class="desktop-link ${isItemActive(item.id) ? 'nav-link-active' : ''}">
                             ${item.label}
                         </a>
                     `).join('')}
@@ -223,7 +231,7 @@ class CuteSenseNavbar extends HTMLElement {
             <!-- Mobile Nav Items -->
             <div class="flex flex-col gap-2 font-bold pb-6 w-full">
                 ${navItems.map(item => `
-                    <a href="${root}${item.path}" class="${active === item.id ? 'text-[#F08DA1] bg-cs-pink/15 font-black border-l-4 border-[#F08DA1]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'} px-4 py-3 rounded-2xl flex items-center justify-between transition-colors">
+                    <a href="${root}${item.path}" class="${isItemActive(item.id) ? 'text-[#F08DA1] bg-cs-pink/15 font-black border-l-4 border-[#F08DA1]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900'} px-4 py-3 rounded-2xl flex items-center justify-between transition-colors">
                         <div class="flex items-center gap-3">
                             <i data-lucide="${item.icon}" class="w-5 h-5 opacity-70"></i>
                             <span class="text-base">${item.label}</span>
