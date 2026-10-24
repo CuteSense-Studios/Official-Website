@@ -981,22 +981,15 @@
             }
         }
 
-        // Load project metadata from assets/js/projects.json
+        // Load project metadata from projects/projects.json (single source of truth)
         async function loadProjectsData() {
             try {
-                const res = await fetch(`../assets/js/projects.json?v=${Date.now()}`);
+                const res = await fetch(`../projects/projects.json?v=${Date.now()}`);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 PROJECTS_DATA = await res.json();
             } catch (e) {
-                console.warn("Could not fetch ../assets/js/projects.json, trying ../projects/projects.json:", e);
-                try {
-                    const fallbackRes = await fetch(`../projects/projects.json?v=${Date.now()}`);
-                    if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
-                    PROJECTS_DATA = await fallbackRes.json();
-                } catch (err) {
-                    console.warn("Using embedded fallback dataset:", err);
-                    PROJECTS_DATA = [...FALLBACK_PROJECTS];
-                }
+                console.warn("Could not fetch ../projects/projects.json, using embedded fallback dataset:", e);
+                PROJECTS_DATA = [...FALLBACK_PROJECTS];
             }
 
             // Animate studio project counter smoothly
