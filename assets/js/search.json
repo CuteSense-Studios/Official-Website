@@ -1,0 +1,25 @@
+{
+  "search": {
+    "placeholder": "Search by title, tag, or tech...",
+    "fields": ["title", "tagline", "category", "status", "tags"]
+  },
+  "categories": [
+    { "value": "all", "label": "All Categories" },
+    { "value": "Games", "label": "🎮 Games" },
+    { "value": "Websites", "label": "🌐 Websites" },
+    { "value": "Templates", "label": "🛠️ Templates" },
+    { "value": "Tools", "label": "🌤️ Weather & Apps" },
+    { "value": "Advocacy", "label": "🕊️ Advocacy Research" }
+  ],
+  "statuses": [
+    { "value": "all", "label": "All Statuses" },
+    { "value": "Featured", "label": "Featured" },
+    { "value": "Active", "label": "Active" },
+    { "value": "Research", "label": "Research" },
+    { "value": "Core", "label": "Core" }
+  ],
+  "noResults": {
+    "title": "No repositories found",
+    "message": "Try adjusting your search terms or clearing the dropdown filters."
+  }
+}
