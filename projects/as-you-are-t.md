@@ -1,5 +1,3 @@
-# 🎮 As You Are (Ren'Py Template & Engine)
-
 > **"The open-source Ren'Py game engine template and dialogue framework powering the visual novel 'As You Are'."**
 
 ---

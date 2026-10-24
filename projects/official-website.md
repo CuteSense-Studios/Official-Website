@@ -1,5 +1,3 @@
-# 🌸 CuteSense Studios Official Website
-
 > **"The official web home and emotive digital sanctuary of CuteSense Studios — featuring live Markdown project rendering, SQLite WebAssembly signature wall, and custom Web Components."**
 
 ---

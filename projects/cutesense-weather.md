@@ -1,5 +1,3 @@
-# 🌤️ CuteSense Weather
-
 > **"A cozy, atmospheric weather web dashboard that pairs real-time open meteorological forecasts with serene anime sky gradients and ambient soundscapes."**
 
 ---

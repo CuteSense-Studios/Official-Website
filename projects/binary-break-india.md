@@ -1,5 +1,3 @@
-# 🇮🇳 Binary Break India
-
 > **"An advocacy, research, and data visualization archive dedicated to supporting diversity, inclusion, and underrepresented voices in tech across India."**
 
 ---

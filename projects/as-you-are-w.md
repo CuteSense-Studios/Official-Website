@@ -1,5 +1,3 @@
-# 🕊️ As You Are (Official Website)
-
 > **"The official web portal and emotional landing experience for 'As You Are' — an intimate indie visual novel exploring identity and human connection."**
 
 ---
